@@ -1,0 +1,10 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    background-color: tomato;
+    width: 600px;
+}
+
+.tab_list {
+    display: flex;
+}
