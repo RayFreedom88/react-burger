@@ -1,0 +1,15 @@
+.ingredient {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 272px;
+}
+
+/* .ingredient img {
+    object-fit: contain;
+} */
+
+.ingredient p:first-of-type {
+    display: flex;
+}

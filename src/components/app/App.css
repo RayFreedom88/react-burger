@@ -1,12 +1,12 @@
-.main {
+.App .main {
     width: 100%;
     max-width: 1920px;
     margin: 0 auto;
 }
 
-.section {
+.App .main__section {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 40px;
     margin: 0 auto;
     width: 1280px;

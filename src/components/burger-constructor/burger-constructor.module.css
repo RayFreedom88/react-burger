@@ -1,0 +1,49 @@
+.burgerConstructor {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    padding-top: 100px;
+}
+
+.burgerConstructor__scrollWrapper {
+    height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.burgerConstructor__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+    width: 600px;
+    padding: 0 16px;
+}
+
+.burgerConstructor__item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.burgerConstructor__item div {
+    max-width: 536px;
+    margin-left: auto;
+}
+
+.burgerConstructor__cost {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 90px;
+}
+
+.burgerConstructor__cost p:first-of-type {
+    display: flex;
+}
+
+.burgerConstructor__cost svg {
+    height: 33px;
+    width: 33px;
+}
