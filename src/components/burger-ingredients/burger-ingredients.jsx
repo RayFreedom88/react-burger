@@ -8,7 +8,6 @@ import { useState } from "react";
 
 function BurgerIngredients({items}) {
     const [current, setCurrent] = useState('булки');
-    console.log(items)
 
     return (
         <div className={BurgerIngredientsStyles.burgerIngredients}>
@@ -39,9 +38,13 @@ function BurgerIngredients({items}) {
 
                         <ul className={BurgerIngredientsStyles.burgerIngredients__list}>
                             {items.map(item => item.type === 'bun' ? (
-                                <li className={BurgerIngredientsStyles.burgerIngredients__item}>
-                                    <Ingredient name={item.name} image={item.image} price={item.price} key={item._id} />
-                                </li>) : (null)
+                                <Ingredient 
+                                    class={BurgerIngredientsStyles.burgerIngredients__item} 
+                                    name={item.name} 
+                                    image={item.image} 
+                                    price={item.price} 
+                                    key={item._id} 
+                                />) : (null)
                             )}
                         </ul>
                     </div>
@@ -51,9 +54,13 @@ function BurgerIngredients({items}) {
 
                         <ul className={BurgerIngredientsStyles.burgerIngredients__list}>
                             {items.map(item => item.type === 'sauce' ? (
-                                <li className={BurgerIngredientsStyles.burgerIngredients__item}>
-                                    <Ingredient name={item.name} image={item.image} price={item.price} key={item._id} />
-                                </li>) : (null)
+                                <Ingredient 
+                                    class={BurgerIngredientsStyles.burgerIngredients__item} 
+                                    name={item.name} 
+                                    image={item.image} 
+                                    price={item.price} 
+                                    key={item._id} 
+                                />) : (null)
                             )}
                         </ul>
                     </div>
@@ -63,9 +70,13 @@ function BurgerIngredients({items}) {
 
                         <ul className={BurgerIngredientsStyles.burgerIngredients__list}>
                             {items.map(item => item.type === 'main' ? (
-                                <li className={BurgerIngredientsStyles.burgerIngredients__item}>
-                                    <Ingredient name={item.name} image={item.image} price={item.price} key={item._id} />
-                                </li>) : (null)
+                                <Ingredient 
+                                    class={BurgerIngredientsStyles.burgerIngredients__item} 
+                                    name={item.name} 
+                                    image={item.image} 
+                                    price={item.price} 
+                                    key={item._id} 
+                                />) : (null)
                             )}
                         </ul>
                     </div>  

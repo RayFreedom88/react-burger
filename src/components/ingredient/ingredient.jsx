@@ -1,12 +1,11 @@
 import React from "react";
-import IngredientStyles from './ingredient.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 class Ingredient extends React.Component {
 
     render() {
         return (
-            <div className={IngredientStyles.ingredient}>
+            <li className={this.props.class} key={this.props._id}>
                 {this.props.count === 1 ? <Counter count={1} size="default" /> : null}
                 
                 <img src={this.props.image} alt={this.props.name}/>
@@ -19,7 +18,7 @@ class Ingredient extends React.Component {
                 <p className="text text_type_main-small mb-5">
                     {this.props.name}
                 </p>
-            </div>
+            </li>
         );
     }
 }
