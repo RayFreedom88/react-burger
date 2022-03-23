@@ -2,11 +2,22 @@ import React from "react";
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 class Ingredient extends React.Component {
+    state = {
+        count: 0,     
+    };
+
+    increment = () =>  {
+        this.setState({
+            count: this.state.count + 1
+        });
+    }
 
     render() {
+        const count = this.state.count;
+        
         return (
-            <li className={this.props.class} key={this.props._id}>
-                {this.props.count === 1 ? <Counter count={1} size="default" /> : null}
+            <li className={this.props.class} key={this.props._id} onClick={this.increment}>
+                {this.state.count >= 1 ? <Counter count={count} size="default" /> : null}
                 
                 <img src={this.props.image} alt={this.props.name}/>
     
@@ -22,6 +33,5 @@ class Ingredient extends React.Component {
         );
     }
 }
-
 
 export default Ingredient;
