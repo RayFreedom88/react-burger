@@ -16,26 +16,26 @@ class AppHeader extends React.Component {
                     <nav className={AppHeaderStyles.nav}>
                         <ul className={AppHeaderStyles.list}>
                             <li>
-                                <a className={AppHeaderStyles.link_active} href="#">
+                                <span className={AppHeaderStyles.link_active}>
                                     <BurgerIcon type="primary" />
                                     <p className="text text_type_main-default ml-2">Конструктор</p>
-                                </a>
+                                </span>
                             </li>
                             
                             <li>
-                                <a className={AppHeaderStyles.link} href="#">
+                                <span className={AppHeaderStyles.link}>
                                     <ListIcon type="secondary" />
                                     <p className="text text_type_main-default ml-2">Лента заказов</p>
-                                </a>
+                                </span>
                             </li>
                         </ul>
 
                         <ul className={AppHeaderStyles.list}>
                             <li>
-                                <a className={AppHeaderStyles.link} href="#">
+                                <span className={AppHeaderStyles.link}>
                                     <ProfileIcon type="secondary" />
                                     <p className="text text_type_main-default ml-2">Личный кабинет</p>
-                                </a>
+                                </span>
                             </li>
                         </ul>
                     </nav>
