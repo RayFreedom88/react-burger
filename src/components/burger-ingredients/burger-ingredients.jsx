@@ -3,11 +3,10 @@ import BurgerIngredientsStyles from './burger-ingredients.module.css';
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "../ingredient/ingredient";
-import { useState } from "react";
 
 
 function BurgerIngredients({items}) {
-    const [current, setCurrent] = useState('булки');
+    const [current, setCurrent] = React.useState('булки');
 
     return (
         <div className={BurgerIngredientsStyles.burgerIngredients}>
