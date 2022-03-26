@@ -6,7 +6,7 @@
 
 .app__section {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 40px;
     margin: 0 auto;
     width: 1280px;

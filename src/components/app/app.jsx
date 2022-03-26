@@ -15,7 +15,7 @@ function App() {
           <h1 className="visually-hidden">Главная страница сайта Stellar Burgers</h1>
           <section className={AppStyles.app__section}>
             <BurgerIngredients items={ingredients} />
-            <BurgerConstructor />
+            <BurgerConstructor items={ingredients} />
           </section>
       </main>
     </div>
