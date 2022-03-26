@@ -38,10 +38,5 @@
     display: flex;
     justify-content: flex-start;
     padding: 20px;
-    color: var(--text-inactive-color);
-}
-
-.link_active {
-    composes: link;
-    color: var(--text-primary-color);
+    cursor: pointer;
 }

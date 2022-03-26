@@ -8,6 +8,13 @@ import Ingredient from "../ingredient/ingredient";
 function BurgerIngredients({items}) {
     const [current, setCurrent] = React.useState('булки');
 
+    const getRandom = function (min, max) {
+        const lower = Math.ceil(Math.min((min), (max)));
+        const upper = Math.floor(Math.max((min), (max)));
+        const result = Math.random() * (upper - lower + 1) + lower;
+        return Math.floor(result);
+      };
+
     return (
         <div className={BurgerIngredientsStyles.burgerIngredients}>
             <h2 className="visually-hidden">Конструктор бургеров</h2>
@@ -43,6 +50,7 @@ function BurgerIngredients({items}) {
                                     image={item.image} 
                                     price={item.price} 
                                     key={item._id} 
+                                    count={item.name === 'Краторная булка N-200i' ? 1 : 0}
                                 />) : (null)
                             )}
                         </ul>
@@ -58,7 +66,8 @@ function BurgerIngredients({items}) {
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
-                                    key={item._id} 
+                                    key={item._id}
+                                    count={getRandom(0, 1)}
                                 />) : (null)
                             )}
                         </ul>
@@ -74,7 +83,8 @@ function BurgerIngredients({items}) {
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
-                                    key={item._id} 
+                                    key={item._id}
+                                    count={getRandom(0, 1)} 
                                 />) : (null)
                             )}
                         </ul>

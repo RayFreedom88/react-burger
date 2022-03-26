@@ -4,6 +4,8 @@ import BurgerConstructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerConstructor ({items}) {
+    const buns = items.filter(item => item.type === 'bun');
+
     return (
         <div className={BurgerConstructorStyles.burgerConstructor}>
             <h2 className="visually-hidden">Лента заказов</h2>
@@ -12,9 +14,9 @@ function BurgerConstructor ({items}) {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
+                    text={`${buns[0].name} (верх)`}
+                    price={buns[0].price}
+                    thumbnail={buns[0].image}
                 />
             </div>
 
@@ -38,9 +40,9 @@ function BurgerConstructor ({items}) {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text="Краторная булка N-200i (низ)"
-                    price={200}
-                    thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
+                    text={`${buns[0].name} (низ)`}
+                    price={buns[0].price}
+                    thumbnail={buns[0].image}
                 />
             </div>
 
