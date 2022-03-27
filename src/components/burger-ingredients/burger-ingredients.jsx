@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import BurgerIngredientsStyles from './burger-ingredients.module.css';
+import burgerIngredientsStyles from './burger-ingredients.module.css';
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "../ingredient/ingredient";
@@ -17,14 +17,14 @@ function BurgerIngredients({items}) {
       };
 
     return (
-        <div className={BurgerIngredientsStyles.burgerIngredients}>
+        <div className={burgerIngredientsStyles.burgerIngredients}>
             <h2 className="visually-hidden">Конструктор бургеров</h2>
 
             <p className="text text_type_main-large mt-5 pt-5">
                 Собери бургер
             </p>
 
-            <div className={BurgerIngredientsStyles.burgerIngredients__tabs}>
+            <div className={burgerIngredientsStyles.burgerIngredients__tabs}>
                 <Tab value="булки" active={current === 'булки'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -38,15 +38,15 @@ function BurgerIngredients({items}) {
                 </Tab>
             </div>
 
-            <div className={BurgerIngredientsStyles.burgerIngredients__scrollWrapper}>
-                <div className={BurgerIngredientsStyles.burgerIngredients__wrap}>
-                    <div className={BurgerIngredientsStyles.burgerIngredients__ingredients}>
+            <div className={burgerIngredientsStyles.burgerIngredients__scrollWrapper}>
+                <div className={burgerIngredientsStyles.burgerIngredients__wrap}>
+                    <div className={burgerIngredientsStyles.burgerIngredients__ingredients}>
                         <h3 className="text text_type_main-medium">Булки</h3>
 
-                        <ul className={BurgerIngredientsStyles.burgerIngredients__list}>
+                        <ul className={burgerIngredientsStyles.burgerIngredients__list}>
                             {items.map(item => item.type === 'bun' ? (
                                 <Ingredient 
-                                    class={BurgerIngredientsStyles.burgerIngredients__item} 
+                                    class={burgerIngredientsStyles.burgerIngredients__item} 
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
@@ -57,13 +57,13 @@ function BurgerIngredients({items}) {
                         </ul>
                     </div>
 
-                    <div className={BurgerIngredientsStyles.burgerIngredients__ingredients}>
+                    <div className={burgerIngredientsStyles.burgerIngredients__ingredients}>
                         <h3 className="text text_type_main-medium">Соусы</h3>
 
-                        <ul className={BurgerIngredientsStyles.burgerIngredients__list}>
+                        <ul className={burgerIngredientsStyles.burgerIngredients__list}>
                             {items.map(item => item.type === 'sauce' ? (
                                 <Ingredient 
-                                    class={BurgerIngredientsStyles.burgerIngredients__item} 
+                                    class={burgerIngredientsStyles.burgerIngredients__item} 
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
@@ -74,13 +74,13 @@ function BurgerIngredients({items}) {
                         </ul>
                     </div>
 
-                    <div className={BurgerIngredientsStyles.burgerIngredients__ingredients}>
+                    <div className={burgerIngredientsStyles.burgerIngredients__ingredients}>
                         <h3 className="text text_type_main-medium">Начинки</h3>
 
-                        <ul className={BurgerIngredientsStyles.burgerIngredients__list}>
+                        <ul className={burgerIngredientsStyles.burgerIngredients__list}>
                             {items.map(item => item.type === 'main' ? (
                                 <Ingredient 
-                                    class={BurgerIngredientsStyles.burgerIngredients__item} 
+                                    class={burgerIngredientsStyles.burgerIngredients__item} 
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
