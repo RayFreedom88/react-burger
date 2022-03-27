@@ -23,6 +23,29 @@ function BurgerIngredients({items}) {
         };
     };
 
+    function Ingredients(props) {
+        return (
+            <div className={burgerIngredientsStyles.ingredients}>
+                <h3 className="text text_type_main-medium" id={props.tabId}>
+                    {props.name}
+                </h3>
+
+                <ul className={burgerIngredientsStyles.list}>
+                    {props.children}
+                </ul>
+            </div>
+        )
+    }
+
+    Ingredients.propTypes = {
+        children: PropTypes.oneOfType([
+          PropTypes.element,
+          PropTypes.node,
+        ]),
+        tabId: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    }
+
     // временное решение для отображения счетчиков у ингридиентов
     const getRandom = function (min, max) {
         const lower = Math.ceil(Math.min((min), (max)));
@@ -35,10 +58,7 @@ function BurgerIngredients({items}) {
         <section className={burgerIngredientsStyles.section}>
             <div className={burgerIngredientsStyles.column}>
                 <h2 className="visually-hidden">Конструктор бургеров</h2>
-
-                <p className="text text_type_main-large mt-5 pt-5">
-                    Собери бургер
-                </p>
+                <p className="text text_type_main-large mt-5 pt-5">Собери бургер</p>
 
                 <div className={burgerIngredientsStyles.tabs}>
                     <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
@@ -56,56 +76,44 @@ function BurgerIngredients({items}) {
 
                 <div className={burgerIngredientsStyles.scrollWrapper}>
                     <div className={burgerIngredientsStyles.wrap}>
-                        <div className={burgerIngredientsStyles.ingredients}>
-                            <h3 className="text text_type_main-medium" id="buns">Булки</h3>
+                        <Ingredients tabId="buns" name="Булки">
+                            {items.map(item => item.type === 'bun' && (
+                                <Ingredient 
+                                    class={burgerIngredientsStyles.item} 
+                                    name={item.name} 
+                                    image={item.image} 
+                                    price={item.price} 
+                                    key={item._id} 
+                                    count={item.name === 'Краторная булка N-200i' ? 1 : 0}
+                                />)
+                            )}
+                        </Ingredients>
 
-                            <ul className={burgerIngredientsStyles.list}>
-                                {items.map(item => item.type === 'bun' ? (
-                                    <Ingredient 
-                                        class={burgerIngredientsStyles.item} 
-                                        name={item.name} 
-                                        image={item.image} 
-                                        price={item.price} 
-                                        key={item._id} 
-                                        count={item.name === 'Краторная булка N-200i' ? 1 : 0}
-                                    />) : (null)
-                                )}
-                            </ul>
-                        </div>
+                        <Ingredients tabId="sauces" name="Соусы">
+                            {items.map(item => item.type === 'sauce' && (
+                                <Ingredient 
+                                    class={burgerIngredientsStyles.item} 
+                                    name={item.name} 
+                                    image={item.image} 
+                                    price={item.price} 
+                                    key={item._id}
+                                    count={getRandom(0, 1)}
+                                />)
+                            )}
+                        </Ingredients>
 
-                        <div className={burgerIngredientsStyles.ingredients}>
-                            <h3 className="text text_type_main-medium" id="sauces">Соусы</h3>
-
-                            <ul className={burgerIngredientsStyles.list}>
-                                {items.map(item => item.type === 'sauce' ? (
-                                    <Ingredient 
-                                        class={burgerIngredientsStyles.item} 
-                                        name={item.name} 
-                                        image={item.image} 
-                                        price={item.price} 
-                                        key={item._id}
-                                        count={getRandom(0, 1)}
-                                    />) : (null)
-                                )}
-                            </ul>
-                        </div>
-
-                        <div className={burgerIngredientsStyles.ingredients}>
-                            <h3 className="text text_type_main-medium" id="mains">Начинки</h3>
-
-                            <ul className={burgerIngredientsStyles.list}>
-                                {items.map(item => item.type === 'main' ? (
-                                    <Ingredient 
-                                        class={burgerIngredientsStyles.item} 
-                                        name={item.name} 
-                                        image={item.image} 
-                                        price={item.price} 
-                                        key={item._id}
-                                        count={getRandom(0, 1)} 
-                                    />) : (null)
-                                )}
-                            </ul>
-                        </div>  
+                        <Ingredients tabId="mains" name="Начинки">
+                            {items.map(item => item.type === 'main' && (
+                                <Ingredient 
+                                    class={burgerIngredientsStyles.item} 
+                                    name={item.name} 
+                                    image={item.image} 
+                                    price={item.price} 
+                                    key={item._id}
+                                    count={getRandom(0, 1)}
+                                />)
+                            )}
+                        </Ingredients>
                     </div>
                 </div>
             </div>
