@@ -10,14 +10,10 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "../ingredient/ingredient";
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-
-
-
-
-
 function BurgerIngredients({items}) {
     const [currentTab, setCurrentTab] = React.useState('булки');
 
+    // временное решение для отображения счетчиков у ингридиентов
     const getRandom = function (min, max) {
         const lower = Math.ceil(Math.min((min), (max)));
         const upper = Math.floor(Math.max((min), (max)));
