@@ -1,11 +1,18 @@
 import React from "react";
-import PropTypes from 'prop-types';
+
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 
+import PropTypes from 'prop-types';
+
+import { itemPropTypes } from "../../utils/types";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+
+import Ingredient from "../ingredient/ingredient";
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Ingredient from "../ingredient/ingredient";
+
+
+
 
 
 function BurgerIngredients({items}) {
@@ -101,21 +108,6 @@ function BurgerIngredients({items}) {
         </section>
     );
 }
-
-const itemPropTypes = PropTypes.shape({
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-    __v: PropTypes.number,
-    _id: PropTypes.string.isRequired
-  });
 
 BurgerIngredients.propTypes = {
    items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
