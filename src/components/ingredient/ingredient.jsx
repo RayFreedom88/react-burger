@@ -1,9 +1,9 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function Ingredient (props) {
     const [state, setState] = React.useState({count: props.count});
-   
 
     const increment = () =>  {
         setState({
@@ -14,7 +14,7 @@ function Ingredient (props) {
     const count = state.count;
         
     return (
-        <li className={props.class} key={props._id} onClick={increment}>
+        <li className={props.class} onClick={increment}>
             {state.count >= 1 ? <Counter count={count} size="default" /> : null}
             
             <img src={props.image} alt={props.name}/>
@@ -30,5 +30,13 @@ function Ingredient (props) {
         </li>
     );
 }
+
+Ingredient.propTypes = {
+    class: PropTypes.string,
+    count: PropTypes.number,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+};
 
 export default Ingredient;
