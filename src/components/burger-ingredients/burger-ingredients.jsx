@@ -13,6 +13,16 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 function BurgerIngredients({items}) {
     const [currentTab, setCurrentTab] = React.useState('булки');
 
+    const tabClickHandler = (tab) => {
+        const element = document.getElementById(tab);
+
+        setCurrentTab(tab);
+       
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" })
+        };
+    };
+
     // временное решение для отображения счетчиков у ингридиентов
     const getRandom = function (min, max) {
         const lower = Math.ceil(Math.min((min), (max)));
@@ -31,15 +41,15 @@ function BurgerIngredients({items}) {
                 </p>
 
                 <div className={burgerIngredientsStyles.tabs}>
-                    <Tab value="булки" active={currentTab === 'булки'} onClick={setCurrentTab}>
+                    <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
                         Булки
                     </Tab>
 
-                    <Tab value="соусы" active={currentTab === 'соусы'} onClick={setCurrentTab}>
+                    <Tab value="sauces" active={currentTab === 'sauces'} onClick={tabClickHandler}>
                         Соусы
                     </Tab>
 
-                    <Tab value="начинки" active={currentTab === 'начинки'} onClick={setCurrentTab}>
+                    <Tab value="mains" active={currentTab === 'mains'} onClick={tabClickHandler}>
                         Начинки
                     </Tab>
                 </div>
@@ -47,7 +57,7 @@ function BurgerIngredients({items}) {
                 <div className={burgerIngredientsStyles.scrollWrapper}>
                     <div className={burgerIngredientsStyles.wrap}>
                         <div className={burgerIngredientsStyles.ingredients}>
-                            <h3 className="text text_type_main-medium">Булки</h3>
+                            <h3 className="text text_type_main-medium" id="buns">Булки</h3>
 
                             <ul className={burgerIngredientsStyles.list}>
                                 {items.map(item => item.type === 'bun' ? (
@@ -64,7 +74,7 @@ function BurgerIngredients({items}) {
                         </div>
 
                         <div className={burgerIngredientsStyles.ingredients}>
-                            <h3 className="text text_type_main-medium">Соусы</h3>
+                            <h3 className="text text_type_main-medium" id="sauces">Соусы</h3>
 
                             <ul className={burgerIngredientsStyles.list}>
                                 {items.map(item => item.type === 'sauce' ? (
@@ -81,7 +91,7 @@ function BurgerIngredients({items}) {
                         </div>
 
                         <div className={burgerIngredientsStyles.ingredients}>
-                            <h3 className="text text_type_main-medium">Начинки</h3>
+                            <h3 className="text text_type_main-medium" id="mains">Начинки</h3>
 
                             <ul className={burgerIngredientsStyles.list}>
                                 {items.map(item => item.type === 'main' ? (

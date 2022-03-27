@@ -7,9 +7,6 @@ import PropTypes from 'prop-types';
 import { itemPropTypes } from "../../utils/types";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-
-
-
 function BurgerConstructor ({items}) {
     const buns = items.filter(item => item.type === 'bun');
 
