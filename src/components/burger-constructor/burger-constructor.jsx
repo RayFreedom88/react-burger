@@ -66,18 +66,18 @@ const itemPropTypes = PropTypes.shape({
     carbohydrates: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     proteins: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired,
+    __v: PropTypes.number,
     _id: PropTypes.string.isRequired
   });
 
 BurgerConstructor.propTypes = {
-    items: PropTypes.arrayOf(itemPropTypes.isRequired)
+    items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
 };
 
 export default BurgerConstructor;
