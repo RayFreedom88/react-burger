@@ -24,7 +24,7 @@ function BurgerIngredients({items}) {
                 Собери бургер
             </p>
 
-            <div className={burgerIngredientsStyles.burgerIngredients__tabs}>
+            <div className={burgerIngredientsStyles.tabs}>
                 <Tab value="булки" active={current === 'булки'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -38,15 +38,15 @@ function BurgerIngredients({items}) {
                 </Tab>
             </div>
 
-            <div className={burgerIngredientsStyles.burgerIngredients__scrollWrapper}>
-                <div className={burgerIngredientsStyles.burgerIngredients__wrap}>
-                    <div className={burgerIngredientsStyles.burgerIngredients__ingredients}>
+            <div className={burgerIngredientsStyles.scrollWrapper}>
+                <div className={burgerIngredientsStyles.wrap}>
+                    <div className={burgerIngredientsStyles.ingredients}>
                         <h3 className="text text_type_main-medium">Булки</h3>
 
-                        <ul className={burgerIngredientsStyles.burgerIngredients__list}>
+                        <ul className={burgerIngredientsStyles.list}>
                             {items.map(item => item.type === 'bun' ? (
                                 <Ingredient 
-                                    class={burgerIngredientsStyles.burgerIngredients__item} 
+                                    class={burgerIngredientsStyles.item} 
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
@@ -57,13 +57,13 @@ function BurgerIngredients({items}) {
                         </ul>
                     </div>
 
-                    <div className={burgerIngredientsStyles.burgerIngredients__ingredients}>
+                    <div className={burgerIngredientsStyles.ingredients}>
                         <h3 className="text text_type_main-medium">Соусы</h3>
 
-                        <ul className={burgerIngredientsStyles.burgerIngredients__list}>
+                        <ul className={burgerIngredientsStyles.list}>
                             {items.map(item => item.type === 'sauce' ? (
                                 <Ingredient 
-                                    class={burgerIngredientsStyles.burgerIngredients__item} 
+                                    class={burgerIngredientsStyles.item} 
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
@@ -74,13 +74,13 @@ function BurgerIngredients({items}) {
                         </ul>
                     </div>
 
-                    <div className={burgerIngredientsStyles.burgerIngredients__ingredients}>
+                    <div className={burgerIngredientsStyles.ingredients}>
                         <h3 className="text text_type_main-medium">Начинки</h3>
 
-                        <ul className={burgerIngredientsStyles.burgerIngredients__list}>
+                        <ul className={burgerIngredientsStyles.list}>
                             {items.map(item => item.type === 'main' ? (
                                 <Ingredient 
-                                    class={burgerIngredientsStyles.burgerIngredients__item} 
+                                    class={burgerIngredientsStyles.item} 
                                     name={item.name} 
                                     image={item.image} 
                                     price={item.price} 
