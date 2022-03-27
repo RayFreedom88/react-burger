@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { itemPropTypes } from "../../utils/types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import Ingredient from "../ingredient/ingredient";
+import Ingredient from "./ingredient";
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 function BurgerIngredients({items}) {
