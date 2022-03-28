@@ -3,17 +3,18 @@ import AppHeader from '../app-header/app-header';
 import styles from './app.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
+const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
   const [ state, setState ] = React.useState({
     isLoading: false,
     hasError: false,
+    ingredients: []
   });
 
   const getIngredients = async () => {
     setState({...state, hasError: false, isLoading: false })
-    fetch(url)
+    fetch(URL)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -36,7 +37,7 @@ function App() {
       <AppHeader />
       <main className={styles.app_main}>
           <h1 className="visually-hidden">Главная страница сайта Stellar Burgers</h1>
-          {dataIngredients && <BurgerIngredients items={dataIngredients} />}
+          {dataIngredients.length > 0 && <BurgerIngredients items={dataIngredients} />}
       </main>
     </div>
   );

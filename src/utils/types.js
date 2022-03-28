@@ -5,7 +5,7 @@ export const itemPropTypes = PropTypes.shape({
     carbohydrates: PropTypes.number.isRequired,
     fat: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
-    image_large: PropTypes.string,
+    image_large: PropTypes.string.isRequired,
     image_mobile: PropTypes.string,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,

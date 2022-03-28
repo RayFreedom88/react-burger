@@ -5,7 +5,7 @@ import styles from './modal.module.css';
 import { createPortal } from 'react-dom';
 import ModalOverlay from './modalOverlay';
 
-function ModalHeader ({ children, onClick }) {
+function ModalHeader({ children, onClick }) {
     return (
         <div className={styles.modal_header}>
             <p className={'text text_type_main-large'}>
@@ -25,7 +25,7 @@ ModalHeader.propTypes = {
     ]).isRequired
 }
 
-function ModalBody ({ children }) {
+function ModalBody({ children }) {
     return (
         <div className={styles.modal_body}>
             {children}
@@ -40,7 +40,7 @@ ModalBody.propTypes = {
     ]).isRequired
 }
 
-export default function Modal({ isOpen, header, children, onClose }) {
+function Modal({ isOpen, header, children, onClose }) {
 
     const handleEscKeyPress = (e) => {
         e.preventDefault()
@@ -94,3 +94,5 @@ Modal.propTypes = {
         PropTypes.node,
     ]).isRequired
 }
+
+export default Modal;
