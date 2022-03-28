@@ -2,41 +2,36 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function Ingredient (props) {
-    const [state, setState] = React.useState({count: props.count});
+function Ingredient ({ count, className, name, image, price, onClick }) {
+    const [state, setState] = React.useState({count: count});
 
-    const increment = () =>  {
-        setState({
-            count: state.count + 1
-        });
-    }
-
-    const count = state.count;
+    const currentCount = state.count;
         
     return (
-        <li className={props.class} onClick={increment}>
-            {state.count >= 1 ? <Counter count={count} size="default" /> : null}
+        <li className={className} onClick={onClick}>
+            {state.count >= 1 ? <Counter count={currentCount} size="default" /> : null}
             
-            <img src={props.image} alt={props.name}/>
+            <img src={image} alt={name}/>
 
             <p className="text text_type_digits-default mt-1 mb-1">
-                <span>{props.price}</span>&nbsp;
+                <span>{price}</span>&nbsp;
                 <CurrencyIcon type="primary" />
             </p>
             
             <p className="text text_type_main-small mb-5">
-                {props.name}
+                {name}
             </p>
         </li>
     );
 }
 
 Ingredient.propTypes = {
-    class: PropTypes.string,
+    className: PropTypes.string.isRequired,
     count: PropTypes.number,
-    image: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default Ingredient;
