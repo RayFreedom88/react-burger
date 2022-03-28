@@ -1,10 +1,10 @@
-.app__main {
+.app_main {
     width: 100%;
     max-width: 1920px;
     margin: 0 auto;
 }
 
-/* .app__section {
+/* .app_section {
     display: flex;
     justify-content: center;
     gap: 40px;

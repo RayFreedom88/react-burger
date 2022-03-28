@@ -1,6 +1,6 @@
 import React from "react";
 import AppHeader from '../app-header/app-header';
-import appStyles from './app.module.css';
+import styles from './app.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="App">
       <AppHeader />
-      <main className={appStyles.app__main}>
+      <main className={styles.app_main}>
           <h1 className="visually-hidden">Главная страница сайта Stellar Burgers</h1>
           {dataIngredients && <BurgerIngredients items={dataIngredients} />}
       </main>

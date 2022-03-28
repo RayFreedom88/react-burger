@@ -1,9 +1,6 @@
 import React from "react";
-
-import burgerConstructorStyles from './burger-constructor.module.css';
-
+import styles from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
-
 import { itemPropTypes } from "../../utils/types";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -11,10 +8,10 @@ function BurgerConstructor ({items}) {
     const buns = items.filter(item => item.type === 'bun');
 
     return (
-        <div className={burgerConstructorStyles.burgerConstructor}>
+        <div className={styles.burgerConstructor}>
             <h2 className="visually-hidden">Лента заказов</h2>
 
-            <div className={burgerConstructorStyles.top}>
+            <div className={styles.top}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -24,10 +21,10 @@ function BurgerConstructor ({items}) {
                 />
             </div>
 
-            <div className={burgerConstructorStyles.scrollWrapper}>
-                <ul className={burgerConstructorStyles.list}>
+            <div className={styles.scrollWrapper}>
+                <ul className={styles.list}>
                     {items.map(item => item.type !== 'bun' ? (
-                        <li className={burgerConstructorStyles.item} key={item._id}>
+                        <li className={styles.item} key={item._id}>
                             <DragIcon type="primary" />
 
                             <ConstructorElement
@@ -40,7 +37,7 @@ function BurgerConstructor ({items}) {
                 </ul>
             </div>
 
-            <div className={burgerConstructorStyles.bottom}>
+            <div className={styles.bottom}>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
@@ -50,7 +47,7 @@ function BurgerConstructor ({items}) {
                 />
             </div>
 
-            <div className={burgerConstructorStyles.cost}>
+            <div className={styles.cost}>
                 <p className="text text_type_digits-medium mt-1 mr-5 mb-1 pr-5">
                     <span>600</span>&nbsp;
                     <CurrencyIcon type="primary" />
