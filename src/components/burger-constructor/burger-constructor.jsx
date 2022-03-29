@@ -20,7 +20,7 @@ function BurgerConstructor({items}) {
     };
 
     return (
-        <div className={styles.burgerConstructor}>
+        <div className={styles.column}>
             <h2 className="visually-hidden">Лента заказов</h2>
 
             <div className={styles.top}>
