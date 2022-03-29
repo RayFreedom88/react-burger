@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from '../burger-ingredients.module.css';
 import PropTypes from 'prop-types';
+import styles from '../burger-ingredients.module.css';
 
 function ingredientImage ({ img, alt }) {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
+import styles from './burger-constructor.module.css';
 import done from '../../images/done.png'
 
 export default function OrderDetails({ id }) {

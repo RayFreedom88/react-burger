@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './modal.module.css';
-import { createPortal } from 'react-dom';
 import ModalOverlay from './modalOverlay';
+import styles from './modal.module.css';
 
 function ModalHeader({ children, onClick }) {
     return (

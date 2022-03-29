@@ -1,15 +1,15 @@
-import React from "react";
-import styles from './burger-constructor.module.css';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { itemPropTypes } from "../../utils/types";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
+import { itemPropTypes } from "../../utils/types";
+import styles from './burger-constructor.module.css';
 
-function BurgerConstructor ({items}) {
+function BurgerConstructor({items}) {
     const buns = items.filter(item => item.type === 'bun');
 
-    const [isOpenModal, setIsOpenModal] = React.useState(false);
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     const handleOpenModal = () => {
         setIsOpenModal(true);

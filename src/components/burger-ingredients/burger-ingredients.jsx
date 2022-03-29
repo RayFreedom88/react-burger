@@ -1,12 +1,12 @@
-import React from "react";
-import styles from './burger-ingredients.module.css';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { itemPropTypes } from "../../utils/types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "./ingredient";
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
+import { itemPropTypes } from "../../utils/types";
+import styles from './burger-ingredients.module.css';
 
  // временное решение для отображения счетчиков у ингридиентов
  const getRandom = function (min, max) {
@@ -39,9 +39,9 @@ Ingredients.propTypes = {
 }
 
 function BurgerIngredients({items}) {
-    const [currentTab, setCurrentTab] = React.useState('булки');
-    const [isOpenModal, setIsOpenModal] = React.useState(false);
-    const [modalData, setModalData] = React.useState();
+    const [currentTab, setCurrentTab] = useState('булки');
+    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [modalData, setModalData] = useState();
 
     const tabClickHandler = (tab) => {
         const element = document.getElementById(tab);

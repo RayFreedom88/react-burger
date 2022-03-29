@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import styles from './app.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import styles from './app.module.css';
 
 const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
-  const [ state, setState ] = React.useState({
+  const [ state, setState ] = useState({
     isLoading: false,
     hasError: false,
     ingredients: []
@@ -25,7 +25,7 @@ function App() {
       .catch(e => console.log(e));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getIngredients();
     // eslint-disable-next-line
   }, []);
@@ -33,7 +33,7 @@ function App() {
   const dataIngredients = state.ingredients;
   
   return (
-    <div className="App">
+    <div className={`app`}>
       <AppHeader />
       <main className={styles.app_main}>
           <h1 className="visually-hidden">Главная страница сайта Stellar Burgers</h1>

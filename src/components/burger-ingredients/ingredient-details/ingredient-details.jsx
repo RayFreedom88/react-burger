@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from '../burger-ingredients.module.css'
 import PropTypes from 'prop-types'
 import { itemPropTypes } from "../../../utils/types";
 import IngredientImage from './ingredient-image';
+import styles from '../burger-ingredients.module.css'
 
 function MicrolEmentsDetail({ caseType, microElementValue }) {
     let name = '';
