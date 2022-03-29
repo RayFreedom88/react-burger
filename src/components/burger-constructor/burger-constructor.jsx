@@ -20,10 +20,10 @@ function BurgerConstructor({items}) {
     };
 
     return (
-        <div className={styles.column}>
+        <div className={styles._column}>
             <h2 className="visually-hidden">Лента заказов</h2>
 
-            <div className={styles.top}>
+            <div className={styles._top}>
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -33,10 +33,10 @@ function BurgerConstructor({items}) {
                 />
             </div>
 
-            <div className={styles.scrollWrapper}>
-                <ul className={styles.list}>
+            <div className={styles._scrollwrapper}>
+                <ul className={styles._list}>
                     {items.map(item => item.type !== 'bun' ? (
-                        <li className={styles.item} key={item._id}>
+                        <li className={styles._item} key={item._id}>
                             <DragIcon type="primary" />
 
                             <ConstructorElement
@@ -49,7 +49,7 @@ function BurgerConstructor({items}) {
                 </ul>
             </div>
 
-            <div className={styles.bottom}>
+            <div className={styles._bottom}>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
@@ -59,7 +59,7 @@ function BurgerConstructor({items}) {
                 />
             </div>
 
-            <div className={styles.cost}>
+            <div className={styles._cost}>
                 <p className="text text_type_digits-medium mt-1 mr-5 mb-1 pr-5">
                     <span>600</span>&nbsp;
                     <CurrencyIcon type="primary" />

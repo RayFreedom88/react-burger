@@ -1,5 +1,5 @@
 
-.section {
+._section {
     display: flex;
     justify-content: center;
     gap: 40px;
@@ -8,39 +8,39 @@
     width: 1280px;
 }
 
-.column {
+._column {
     display: flex;
     flex-direction: column;
     width: 600px;
 }
 
-.tabs {
+._tabs {
     display: flex;
     padding-top: 20px;
     padding-bottom: 40px;
 }
 
-.tabs div {
+._tabs div {
     flex-grow: 1;
 }
 
-.scrollWrapper {
+._scrollwrapper {
     height: 75vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.wrap {
+._wrap {
     height: auto;
     width: 600px;
 }
 
-.ingredients {
+._ingredients {
     height: auto;
     width: auto;
 }
 
-.list {
+._list {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -51,7 +51,7 @@
     padding-bottom: 40px;
 }
 
-.item {
+._item {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -61,16 +61,16 @@
     cursor: pointer;
 }
 
-.item p:first-of-type {
+._item p:first-of-type {
     display: flex;
 }
 
-.ingredient_image img {
+._image img {
     max-width: 100%;
     max-height: 100%;
 }
 
-.ingredient_detail_list {
+._details {
     display: flex;
     flex-direction: row;
     align-items: flex-start;

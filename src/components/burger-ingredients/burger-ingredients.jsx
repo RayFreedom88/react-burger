@@ -17,12 +17,12 @@ import styles from './burger-ingredients.module.css';
 };
 function Ingredients({ tabId, name, children }) {
     return (
-        <div className={styles.ingredients}>
+        <div className={styles._ingredients}>
             <h3 className="text text_type_main-medium" id={tabId}>
                 {name}
             </h3>
 
-            <ul className={styles.list}>
+            <ul className={styles._list}>
                 {children}
             </ul>
         </div>
@@ -65,7 +65,7 @@ function BurgerIngredients({items}) {
     const getIngredient = (data) => {
         return (
             <Ingredient 
-                className={styles.item} 
+                className={styles._item} 
                 name={data.name} 
                 image={data.image} 
                 price={data.price} 
@@ -77,12 +77,12 @@ function BurgerIngredients({items}) {
     };
 
     return (
-        <section className={styles.section}>
-            <div className={styles.column}>
+        <section className={styles._section}>
+            <div className={styles._column}>
                 <h2 className="visually-hidden">Конструктор бургеров</h2>
                 <p className="text text_type_main-large mt-5 pt-5">Собери бургер</p>
 
-                <div className={styles.tabs}>
+                <div className={styles._tabs}>
                     <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
                         Булки
                     </Tab>
@@ -96,8 +96,8 @@ function BurgerIngredients({items}) {
                     </Tab>
                 </div>
 
-                <div className={styles.scrollWrapper}>
-                    <div className={styles.wrap}>
+                <div className={styles._scrollwrapper}>
+                    <div className={styles._wrap}>
                         <Ingredients tabId="buns" name="Булки">
                             {items.map(item => item.type === 'bun' && getIngredient(item))}
                         </Ingredients>

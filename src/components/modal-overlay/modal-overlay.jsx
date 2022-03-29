@@ -4,7 +4,7 @@ import styles from './modal-overlay.module.css';
 
 export default function ModalOverlay (props) {
   return (
-    <div className={`${styles.overlay}`} onClick={props.onClick}></div>
+    <div className={`${styles._overlay}`} onClick={props.onClick}></div>
   )
 }
 

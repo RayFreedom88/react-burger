@@ -35,7 +35,7 @@ function App() {
   return (
     <div className={`app`}>
       <AppHeader />
-      <main className={styles.app_main}>
+      <main className={styles._main}>
           <h1 className="visually-hidden">Главная страница сайта Stellar Burgers</h1>
           {dataIngredients.length > 0 && <BurgerIngredients items={dataIngredients} />}
       </main>
