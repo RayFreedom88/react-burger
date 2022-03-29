@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './modal-overlay.module.css';
 
-export default function ModalOverlay (props) {
+export default function ModalOverlay ({ onClick }) {
   return (
-    <div className={`${styles._overlay}`} onClick={props.onClick}></div>
+    <div className={`${styles._overlay}`} onClick={onClick}></div>
   )
 }
 
