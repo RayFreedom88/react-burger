@@ -67,10 +67,7 @@ function Modal({ isOpen, header, children, onClose }) {
         ( 
             <> 
                 {isOpen && 
-                    <div 
-                        id='modal'
-                        tabIndex="0"
-                    > 
+                    <div id='modal'> 
                         <ModalOverlay onClick={onClose} />
 
                         <div className={styles._modal}>
