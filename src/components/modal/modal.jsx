@@ -42,13 +42,22 @@ ModalBody.propTypes = {
 
 function Modal({ isOpen, header, children, onClose }) {
 
-    const handleEscKeyPress = (e) => {
+    const handleEscKeyDown = (e) => {
         e.preventDefault()
     
         if (e.key === 'Escape') {
             onClose();
         }
     }
+
+    useEffect(() => {
+        if(isOpen) window.addEventListener('keydown', handleEscKeyDown);
+
+        return () => {
+            window.removeEventListener('keydown', handleEscKeyDown);
+        };
+        // eslint-disable-next-line
+    }, [isOpen])
 
     useEffect(() => {
         if (isOpen) document.getElementById('modal').focus();
@@ -61,7 +70,6 @@ function Modal({ isOpen, header, children, onClose }) {
                     <div 
                         id='modal'
                         tabIndex="0"
-                        onKeyDown={handleEscKeyPress}         
                     > 
                         <ModalOverlay onClick={onClose} />
 
