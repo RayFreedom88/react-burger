@@ -7,7 +7,7 @@ import styles from './modal.module.css';
 
 function ModalHeader({ children, onClick }) {
     return (
-        <div className={styles._header}>
+        <div className={styles.modal__header}>
             <p className={'text text_type_main-large'}>
                 {children}
             </p>
@@ -27,7 +27,7 @@ ModalHeader.propTypes = {
 
 function ModalBody({ children }) {
     return (
-        <div className={styles._body}>
+        <div className={styles.modal__body}>
             {children}
         </div>
     )
@@ -70,7 +70,7 @@ function Modal({ isOpen, header, children, onClose }) {
                     <div id='modal'>
                         <ModalOverlay onClick={onClose} />
 
-                        <div className={styles._modal}>
+                        <div className={styles.modal}>
                             <ModalHeader onClick={onClose}>
                                 {header}
                             </ModalHeader>
@@ -83,7 +83,7 @@ function Modal({ isOpen, header, children, onClose }) {
                 }
             </>
         ),
-        document.getElementById("modal-root")
+        document.getElementById('modal-root')
     );
 }
 

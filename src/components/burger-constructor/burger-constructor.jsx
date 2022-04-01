@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
-import { itemPropTypes } from "../../utils/types";
+import { itemPropTypes } from '../../utils/types';
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor({ items }) {
@@ -20,12 +20,12 @@ function BurgerConstructor({ items }) {
     };
 
     return (
-        <div className={styles._column}>
-            <h2 className="visually-hidden">Лента заказов</h2>
+        <div className={styles.burgerconstructor__column}>
+            <h2 className={`visually-hidden`}>Лента заказов</h2>
 
-            <div className={styles._top}>
+            <div className={styles.burgerconstructor__top}>
                 <ConstructorElement
-                    type="top"
+                    type='top'
                     isLocked={true}
                     text={`${buns[0].name} (верх)`}
                     price={buns[0].price}
@@ -33,11 +33,11 @@ function BurgerConstructor({ items }) {
                 />
             </div>
 
-            <div className={styles._scrollwrapper}>
-                <ul className={styles._list}>
+            <div className={styles.burgerconstructor__scrollwrapper}>
+                <ul className={styles.burgerconstructor__list}>
                     {items.map(item => item.type !== 'bun' ? (
-                        <li className={styles._item} key={item._id}>
-                            <DragIcon type="primary" />
+                        <li className={styles.burgerconstructor__item} key={item._id}>
+                            <DragIcon type='primary' />
 
                             <ConstructorElement
                                 text={item.name}
@@ -49,9 +49,9 @@ function BurgerConstructor({ items }) {
                 </ul>
             </div>
 
-            <div className={styles._bottom}>
+            <div className={styles.burgerconstructor__bottom}>
                 <ConstructorElement
-                    type="bottom"
+                    type='bottom'
                     isLocked={true}
                     text={`${buns[0].name} (низ)`}
                     price={buns[0].price}
@@ -59,23 +59,23 @@ function BurgerConstructor({ items }) {
                 />
             </div>
 
-            <div className={styles._cost}>
-                <p className="text text_type_digits-medium mt-1 mr-5 mb-1 pr-5">
+            <div className={styles.burgerconstructor__cost}>
+                <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>
                     <span>600</span>&nbsp;
-                    <CurrencyIcon type="primary" />
+                    <CurrencyIcon type='primary' />
                 </p>
 
-                <Button type="primary" size="large" onClick={handleOpenModal}>
+                <Button type='primary' size='large' onClick={handleOpenModal}>
                     Оформить заказ
                 </Button>
             </div>
 
             <Modal
-                header={''}
+                header={``}
                 isOpen={isOpenModal}
                 onClose={handleCloseModal}
             >
-                <OrderDetails id={'034536'} />
+                <OrderDetails id={`034536`} />
             </Modal>
         </div>
     );

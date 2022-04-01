@@ -51,7 +51,7 @@ function IngredientDetails({ ingredient }) {
                 <p className={`text text_type_main-medium`}>{ingredient.name}</p>
             </div>
 
-            <div className={`${styles._details} pb-15`}>
+            <div className={`${styles.burgeringredients__details} pb-15`}>
                 <MicrolEmentsDetail
                     caseType={'calories'}
                     microElementValue={ingredient.calories} />

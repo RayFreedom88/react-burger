@@ -39,12 +39,12 @@ function App() {
     return (
         <div className={`app`}>
             <AppHeader />
-            <main className={styles._main}>
-                <h1 className='visually-hidden'>
+            <main className={styles.app__main}>
+                <h1 className={`visually-hidden`}>
                     Главная страница сайта Stellar Burgers
                 </h1>
                 {dataIngredients.length > 0 && (
-                    <section className={styles._section}>
+                    <section className={styles.app__section}>
                         <BurgerIngredients items={dataIngredients} />
                         <BurgerConstructor items={dataIngredients} />
                     </section>

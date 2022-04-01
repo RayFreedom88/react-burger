@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Ingredient from "./ingredient";
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
-import { itemPropTypes } from "../../utils/types";
+import { itemPropTypes } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 
 // временное решение для отображения счетчиков у ингридиентов
@@ -16,12 +16,12 @@ const getRandom = function (min, max) {
 };
 function Ingredients({ tabId, name, children }) {
     return (
-        <div className={styles._ingredients}>
-            <h3 className="text text_type_main-medium" id={tabId}>
+        <div className={styles.burgeringredients__ingredients}>
+            <h3 className={`text text_type_main-medium`} id={tabId}>
                 {name}
             </h3>
 
-            <ul className={styles._list}>
+            <ul className={styles.burgeringredients__list}>
                 {children}
             </ul>
         </div>
@@ -48,7 +48,7 @@ function BurgerIngredients({ items }) {
         setCurrentTab(tab);
 
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" })
+            element.scrollIntoView({ behavior: 'smooth' })
         };
     };
 
@@ -64,7 +64,7 @@ function BurgerIngredients({ items }) {
     const getIngredient = (data) => {
         return (
             <Ingredient
-                className={styles._item}
+                className={styles.burgeringredients__item}
                 name={data.name}
                 image={data.image}
                 price={data.price}
@@ -76,35 +76,35 @@ function BurgerIngredients({ items }) {
     };
 
     return (
-        <div className={styles._column}>
-            <h2 className="visually-hidden">Конструктор бургеров</h2>
-            <p className="text text_type_main-large mt-5 pt-5">Собери бургер</p>
+        <div className={styles.burgeringredients__column}>
+            <h2 className={`visually-hidden`}>Конструктор бургеров</h2>
+            <p className={`text text_type_main-large mt-5 pt-5`}>Собери бургер</p>
 
-            <div className={styles._tabs}>
-                <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
+            <div className={styles.burgeringredients__tabs}>
+                <Tab value='buns' active={currentTab === 'buns'} onClick={tabClickHandler}>
                     Булки
                 </Tab>
 
-                <Tab value="sauces" active={currentTab === 'sauces'} onClick={tabClickHandler}>
+                <Tab value='sauces' active={currentTab === 'sauces'} onClick={tabClickHandler}>
                     Соусы
                 </Tab>
 
-                <Tab value="mains" active={currentTab === 'mains'} onClick={tabClickHandler}>
+                <Tab value='mains' active={currentTab === 'mains'} onClick={tabClickHandler}>
                     Начинки
                 </Tab>
             </div>
 
-            <div className={styles._scrollwrapper}>
-                <div className={styles._wrap}>
-                    <Ingredients tabId="buns" name="Булки">
+            <div className={styles.burgeringredients__scrollwrapper}>
+                <div className={styles.burgeringredients__wrap}>
+                    <Ingredients tabId='buns' name='Булки'>
                         {items.map(item => item.type === 'bun' && getIngredient(item))}
                     </Ingredients>
 
-                    <Ingredients tabId="sauces" name="Соусы">
+                    <Ingredients tabId='sauces' name='Соусы'>
                         {items.map(item => item.type === 'sauce' && getIngredient(item))}
                     </Ingredients>
 
-                    <Ingredients tabId="mains" name="Начинки">
+                    <Ingredients tabId='mains' name='Начинки'>
                         {items.map(item => item.type === 'main' && getIngredient(item))}
                     </Ingredients>
                 </div>

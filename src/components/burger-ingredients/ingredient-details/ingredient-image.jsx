@@ -4,7 +4,7 @@ import styles from '../burger-ingredients.module.css';
 
 function ingredientImage({ img, alt }) {
     return (
-        <div className={styles._image}>
+        <div className={styles.burgeringredients__image}>
             <img src={img} alt={alt} />
         </div>
     )
