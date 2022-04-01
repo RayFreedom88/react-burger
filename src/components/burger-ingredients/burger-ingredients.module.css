@@ -1,13 +1,3 @@
-
-._section {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin: 0 auto;
-    height: 912px;
-    width: 1280px;
-}
-
 ._column {
     display: flex;
     flex-direction: column;

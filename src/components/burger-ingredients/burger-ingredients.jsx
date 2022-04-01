@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "./ingredient";
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
 import { itemPropTypes } from "../../utils/types";
@@ -77,52 +76,48 @@ function BurgerIngredients({ items }) {
     };
 
     return (
-        <section className={styles._section}>
-            <div className={styles._column}>
-                <h2 className="visually-hidden">Конструктор бургеров</h2>
-                <p className="text text_type_main-large mt-5 pt-5">Собери бургер</p>
+        <div className={styles._column}>
+            <h2 className="visually-hidden">Конструктор бургеров</h2>
+            <p className="text text_type_main-large mt-5 pt-5">Собери бургер</p>
 
-                <div className={styles._tabs}>
-                    <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
-                        Булки
-                    </Tab>
+            <div className={styles._tabs}>
+                <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
+                    Булки
+                </Tab>
 
-                    <Tab value="sauces" active={currentTab === 'sauces'} onClick={tabClickHandler}>
-                        Соусы
-                    </Tab>
+                <Tab value="sauces" active={currentTab === 'sauces'} onClick={tabClickHandler}>
+                    Соусы
+                </Tab>
 
-                    <Tab value="mains" active={currentTab === 'mains'} onClick={tabClickHandler}>
-                        Начинки
-                    </Tab>
-                </div>
-
-                <div className={styles._scrollwrapper}>
-                    <div className={styles._wrap}>
-                        <Ingredients tabId="buns" name="Булки">
-                            {items.map(item => item.type === 'bun' && getIngredient(item))}
-                        </Ingredients>
-
-                        <Ingredients tabId="sauces" name="Соусы">
-                            {items.map(item => item.type === 'sauce' && getIngredient(item))}
-                        </Ingredients>
-
-                        <Ingredients tabId="mains" name="Начинки">
-                            {items.map(item => item.type === 'main' && getIngredient(item))}
-                        </Ingredients>
-                    </div>
-                </div>
-
-                <Modal
-                    header={'Детали ингредиента'}
-                    isOpen={isOpenModal}
-                    onClose={handleCloseModal}
-                >
-                    <IngredientDetails ingredient={modalData} />
-                </Modal>
+                <Tab value="mains" active={currentTab === 'mains'} onClick={tabClickHandler}>
+                    Начинки
+                </Tab>
             </div>
 
-            <BurgerConstructor items={items} />
-        </section>
+            <div className={styles._scrollwrapper}>
+                <div className={styles._wrap}>
+                    <Ingredients tabId="buns" name="Булки">
+                        {items.map(item => item.type === 'bun' && getIngredient(item))}
+                    </Ingredients>
+
+                    <Ingredients tabId="sauces" name="Соусы">
+                        {items.map(item => item.type === 'sauce' && getIngredient(item))}
+                    </Ingredients>
+
+                    <Ingredients tabId="mains" name="Начинки">
+                        {items.map(item => item.type === 'main' && getIngredient(item))}
+                    </Ingredients>
+                </div>
+            </div>
+
+            <Modal
+                header={'Детали ингредиента'}
+                isOpen={isOpenModal}
+                onClose={handleCloseModal}
+            >
+                <IngredientDetails ingredient={modalData} />
+            </Modal>
+        </div>
     );
 }
 

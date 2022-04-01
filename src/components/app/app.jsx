@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import styles from "./app.module.css";
+import React, { useState, useEffect } from 'react';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import styles from './app.module.css';
 
-const URL = "https://norma.nomoreparties.space/api/ingredients";
+const URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
     const [state, setState] = useState({
@@ -39,11 +40,14 @@ function App() {
         <div className={`app`}>
             <AppHeader />
             <main className={styles._main}>
-                <h1 className="visually-hidden">
+                <h1 className='visually-hidden'>
                     Главная страница сайта Stellar Burgers
                 </h1>
                 {dataIngredients.length > 0 && (
-                    <BurgerIngredients items={dataIngredients} />
+                    <section className={styles._section}>
+                        <BurgerIngredients items={dataIngredients} />
+                        <BurgerConstructor items={dataIngredients} />
+                    </section>
                 )}
             </main>
         </div>
