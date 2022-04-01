@@ -13,4 +13,4 @@ export const itemPropTypes = PropTypes.shape({
     type: PropTypes.string.isRequired,
     __v: PropTypes.number,
     _id: PropTypes.string.isRequired
-  });
+});

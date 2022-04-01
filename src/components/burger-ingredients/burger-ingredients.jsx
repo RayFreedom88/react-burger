@@ -8,8 +8,8 @@ import IngredientDetails from './ingredient-details/ingredient-details';
 import { itemPropTypes } from "../../utils/types";
 import styles from './burger-ingredients.module.css';
 
- // временное решение для отображения счетчиков у ингридиентов
- const getRandom = function (min, max) {
+// временное решение для отображения счетчиков у ингридиентов
+const getRandom = function (min, max) {
     const lower = Math.ceil(Math.min((min), (max)));
     const upper = Math.floor(Math.max((min), (max)));
     const result = Math.random() * (upper - lower + 1) + lower;
@@ -31,14 +31,14 @@ function Ingredients({ tabId, name, children }) {
 
 Ingredients.propTypes = {
     children: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.node,
+        PropTypes.element,
+        PropTypes.node,
     ]),
     tabId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
 }
 
-function BurgerIngredients({items}) {
+function BurgerIngredients({ items }) {
     const [currentTab, setCurrentTab] = useState('булки');
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [modalData, setModalData] = useState();
@@ -47,7 +47,7 @@ function BurgerIngredients({items}) {
         const element = document.getElementById(tab);
 
         setCurrentTab(tab);
-       
+
         if (element) {
             element.scrollIntoView({ behavior: "smooth" })
         };
@@ -64,14 +64,14 @@ function BurgerIngredients({items}) {
 
     const getIngredient = (data) => {
         return (
-            <Ingredient 
-                className={styles._item} 
-                name={data.name} 
-                image={data.image} 
-                price={data.price} 
-                key={data._id} 
+            <Ingredient
+                className={styles._item}
+                name={data.name}
+                image={data.image}
+                price={data.price}
+                key={data._id}
                 count={getRandom(0, 1)}
-                onClick={() =>{handleOpenModal(data)}}
+                onClick={() => { handleOpenModal(data) }}
             />
         )
     };
@@ -111,23 +111,23 @@ function BurgerIngredients({items}) {
                         </Ingredients>
                     </div>
                 </div>
-                
-                <Modal 
-                    header={'Детали ингредиента'} 
-                    isOpen={isOpenModal} 
+
+                <Modal
+                    header={'Детали ингредиента'}
+                    isOpen={isOpenModal}
                     onClose={handleCloseModal}
                 >
                     <IngredientDetails ingredient={modalData} />
                 </Modal>
             </div>
-            
+
             <BurgerConstructor items={items} />
         </section>
     );
 }
 
 BurgerIngredients.propTypes = {
-   items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
+    items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
 };
 
 export default BurgerIngredients;

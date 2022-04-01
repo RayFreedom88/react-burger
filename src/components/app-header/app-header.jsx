@@ -10,7 +10,7 @@ function AppHeader() {
                 <div className={styles.logo}>
                     <Logo />
                 </div>
-                
+
                 <nav className={styles.nav}>
                     <ul className={styles.list}>
                         <li>
@@ -19,7 +19,7 @@ function AppHeader() {
                                 <p className="text text_type_main-default ml-2">Конструктор</p>
                             </span>
                         </li>
-                        
+
                         <li>
                             <span className={styles.link}>
                                 <ListIcon type="secondary" />

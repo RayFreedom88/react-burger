@@ -6,7 +6,7 @@ import OrderDetails from './order-details';
 import { itemPropTypes } from "../../utils/types";
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor({items}) {
+function BurgerConstructor({ items }) {
     const buns = items.filter(item => item.type === 'bun');
 
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -40,7 +40,7 @@ function BurgerConstructor({items}) {
                             <DragIcon type="primary" />
 
                             <ConstructorElement
-                                text={item.name} 
+                                text={item.name}
                                 price={item.price}
                                 thumbnail={item.image}
                             />
@@ -70,9 +70,9 @@ function BurgerConstructor({items}) {
                 </Button>
             </div>
 
-            <Modal 
-                header={''} 
-                isOpen={isOpenModal} 
+            <Modal
+                header={''}
+                isOpen={isOpenModal}
                 onClose={handleCloseModal}
             >
                 <OrderDetails id={'034536'} />
