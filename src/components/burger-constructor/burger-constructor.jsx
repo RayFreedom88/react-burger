@@ -7,12 +7,14 @@ import { IngredientsContext } from '../../services/ingredients-context.jsx';
 // import { itemPropTypes } from '../../utils/types';
 import styles from './burger-constructor.module.css';
 
+
+
 function BurgerConstructor() {
     const { dataIngredients } = useContext(IngredientsContext);
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     const buns = dataIngredients.filter(item => item.type === 'bun');
-
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const otherItems = dataIngredients.filter(item => item.type !== 'bun');
 
     const handleOpenModal = () => {
         setIsOpenModal(true);
@@ -38,7 +40,7 @@ function BurgerConstructor() {
 
             <div className={styles.burgerconstructor__scrollwrapper}>
                 <ul className={styles.burgerconstructor__list}>
-                    {dataIngredients.map(item => item.type !== 'bun' ? (
+                    {otherItems.map(item => (
                         <li className={styles.burgerconstructor__item} key={item._id}>
                             <DragIcon type='primary' />
 
@@ -47,7 +49,7 @@ function BurgerConstructor() {
                                 price={item.price}
                                 thumbnail={item.image}
                             />
-                        </li>) : (null)
+                        </li>)
                     )}
                 </ul>
             </div>
