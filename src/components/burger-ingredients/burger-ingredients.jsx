@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
-import { itemPropTypes } from '../../utils/types';
+import { IngredientsContext } from '../../services/ingredients-context.jsx';
+// import { itemPropTypes } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 
 // временное решение для отображения счетчиков у ингридиентов
@@ -37,7 +38,8 @@ Ingredients.propTypes = {
     name: PropTypes.string.isRequired
 }
 
-function BurgerIngredients({ items }) {
+function BurgerIngredients() {
+    const { dataIngredients } = useContext(IngredientsContext);
     const [currentTab, setCurrentTab] = useState('булки');
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [modalData, setModalData] = useState();
@@ -97,15 +99,15 @@ function BurgerIngredients({ items }) {
             <div className={styles.burgeringredients__scrollwrapper}>
                 <div className={styles.burgeringredients__wrap}>
                     <Ingredients tabId='buns' name='Булки'>
-                        {items.map(item => item.type === 'bun' && getIngredient(item))}
+                        {dataIngredients.map(item => item.type === 'bun' && getIngredient(item))}
                     </Ingredients>
 
                     <Ingredients tabId='sauces' name='Соусы'>
-                        {items.map(item => item.type === 'sauce' && getIngredient(item))}
+                        {dataIngredients.map(item => item.type === 'sauce' && getIngredient(item))}
                     </Ingredients>
 
                     <Ingredients tabId='mains' name='Начинки'>
-                        {items.map(item => item.type === 'main' && getIngredient(item))}
+                        {dataIngredients.map(item => item.type === 'main' && getIngredient(item))}
                     </Ingredients>
                 </div>
             </div>
@@ -121,8 +123,8 @@ function BurgerIngredients({ items }) {
     );
 }
 
-BurgerIngredients.propTypes = {
-    items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
-};
+// BurgerIngredients.propTypes = {
+//     items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
+// };
 
 export default BurgerIngredients;

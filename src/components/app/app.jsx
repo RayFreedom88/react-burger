@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { IngredientsContext } from '../../services/ingredients-context.jsx';
 import styles from './app.module.css';
 
 const URL = 'https://norma.nomoreparties.space/api/ingredients';
@@ -32,7 +33,7 @@ function App() {
     useEffect(() => {
         getIngredients();
         // eslint-disable-next-line
-    }, []);
+    }, [state.isLoading]);
 
     const dataIngredients = state.ingredients;
 
@@ -45,8 +46,10 @@ function App() {
                 </h1>
                 {dataIngredients.length > 0 && (
                     <section className={styles.app__section}>
-                        <BurgerIngredients items={dataIngredients} />
-                        <BurgerConstructor items={dataIngredients} />
+                        <IngredientsContext.Provider value={{ dataIngredients }}>
+                            <BurgerIngredients />
+                            <BurgerConstructor />
+                        </IngredientsContext.Provider>
                     </section>
                 )}
             </main>
