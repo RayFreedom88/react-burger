@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from './ingredient';
@@ -77,6 +77,10 @@ function BurgerIngredients() {
         )
     };
 
+    const buns = useMemo(() => dataIngredients.filter((item) => item.type === 'bun'), [dataIngredients]);
+    const sauces = useMemo(() => dataIngredients.filter((item) => item.type === 'sauce'), [dataIngredients]);
+    const mains = useMemo(() => dataIngredients.filter((item) => item.type === 'main'), [dataIngredients]);
+
     return (
         <div className={styles.burgeringredients__column}>
             <h2 className={`visually-hidden`}>Конструктор бургеров</h2>
@@ -99,15 +103,15 @@ function BurgerIngredients() {
             <div className={styles.burgeringredients__scrollwrapper}>
                 <div className={styles.burgeringredients__wrap}>
                     <Ingredients tabId='buns' name='Булки'>
-                        {dataIngredients.map(item => item.type === 'bun' && getIngredient(item))}
+                        {buns.map(getIngredient)}
                     </Ingredients>
 
                     <Ingredients tabId='sauces' name='Соусы'>
-                        {dataIngredients.map(item => item.type === 'sauce' && getIngredient(item))}
+                        {sauces.map(getIngredient)}
                     </Ingredients>
 
                     <Ingredients tabId='mains' name='Начинки'>
-                        {dataIngredients.map(item => item.type === 'main' && getIngredient(item))}
+                        {mains.map(getIngredient)}
                     </Ingredients>
                 </div>
             </div>
