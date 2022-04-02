@@ -5,7 +5,6 @@ import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
 import { IngredientsContext } from '../../services/ingredients-context.jsx';
-// import { itemPropTypes } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 
 // временное решение для отображения счетчиков у ингридиентов
@@ -126,9 +125,5 @@ function BurgerIngredients() {
         </div>
     );
 }
-
-// BurgerIngredients.propTypes = {
-//     items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
-// };
 
 export default BurgerIngredients;

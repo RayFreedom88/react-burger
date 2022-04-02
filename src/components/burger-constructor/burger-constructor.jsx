@@ -1,28 +1,39 @@
-import React, { useState, useContext } from 'react';
-// import PropTypes from 'prop-types';
+import React, { useState, useContext, useMemo } from 'react';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
+import { postOrder } from '../../utils/api';
 import { IngredientsContext } from '../../services/ingredients-context.jsx';
-// import { itemPropTypes } from '../../utils/types';
 import styles from './burger-constructor.module.css';
-
-
 
 function BurgerConstructor() {
     const { dataIngredients } = useContext(IngredientsContext);
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const [orderNumber, setOrderNumber] = useState(null);
 
     const buns = dataIngredients.filter(item => item.type === 'bun');
     const otherItems = dataIngredients.filter(item => item.type !== 'bun');
 
     const handleOpenModal = () => {
+        postOrder([
+            buns[0]._id,
+            ...otherItems.map((x) => x._id),
+            buns[0]._id
+        ]).then((res => {
+            setOrderNumber(res.order.number);
+        }))
         setIsOpenModal(true);
     };
 
     const handleCloseModal = () => {
         setIsOpenModal(false);
     };
+
+    const totalPrice = useMemo(() =>
+        otherItems.reduce((sum, item) => sum + item.price, buns[0].price * 2),
+        // eslint-disable-next-line
+        [otherItems, buns[0]]
+	);
 
     return (
         <div className={styles.burgerconstructor__column}>
@@ -66,7 +77,7 @@ function BurgerConstructor() {
 
             <div className={styles.burgerconstructor__cost}>
                 <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>
-                    <span>600</span>&nbsp;
+                    <span>{totalPrice}</span>&nbsp;
                     <CurrencyIcon type='primary' />
                 </p>
 
@@ -74,20 +85,17 @@ function BurgerConstructor() {
                     Оформить заказ
                 </Button>
             </div>
-
-            <Modal
-                header={``}
-                isOpen={isOpenModal}
-                onClose={handleCloseModal}
-            >
-                <OrderDetails id={`034536`} />
-            </Modal>
+            {orderNumber &&
+                <Modal
+                    header={``}
+                    isOpen={isOpenModal}
+                    onClose={handleCloseModal}
+                >
+                    <OrderDetails id={orderNumber} />
+                </Modal>
+            }
         </div>
     );
 }
-
-// BurgerConstructor.propTypes = {
-//     items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
-// };
 
 export default BurgerConstructor;
