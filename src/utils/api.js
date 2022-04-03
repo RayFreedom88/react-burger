@@ -4,18 +4,19 @@ const Endpoint = {
     ORDERS: 'orders'
 }
 
+const checkReponse = (response) => {
+    if (response.ok) {
+        return response.json();
+    }
+    return Promise.reject(`Ошибка ${response.status}`);
+};
+  
+
 export const getIngredients = async () => {
 
     return await fetch(`${URL_API}/${Endpoint.INGREDIENTS}`)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(response.status);
-        })
+        .then(checkReponse)
         .then(data => data)
-        .catch(e => console.log(e))
-
 }
 
 export const postOrder = async (ingredientsId) => {
@@ -28,13 +29,6 @@ export const postOrder = async (ingredientsId) => {
         },
         body: JSON.stringify({ ingredients: ingredientsId })
     })
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(response.status);
-        })
+        .then(checkReponse)
         .then(data => data)
-        .catch(e => console.log(e))
-
 }
