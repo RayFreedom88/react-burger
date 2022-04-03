@@ -14,13 +14,15 @@ function App() {
     });
 
     useEffect(() => {
-        getIngredients().then(res => {
-            setState({ ...state, hasError: false, isLoading: false });
+        getIngredients()
+            .then(res => {
+                setState({ ...state, hasError: false, isLoading: false });
 
-            if(res && res.success) {
-                setState({ ...state, ingredients: res.data, isLoading: false })
-            }
-        });
+                if(res && res.success) {
+                    setState({ ...state, ingredients: res.data, isLoading: false })
+                }
+            })
+            .catch(e => console.log(e));
         // eslint-disable-next-line
     }, [state.isLoading]);
 

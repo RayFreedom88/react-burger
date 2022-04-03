@@ -21,7 +21,8 @@ function BurgerConstructor() {
             buns[0]._id
         ]).then((res => {
             setOrderNumber(res.order.number);
-        }))
+        })).catch(e => console.log(e));
+
         setIsOpenModal(true);
     };
 
