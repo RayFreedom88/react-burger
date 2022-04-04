@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function Ingredient ({ count, className, name, image, price, onClick }) {
-   
+function Ingredient({ count, className, name, image, price, onClick }) {
+
     return (
         <li className={className} onClick={onClick}>
-            {count >= 1 ? <Counter count={count} size="default" /> : null}
-            
-            <img src={image} alt={name}/>
+            {count >= 1 ? <Counter count={count} size='default' /> : null}
 
-            <p className="text text_type_digits-default mt-1 mb-1">
+            <img src={image} alt={name} />
+
+            <p className={`text text_type_digits-default mt-1 mb-1`}>
                 <span>{price}</span>&nbsp;
-                <CurrencyIcon type="primary" />
+                <CurrencyIcon type='primary' />
             </p>
-            
-            <p className="text text_type_main-small mb-5">
+
+            <p className={`text text_type_main-small mb-5`}>
                 {name}
             </p>
         </li>

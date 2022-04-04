@@ -1,46 +1,36 @@
-
-._section {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin: 0 auto;
-    height: 912px;
-    width: 1280px;
-}
-
-._column {
+.burgeringredients__column {
     display: flex;
     flex-direction: column;
     width: 600px;
 }
 
-._tabs {
+.burgeringredients__tabs {
     display: flex;
     padding-top: 20px;
     padding-bottom: 40px;
 }
 
-._tabs div {
+.burgeringredients__tabs div {
     flex-grow: 1;
 }
 
-._scrollwrapper {
+.burgeringredients__scrollwrapper {
     height: 75vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-._wrap {
+.burgeringredients__wrap {
     height: auto;
     width: 600px;
 }
 
-._ingredients {
+.burgeringredients__ingredients {
     height: auto;
     width: auto;
 }
 
-._list {
+.burgeringredients__list {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -51,7 +41,7 @@
     padding-bottom: 40px;
 }
 
-._item {
+.burgeringredients__item {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -61,16 +51,22 @@
     cursor: pointer;
 }
 
-._item p:first-of-type {
+.burgeringredients__item p:first-of-type {
     display: flex;
 }
 
-._image img {
+.burgeringredients__image {
+    height: 240px;
+    padding: 0 20px;
+}
+
+.burgeringredients__image img {
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
 }
 
-._details {
+.burgeringredients__details {
     display: flex;
     flex-direction: row;
     align-items: flex-start;

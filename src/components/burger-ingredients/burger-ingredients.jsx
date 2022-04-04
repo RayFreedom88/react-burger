@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Ingredient from "./ingredient";
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
-import { itemPropTypes } from "../../utils/types";
+import { IngredientsContext } from '../../services/ingredients-context.jsx';
 import styles from './burger-ingredients.module.css';
 
- // временное решение для отображения счетчиков у ингридиентов
- const getRandom = function (min, max) {
+// временное решение для отображения счетчиков у ингридиентов
+const getRandom = function (min, max) {
     const lower = Math.ceil(Math.min((min), (max)));
     const upper = Math.floor(Math.max((min), (max)));
     const result = Math.random() * (upper - lower + 1) + lower;
@@ -17,12 +16,12 @@ import styles from './burger-ingredients.module.css';
 };
 function Ingredients({ tabId, name, children }) {
     return (
-        <div className={styles._ingredients}>
-            <h3 className="text text_type_main-medium" id={tabId}>
+        <div className={styles.burgeringredients__ingredients}>
+            <h3 className={`text text_type_main-medium`} id={tabId}>
                 {name}
             </h3>
 
-            <ul className={styles._list}>
+            <ul className={styles.burgeringredients__list}>
                 {children}
             </ul>
         </div>
@@ -31,14 +30,15 @@ function Ingredients({ tabId, name, children }) {
 
 Ingredients.propTypes = {
     children: PropTypes.oneOfType([
-      PropTypes.element,
-      PropTypes.node,
+        PropTypes.element,
+        PropTypes.node,
     ]),
     tabId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
 }
 
-function BurgerIngredients({items}) {
+function BurgerIngredients() {
+    const { dataIngredients } = useContext(IngredientsContext);
     const [currentTab, setCurrentTab] = useState('булки');
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [modalData, setModalData] = useState();
@@ -47,9 +47,9 @@ function BurgerIngredients({items}) {
         const element = document.getElementById(tab);
 
         setCurrentTab(tab);
-       
+
         if (element) {
-            element.scrollIntoView({ behavior: "smooth" })
+            element.scrollIntoView({ behavior: 'smooth' })
         };
     };
 
@@ -64,70 +64,66 @@ function BurgerIngredients({items}) {
 
     const getIngredient = (data) => {
         return (
-            <Ingredient 
-                className={styles._item} 
-                name={data.name} 
-                image={data.image} 
-                price={data.price} 
-                key={data._id} 
+            <Ingredient
+                className={styles.burgeringredients__item}
+                name={data.name}
+                image={data.image}
+                price={data.price}
+                key={data._id}
                 count={getRandom(0, 1)}
-                onClick={() =>{handleOpenModal(data)}}
+                onClick={() => { handleOpenModal(data) }}
             />
         )
     };
 
+    const buns = useMemo(() => dataIngredients.filter((item) => item.type === 'bun'), [dataIngredients]);
+    const sauces = useMemo(() => dataIngredients.filter((item) => item.type === 'sauce'), [dataIngredients]);
+    const mains = useMemo(() => dataIngredients.filter((item) => item.type === 'main'), [dataIngredients]);
+
     return (
-        <section className={styles._section}>
-            <div className={styles._column}>
-                <h2 className="visually-hidden">Конструктор бургеров</h2>
-                <p className="text text_type_main-large mt-5 pt-5">Собери бургер</p>
+        <div className={styles.burgeringredients__column}>
+            <h2 className={`visually-hidden`}>Конструктор бургеров</h2>
+            <p className={`text text_type_main-large mt-5 pt-5`}>Собери бургер</p>
 
-                <div className={styles._tabs}>
-                    <Tab value="buns" active={currentTab === 'buns'} onClick={tabClickHandler}>
-                        Булки
-                    </Tab>
+            <div className={styles.burgeringredients__tabs}>
+                <Tab value='buns' active={currentTab === 'buns'} onClick={tabClickHandler}>
+                    Булки
+                </Tab>
 
-                    <Tab value="sauces" active={currentTab === 'sauces'} onClick={tabClickHandler}>
-                        Соусы
-                    </Tab>
+                <Tab value='sauces' active={currentTab === 'sauces'} onClick={tabClickHandler}>
+                    Соусы
+                </Tab>
 
-                    <Tab value="mains" active={currentTab === 'mains'} onClick={tabClickHandler}>
-                        Начинки
-                    </Tab>
-                </div>
-
-                <div className={styles._scrollwrapper}>
-                    <div className={styles._wrap}>
-                        <Ingredients tabId="buns" name="Булки">
-                            {items.map(item => item.type === 'bun' && getIngredient(item))}
-                        </Ingredients>
-
-                        <Ingredients tabId="sauces" name="Соусы">
-                            {items.map(item => item.type === 'sauce' && getIngredient(item))}
-                        </Ingredients>
-
-                        <Ingredients tabId="mains" name="Начинки">
-                            {items.map(item => item.type === 'main' && getIngredient(item))}
-                        </Ingredients>
-                    </div>
-                </div>
-                
-                <Modal 
-                    header={'Детали ингредиента'} 
-                    isOpen={isOpenModal} 
-                    onClose={handleCloseModal}
-                >
-                    <IngredientDetails ingredient={modalData} />
-                </Modal>
+                <Tab value='mains' active={currentTab === 'mains'} onClick={tabClickHandler}>
+                    Начинки
+                </Tab>
             </div>
-            
-            <BurgerConstructor items={items} />
-        </section>
+
+            <div className={styles.burgeringredients__scrollwrapper}>
+                <div className={styles.burgeringredients__wrap}>
+                    <Ingredients tabId='buns' name='Булки'>
+                        {buns.map(getIngredient)}
+                    </Ingredients>
+
+                    <Ingredients tabId='sauces' name='Соусы'>
+                        {sauces.map(getIngredient)}
+                    </Ingredients>
+
+                    <Ingredients tabId='mains' name='Начинки'>
+                        {mains.map(getIngredient)}
+                    </Ingredients>
+                </div>
+            </div>
+
+            <Modal
+                header={'Детали ингредиента'}
+                isOpen={isOpenModal}
+                onClose={handleCloseModal}
+            >
+                <IngredientDetails ingredient={modalData} />
+            </Modal>
+        </div>
     );
 }
-
-BurgerIngredients.propTypes = {
-   items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
-};
 
 export default BurgerIngredients;

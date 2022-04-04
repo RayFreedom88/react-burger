@@ -1,5 +1,14 @@
-._main {
+.app__main {
     width: 100%;
     max-width: 1920px;
     margin: 0 auto;
+}
+
+.app__section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 0 auto;
+    height: 912px;
+    width: 1280px;
 }

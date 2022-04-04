@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext, useMemo } from 'react';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
-import { itemPropTypes } from "../../utils/types";
+import { postOrder } from '../../utils/api';
+import { IngredientsContext } from '../../services/ingredients-context.jsx';
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor({items}) {
-    const buns = items.filter(item => item.type === 'bun');
-
+function BurgerConstructor() {
+    const { dataIngredients } = useContext(IngredientsContext);
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const [orderNumber, setOrderNumber] = useState(null);
+
+    const buns = dataIngredients.filter(item => item.type === 'bun');
+    const otherItems = dataIngredients.filter(item => item.type !== 'bun');
 
     const handleOpenModal = () => {
+        postOrder([
+            buns[0]._id,
+            ...otherItems.map((x) => x._id),
+            buns[0]._id
+        ]).then((res => {
+            setOrderNumber(res.order.number);
+        })).catch(e => console.log(e));
+
         setIsOpenModal(true);
     };
 
@@ -19,13 +30,19 @@ function BurgerConstructor({items}) {
         setIsOpenModal(false);
     };
 
-    return (
-        <div className={styles._column}>
-            <h2 className="visually-hidden">Лента заказов</h2>
+    const totalPrice = useMemo(() =>
+        otherItems.reduce((sum, item) => sum + item.price, buns[0].price * 2),
+        // eslint-disable-next-line
+        [otherItems, buns[0]]
+	);
 
-            <div className={styles._top}>
+    return (
+        <div className={styles.burgerconstructor__column}>
+            <h2 className={`visually-hidden`}>Лента заказов</h2>
+
+            <div className={styles.burgerconstructor__top}>
                 <ConstructorElement
-                    type="top"
+                    type='top'
                     isLocked={true}
                     text={`${buns[0].name} (верх)`}
                     price={buns[0].price}
@@ -33,25 +50,25 @@ function BurgerConstructor({items}) {
                 />
             </div>
 
-            <div className={styles._scrollwrapper}>
-                <ul className={styles._list}>
-                    {items.map(item => item.type !== 'bun' ? (
-                        <li className={styles._item} key={item._id}>
-                            <DragIcon type="primary" />
+            <div className={styles.burgerconstructor__scrollwrapper}>
+                <ul className={styles.burgerconstructor__list}>
+                    {otherItems.map(item => (
+                        <li className={styles.burgerconstructor__item} key={item._id}>
+                            <DragIcon type='primary' />
 
                             <ConstructorElement
-                                text={item.name} 
+                                text={item.name}
                                 price={item.price}
                                 thumbnail={item.image}
                             />
-                        </li>) : (null)
+                        </li>)
                     )}
                 </ul>
             </div>
 
-            <div className={styles._bottom}>
+            <div className={styles.burgerconstructor__bottom}>
                 <ConstructorElement
-                    type="bottom"
+                    type='bottom'
                     isLocked={true}
                     text={`${buns[0].name} (низ)`}
                     price={buns[0].price}
@@ -59,30 +76,27 @@ function BurgerConstructor({items}) {
                 />
             </div>
 
-            <div className={styles._cost}>
-                <p className="text text_type_digits-medium mt-1 mr-5 mb-1 pr-5">
-                    <span>600</span>&nbsp;
-                    <CurrencyIcon type="primary" />
+            <div className={styles.burgerconstructor__cost}>
+                <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>
+                    <span>{totalPrice}</span>&nbsp;
+                    <CurrencyIcon type='primary' />
                 </p>
 
-                <Button type="primary" size="large" onClick={handleOpenModal}>
+                <Button type='primary' size='large' onClick={handleOpenModal}>
                     Оформить заказ
                 </Button>
             </div>
-
-            <Modal 
-                header={''} 
-                isOpen={isOpenModal} 
-                onClose={handleCloseModal}
-            >
-                <OrderDetails id={'034536'} />
-            </Modal>
+            {orderNumber &&
+                <Modal
+                    header={``}
+                    isOpen={isOpenModal}
+                    onClose={handleCloseModal}
+                >
+                    <OrderDetails id={orderNumber} />
+                </Modal>
+            }
         </div>
     );
 }
-
-BurgerConstructor.propTypes = {
-    items: PropTypes.arrayOf(itemPropTypes.isRequired).isRequired
-};
 
 export default BurgerConstructor;
