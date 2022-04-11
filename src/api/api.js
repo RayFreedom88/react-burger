@@ -12,7 +12,7 @@ const checkReponse = (response) => {
 };
   
 
-export const getIngredients = async () => {
+export const getData = async () => {
 
     return await fetch(`${URL_API}/${Endpoint.INGREDIENTS}`)
         .then(checkReponse)

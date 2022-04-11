@@ -2,7 +2,7 @@ import React, { useState, useContext, useMemo } from 'react';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
-import { postOrder } from '../../utils/api';
+import { postOrder } from '../../api/api';
 import { IngredientsContext } from '../../services/ingredients-context.jsx';
 import styles from './burger-constructor.module.css';
 

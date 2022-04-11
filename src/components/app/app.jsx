@@ -5,7 +5,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { IngredientsContext } from '../../services/ingredients-context.jsx';
-import { getIngredients } from '../../utils/api';
+import { getData } from '../../api/api';
 import styles from './app.module.css';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     });
 
     useEffect(() => {
-        getIngredients()
+        getData()
             .then(res => {
                 setState({ ...state, hasError: false, isLoading: false });
 
