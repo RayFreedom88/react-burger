@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-// здесь будут подключаться редьюсеры в корневой редьюсер
+import { ingredientsReducer } from './ingredients';
 
 export const rootReducer = combineReducers({
-    
+  ingredients: ingredientsReducer,
 });
