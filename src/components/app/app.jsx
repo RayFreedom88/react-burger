@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -31,19 +33,21 @@ function App() {
     return (
         <div className={`app`}>
             <AppHeader />
-            <main className={styles.app__main}>
-                <h1 className={`visually-hidden`}>
-                    Главная страница сайта Stellar Burgers
-                </h1>
-                {dataIngredients.length > 0 && (
-                    <section className={styles.app__section}>
-                        <IngredientsContext.Provider value={{ dataIngredients }}>
-                            <BurgerIngredients />
-                            <BurgerConstructor />
-                        </IngredientsContext.Provider>
-                    </section>
-                )}
-            </main>
+            <DndProvider backend={HTML5Backend}>
+                <main className={styles.app__main}>
+                    <h1 className={`visually-hidden`}>
+                        Главная страница сайта Stellar Burgers
+                    </h1>
+                    {dataIngredients.length > 0 && (
+                        <section className={styles.app__section}>
+                            <IngredientsContext.Provider value={{ dataIngredients }}>
+                                <BurgerIngredients />
+                                <BurgerConstructor />
+                            </IngredientsContext.Provider>
+                        </section>
+                    )}
+                </main>
+            </DndProvider>
         </div>
     );
 }
