@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { IngredientsContext } from '../../services/ingredients-context.jsx';
+
+import { IngredientsContext } from '../../services/ingredients-context';
 import { getData } from '../../api/api';
+
 import styles from './app.module.css';
 
 function App() {

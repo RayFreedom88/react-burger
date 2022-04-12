@@ -6,7 +6,9 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import App from './components/app/app';
+
 import { rootReducer } from './services/reducers/index.js';
+
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 
@@ -18,6 +20,8 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
+
+console.log('store :>> ', store.getState());
 
 ReactDOM.render(
   <React.StrictMode>

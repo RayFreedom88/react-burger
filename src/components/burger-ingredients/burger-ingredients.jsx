@@ -1,10 +1,15 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
-import { IngredientsContext } from '../../services/ingredients-context.jsx';
+
+import { getItems } from '../../services/actions/ingredients';
+
 import styles from './burger-ingredients.module.css';
 
 // временное решение для отображения счетчиков у ингридиентов
@@ -38,29 +43,10 @@ Ingredients.propTypes = {
 }
 
 function BurgerIngredients() {
-    const { dataIngredients } = useContext(IngredientsContext);
-    const [currentTab, setCurrentTab] = useState('булки');
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const [modalData, setModalData] = useState();
 
-    const tabClickHandler = (tab) => {
-        const element = document.getElementById(tab);
+    const dispatch = useDispatch();
 
-        setCurrentTab(tab);
-
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' })
-        };
-    };
-
-    const handleOpenModal = (data) => {
-        setIsOpenModal(true);
-        setModalData(data);
-    };
-
-    const handleCloseModal = () => {
-        setIsOpenModal(false);
-    };
+    const ingredients = useSelector(state => state.ingredients.ingredients);
 
     const getIngredient = (data) => {
         return (
@@ -76,9 +62,47 @@ function BurgerIngredients() {
         )
     };
 
-    const buns = useMemo(() => dataIngredients.filter((item) => item.type === 'bun'), [dataIngredients]);
-    const sauces = useMemo(() => dataIngredients.filter((item) => item.type === 'sauce'), [dataIngredients]);
-    const mains = useMemo(() => dataIngredients.filter((item) => item.type === 'main'), [dataIngredients]);
+    const buns = useMemo(() => ingredients.filter((item) => item.type === 'bun'), [ingredients]);
+    const sauces = useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
+    const mains = useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
+
+    useEffect(() => {
+        if (!ingredients.length) dispatch(getItems());
+    },
+        [dispatch, ingredients]
+    );
+
+    console.log('burger-ingredients :>> ', ingredients);
+
+    // Tabs
+
+    const [currentTab, setCurrentTab] = useState('булки');
+
+    const tabClickHandler = (tab) => {
+        const element = document.getElementById(tab);
+
+        setCurrentTab(tab);
+
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' })
+        };
+    };
+
+    // Modal
+
+    const [isOpenModal, setIsOpenModal] = useState(false);
+    const [modalData, setModalData] = useState();
+
+    const handleOpenModal = (data) => {
+        setIsOpenModal(true);
+        setModalData(data);
+    };
+
+    const handleCloseModal = () => {
+        setIsOpenModal(false);
+    };
+
+    if (!ingredients.length) return null;
 
     return (
         <div className={styles.burgeringredients__column}>
