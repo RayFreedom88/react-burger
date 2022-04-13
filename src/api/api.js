@@ -1,22 +1,21 @@
-const URL_API = 'https://norma.nomoreparties.space/api';
 const Endpoint = {
     INGREDIENTS: 'ingredients',
     ORDERS: 'orders'
-}
+};
+const URL_API = 'https://norma.nomoreparties.space/api';
 
-const checkReponse = (response) => {
-    if (response.ok) {
-        return response.json();
+const checkReponse = (res) => {
+    if (res.ok) {
+        return res.json();
     }
-    return Promise.reject(`Ошибка ${response.status}`);
+    return Promise.reject(`Ошибка ${res.status}`);
 };
   
 
 export const getData = async () => {
 
     return await fetch(`${URL_API}/${Endpoint.INGREDIENTS}`)
-        .then(checkReponse)
-        .then(data => data)
+        .then(checkReponse);
 }
 
 export const postOrder = async (ingredientsId) => {
@@ -27,8 +26,9 @@ export const postOrder = async (ingredientsId) => {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ingredients: ingredientsId })
+        body: JSON.stringify({ 
+            ingredients: ingredientsId 
+        })
     })
-        .then(checkReponse)
-        .then(data => data)
+        .then(checkReponse);
 }

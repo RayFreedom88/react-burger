@@ -1,25 +1,18 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
 
+import { useSelector, useDispatch } from 'react-redux';
 import { getItems } from '../../services/actions/ingredients';
 
 import styles from './burger-ingredients.module.css';
 
-// временное решение для отображения счетчиков у ингридиентов
-const getRandom = function (min, max) {
-    const lower = Math.ceil(Math.min((min), (max)));
-    const upper = Math.floor(Math.max((min), (max)));
-    const result = Math.random() * (upper - lower + 1) + lower;
-    return Math.floor(result);
-};
 function Ingredients({ tabId, name, children }) {
+    
     return (
         <div className={styles.burgeringredients__ingredients}>
             <h3 className={`text text_type_main-medium`} id={tabId}>
@@ -43,36 +36,31 @@ Ingredients.propTypes = {
 }
 
 function BurgerIngredients() {
-
     const dispatch = useDispatch();
 
-    const ingredients = useSelector(state => state.ingredients.ingredients);
+    useEffect(() => {
+        dispatch(getItems());
+    },
+        [dispatch]
+    );
 
-    const getIngredient = (data) => {
+    const allIngredients = useSelector(state => state.ingredients.allIngredients);
+
+    const getIngredient = (item) => {
+      
         return (
             <Ingredient
                 className={styles.burgeringredients__item}
-                name={data.name}
-                image={data.image}
-                price={data.price}
-                key={data._id}
-                count={getRandom(0, 1)}
-                onClick={() => { handleOpenModal(data) }}
+                item={item}
+                key={item._id}
+                onClick={() => { handleOpenModal(item) }}
             />
         )
     };
 
-    const buns = useMemo(() => ingredients.filter((item) => item.type === 'bun'), [ingredients]);
-    const sauces = useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
-    const mains = useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
-
-    useEffect(() => {
-        if (!ingredients.length) dispatch(getItems());
-    },
-        [dispatch, ingredients]
-    );
-
-    console.log('burger-ingredients :>> ', ingredients);
+    const buns = useMemo(() => allIngredients.filter((item) => item.type === 'bun'), [allIngredients]);
+    const sauces = useMemo(() => allIngredients.filter((item) => item.type === 'sauce'), [allIngredients]);
+    const mains = useMemo(() => allIngredients.filter((item) => item.type === 'main'), [allIngredients]);
 
     // Tabs
 
@@ -102,7 +90,7 @@ function BurgerIngredients() {
         setIsOpenModal(false);
     };
 
-    if (!ingredients.length) return null;
+    if (!allIngredients.length) return null;
 
     return (
         <div className={styles.burgeringredients__column}>

@@ -1,18 +1,61 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
 import { postOrder } from '../../api/api';
-import { IngredientsContext } from '../../services/ingredients-context.jsx';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    ADD_SELECTED_INGREDIENT,
+    ADD_SELECTED_BUN
+} from '../../services/actions/ingredients';
+
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
-    const { dataIngredients } = useContext(IngredientsContext);
+    const dispatch = useDispatch();
+
+    const allIngredients = useSelector(state => state.ingredients.allIngredients);
+
+    const { ingredients, bun } = useSelector(state => state.ingredients.selected);
+
+    const buns = useMemo(() => allIngredients.filter((item) => item.type === 'bun'), [allIngredients]);
+    const otherItems = useMemo(() => allIngredients.filter(item => item.type !== 'bun'), [allIngredients]);
+
+    const addIngredient = (ingredientId) => {
+        const type = allIngredients.find(item => item._id === ingredientId._id).type;
+
+        if (type === 'bun') {
+            dispatch({
+                type: ADD_SELECTED_BUN,
+                id: ingredientId._id
+            });
+        } else {
+            dispatch({
+                type: ADD_SELECTED_INGREDIENT,
+                id: ingredientId._id
+            });
+        }
+    };
+
+    // временное решение для заполнения конструктора
+    useEffect(() => {
+        if (allIngredients.length) {
+            addIngredient(buns[0]);
+            otherItems.slice(3, 8).map(item => {
+                return addIngredient(item);
+            })
+        }
+    },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [allIngredients]
+    );
+
+    // Modal
+
     const [isOpenModal, setIsOpenModal] = useState(false);
     const [orderNumber, setOrderNumber] = useState(null);
-
-    const buns = dataIngredients.filter(item => item.type === 'bun');
-    const otherItems = dataIngredients.filter(item => item.type !== 'bun');
 
     const handleOpenModal = () => {
         postOrder([
@@ -30,30 +73,32 @@ function BurgerConstructor() {
         setIsOpenModal(false);
     };
 
-    const totalPrice = useMemo(() =>
-        otherItems.reduce((sum, item) => sum + item.price, buns[0].price * 2),
-        // eslint-disable-next-line
-        [otherItems, buns[0]]
-	);
+    // Total price
+
+    const totalPrice = 0;
+
+    if (!allIngredients.length) return null;
 
     return (
         <div className={styles.burgerconstructor__column}>
             <h2 className={`visually-hidden`}>Лента заказов</h2>
-
-            <div className={styles.burgerconstructor__top}>
-                <ConstructorElement
-                    type='top'
-                    isLocked={true}
-                    text={`${buns[0].name} (верх)`}
-                    price={buns[0].price}
-                    thumbnail={buns[0].image}
-                />
-            </div>
+            {(bun != null) &&
+                <div className={styles.burgerconstructor__top}>
+                    <ConstructorElement
+                        type='top'
+                        isLocked={true}
+                        text={`${buns[0].name} (верх)`}
+                        price={buns[0].price}
+                        thumbnail={buns[0].image}
+                    />
+                </div>
+            }
 
             <div className={styles.burgerconstructor__scrollwrapper}>
                 <ul className={styles.burgerconstructor__list}>
-                    {otherItems.map(item => (
-                        <li className={styles.burgerconstructor__item} key={item._id}>
+                    {/* временное решение, скорее всего придется создавать отдельный компонент */}
+                    {(ingredients.length > 0) && otherItems.filter((item) => ingredients.find(product => item._id === product)).map((item, i) => (
+                        <li className={styles.burgerconstructor__item} key={i}>
                             <DragIcon type='primary' />
 
                             <ConstructorElement
@@ -66,15 +111,17 @@ function BurgerConstructor() {
                 </ul>
             </div>
 
-            <div className={styles.burgerconstructor__bottom}>
-                <ConstructorElement
-                    type='bottom'
-                    isLocked={true}
-                    text={`${buns[0].name} (низ)`}
-                    price={buns[0].price}
-                    thumbnail={buns[0].image}
-                />
-            </div>
+            {(bun != null) &&
+                <div className={styles.burgerconstructor__bottom}>
+                    <ConstructorElement
+                        type='bottom'
+                        isLocked={true}
+                        text={`${buns[0].name} (низ)`}
+                        price={buns[0].price}
+                        thumbnail={buns[0].image}
+                    />
+                </div>
+            }
 
             <div className={styles.burgerconstructor__cost}>
                 <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>

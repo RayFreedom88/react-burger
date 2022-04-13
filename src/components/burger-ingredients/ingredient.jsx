@@ -1,8 +1,30 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function Ingredient({ count, className, name, image, price, onClick }) {
+import { itemPropTypes } from '../../utils/types';
+
+import { useSelector } from 'react-redux';
+function Ingredient({ item, className, onClick }) {
+    const { name, image, price } = item;
+
+    const { bun, ingredients } = useSelector(state => state.ingredients.selected);
+
+    const count = useMemo(() => {
+        let count = 0;
+
+        if (item.type === 'bun') {
+            if (bun === item._id) count = 2;
+        } else {
+            ingredients.forEach(function (ingredient) {
+                if (ingredient === item._id) count = count + 1;
+            })
+        }
+        return count;
+    },
+        [bun, ingredients, item]
+    );
 
     return (
         <li className={className} onClick={onClick}>
@@ -23,11 +45,9 @@ function Ingredient({ count, className, name, image, price, onClick }) {
 }
 
 Ingredient.propTypes = {
+    item: itemPropTypes.isRequired,
     className: PropTypes.string.isRequired,
     count: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
     onClick: PropTypes.func.isRequired
 };
 
