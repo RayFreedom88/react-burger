@@ -26,7 +26,7 @@ const initialState = {
 
     currentIngredient: {},
 
-    orders: [],
+    orders: null,
     orderRequest: false,
     orderFailed: false,
 };
@@ -118,8 +118,7 @@ export const ingredientsReducer = (state = initialState, action) => {
 
             return {
                 ...state,
-                orderObject: action.order,
-                orders: [...state.orders, action.order],
+                order: action.order,
                 orderRequest: false,
                 orderFailed: false,
 

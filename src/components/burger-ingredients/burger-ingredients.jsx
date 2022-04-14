@@ -80,7 +80,7 @@ function BurgerIngredients() {
         };
     };
 
-    // Modal
+    // Modal (IngredientDetails)
 
     const [isOpenModal, setIsOpenModal] = useState(false);
 

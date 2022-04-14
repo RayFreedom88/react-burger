@@ -3,12 +3,12 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
-import { postOrder } from '../../api/api';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
     ADD_SELECTED_INGREDIENT,
-    ADD_SELECTED_BUN
+    ADD_SELECTED_BUN,
+    getOrder
 } from '../../services/actions/ingredients';
 
 import styles from './burger-constructor.module.css';
@@ -52,19 +52,15 @@ function BurgerConstructor() {
         [allIngredients]
     );
 
-    // Modal
+    // Modal (OrderDetails)
 
+    const order = useSelector(state => state.ingredients.order);
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const [orderNumber, setOrderNumber] = useState(null);
 
     const handleOpenModal = () => {
-        postOrder([
-            buns[0]._id,
-            ...otherItems.map((x) => x._id),
-            buns[0]._id
-        ]).then((res => {
-            setOrderNumber(res.order.number);
-        })).catch(e => console.log(e));
+        dispatch(
+            getOrder([...ingredients, bun, bun])
+        );
 
         setIsOpenModal(true);
     };
@@ -80,80 +76,92 @@ function BurgerConstructor() {
 
         if (ingredients.length > 0) ingredients
             .map(item => totalPrice += allIngredients.find(product => item === product._id)
-            .price);
+                .price);
 
         if (bun != null) {
             totalPrice += 2 * allIngredients.find(product => product._id === bun).price;
         }
-        
+
         return totalPrice;
     }, [ingredients, bun, allIngredients]);
-
-    console.log('getTotal :>> ', getTotalPrice);
 
     if (!allIngredients.length) return null;
 
     return (
         <div className={styles.burgerconstructor__column}>
             <h2 className={`visually-hidden`}>Лента заказов</h2>
-            {(bun != null) &&
-                <div className={styles.burgerconstructor__top}>
-                    <ConstructorElement
-                        type='top'
-                        isLocked={true}
-                        text={`${buns[0].name} (верх)`}
-                        price={buns[0].price}
-                        thumbnail={buns[0].image}
-                    />
-                </div>
-            }
-
-            <div className={styles.burgerconstructor__scrollwrapper}>
-                <ul className={styles.burgerconstructor__list}>
-                    {/* временное решение, скорее всего придется создавать отдельный компонент */}
-                    {(ingredients.length > 0) && otherItems.filter((item) => ingredients.find(product => item._id === product)).map((item, i) => (
-                        <li className={styles.burgerconstructor__item} key={i}>
-                            <DragIcon type='primary' />
-
+            {(ingredients.length > 0) || bun
+                ?
+                <>
+                    {(bun != null) &&
+                        <div className={styles.burgerconstructor__top}>
                             <ConstructorElement
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
+                                type='top'
+                                isLocked={true}
+                                text={`${buns[0].name} (верх)`}
+                                price={buns[0].price}
+                                thumbnail={buns[0].image}
                             />
-                        </li>)
-                    )}
-                </ul>
-            </div>
+                        </div>
+                    }
 
-            {(bun != null) &&
-                <div className={styles.burgerconstructor__bottom}>
-                    <ConstructorElement
-                        type='bottom'
-                        isLocked={true}
-                        text={`${buns[0].name} (низ)`}
-                        price={buns[0].price}
-                        thumbnail={buns[0].image}
-                    />
-                </div>
+                    <div className={styles.burgerconstructor__scrollwrapper}>
+                        <ul className={styles.burgerconstructor__list}>
+
+                            {(ingredients.length > 0) && otherItems.filter((item) => ingredients.find(product => item._id === product)).map((item, i) => (
+                                <li className={styles.burgerconstructor__item} key={i}>
+                                    <DragIcon type='primary' />
+
+                                    <ConstructorElement
+                                        text={item.name}
+                                        price={item.price}
+                                        thumbnail={item.image}
+                                    />
+                                </li>)
+                            )}
+                        </ul>
+                    </div>
+
+                    {(bun != null) &&
+                        <div className={styles.burgerconstructor__bottom}>
+                            <ConstructorElement
+                                type='bottom'
+                                isLocked={true}
+                                text={`${buns[0].name} (низ)`}
+                                price={buns[0].price}
+                                thumbnail={buns[0].image}
+                            />
+                        </div>
+                    }
+
+                    <div className={styles.burgerconstructor__cost}>
+                        <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>
+                            <span>{getTotalPrice}</span>&nbsp;
+                            <CurrencyIcon type='primary' />
+                        </p>
+
+                        <Button type='primary' size='large' onClick={handleOpenModal}>
+                            Оформить заказ
+                        </Button>
+                    </div>
+                </>
+                :
+                <>
+                    <div className={'pt-30 pb-30'} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} >
+                        <p className={`text text_type_main-medium pb-10 pl-10 pr-10 pt-10`} style={{ textAlign: 'center' }}>
+                            Перенесите в эту область ингредиенты для бургера
+                        </p>
+                    </div>
+                </>
             }
 
-            <div className={styles.burgerconstructor__cost}>
-                <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>
-                    <span>{getTotalPrice}</span>&nbsp;
-                    <CurrencyIcon type='primary' />
-                </p>
-
-                <Button type='primary' size='large' onClick={handleOpenModal}>
-                    Оформить заказ
-                </Button>
-            </div>
-            {orderNumber &&
+            {order &&
                 <Modal
                     header={``}
                     isOpen={isOpenModal}
                     onClose={handleCloseModal}
                 >
-                    <OrderDetails id={orderNumber} />
+                    <OrderDetails />
                 </Modal>
             }
         </div>

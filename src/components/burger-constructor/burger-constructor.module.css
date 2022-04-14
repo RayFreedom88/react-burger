@@ -49,6 +49,11 @@
 .burgerconstructor__item div {
     max-width: 536px;
     margin-left: auto;
+    min-height: 80px;
+}
+
+.burgerconstructor__item svg {
+    cursor: pointer;
 }
 
 .burgerconstructor__cost {
