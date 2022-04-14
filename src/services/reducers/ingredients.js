@@ -6,6 +6,9 @@ import {
     ADD_SELECTED_INGREDIENT,
     ADD_SELECTED_BUN,
 
+    ADD_INGREDIENT_MODAL,
+    DELETE_INGREDIENT_MODAL,
+
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
@@ -21,16 +24,19 @@ const initialState = {
         bun: null,
     },
 
+    currentIngredient: {},
+
     orders: [],
     orderRequest: false,
     orderFailed: false,
-}
+};
 
 export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
         // Все ингредиенты (BurgerIngredients)
 
         case GET_INGREDIENTS_REQUEST: {
+
             return {
                 ...state,
                 ingredientsRequest: true
@@ -38,6 +44,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
 
         case GET_INGREDIENTS_SUCCESS: {
+
             return {
                 ...state,
                 ingredientsRequest: false,
@@ -47,6 +54,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
 
         case GET_INGREDIENTS_FAILED: {
+
             return {
                 ...state,
                 ingredientsRequest: false,
@@ -57,6 +65,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         // выбранные ингредиенты (BurgerConstructor)
 
         case ADD_SELECTED_BUN: {
+
             return {
                 ...state,
                 selected: {
@@ -67,6 +76,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         }
 
         case ADD_SELECTED_INGREDIENT: {
+
             return {
                 ...state,
                 selected: {
@@ -76,9 +86,28 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
         }
 
+        // Modal
+
+        case ADD_INGREDIENT_MODAL: {
+
+            return {
+                ...state,
+                currentIngredient: action.ingredient
+            }
+        }
+
+        case DELETE_INGREDIENT_MODAL: {
+
+            return {
+                ...state,
+                currentIngredient: {}
+            }
+        }
+
         // Order
 
         case GET_ORDER_REQUEST: {
+
             return {
                 ...state,
                 ordersRequest: true
@@ -87,30 +116,32 @@ export const ingredientsReducer = (state = initialState, action) => {
 
         case GET_ORDER_SUCCESS: {
 
-            return { 
-                ...state, 
-                orderObject: action.order, 
-                orders: [...state.orders, action.order], 
-                orderRequest: false, 
-                orderFailed: false, 
+            return {
+                ...state,
+                orderObject: action.order,
+                orders: [...state.orders, action.order],
+                orderRequest: false,
+                orderFailed: false,
 
-                selected: { 
-                    ingredients: [], 
-                    bun: null 
-                } 
+                selected: {
+                    ingredients: [],
+                    bun: null
+                }
             };
         }
 
         case GET_ORDER_FAILED: {
-            return { 
-                ...state, 
-                orderRequest: false, 
+
+            return {
+                ...state,
+                orderRequest: false,
                 orderFailed: true
             };
         }
 
         default: {
+
             return state;
         }
     }
-}
+};

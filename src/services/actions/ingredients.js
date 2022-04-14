@@ -7,11 +7,15 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const ADD_SELECTED_INGREDIENT = 'ADD_SELECTED_INGREDIENT';
 export const ADD_SELECTED_BUN = 'ADD_SELECTED_BUN';
 
+export const ADD_INGREDIENT_MODAL = 'ADD_INGREDIENT_MODAL';
+export const DELETE_INGREDIENT_MODAL = 'DELETE_INGREDIENT_MODAL';
+
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
 export function getItems() {
+
     return function (dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST,
@@ -32,9 +36,10 @@ export function getItems() {
             })
             .catch(err =>  console.log(err));
     }
-}
+};
 
 export function getOrder(ingredients) {
+
     return function (dispatch) {
         dispatch({
             type: GET_ORDER_REQUEST
@@ -58,4 +63,4 @@ export function getOrder(ingredients) {
             })
             .catch(err =>  console.log(err));
     };
-}
+};

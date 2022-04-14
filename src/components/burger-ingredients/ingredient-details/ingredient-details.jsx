@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+
 import { itemPropTypes } from "../../../utils/types";
 import IngredientImage from './ingredient-image';
+
+import { useSelector } from 'react-redux';
+
 import styles from '../burger-ingredients.module.css'
 
 function MicrolEmentsDetail({ caseType, microElementValue }) {
@@ -31,7 +35,7 @@ function MicrolEmentsDetail({ caseType, microElementValue }) {
             <p className={'text text_type_digits-default '}>{microElementValue}</p>
         </div>
     )
-}
+};
 
 MicrolEmentsDetail.propTypes = {
     caseType: PropTypes.string.isRequired,
@@ -39,9 +43,10 @@ MicrolEmentsDetail.propTypes = {
         PropTypes.string,
         PropTypes.number
     ]).isRequired
-}
+};
 
-function IngredientDetails({ ingredient }) {
+function IngredientDetails() {
+    const ingredient = useSelector(state => state.ingredients.currentIngredient);
 
     return (
         <>
@@ -67,10 +72,10 @@ function IngredientDetails({ ingredient }) {
             </div>
         </>
     )
-}
+};
 
 IngredientDetails.propTypes = {
     ingredient: itemPropTypes,
-}
+};
 
-export default IngredientDetails
+export default IngredientDetails;

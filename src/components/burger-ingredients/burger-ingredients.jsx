@@ -7,12 +7,16 @@ import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems } from '../../services/actions/ingredients';
+import {
+    getItems,
+    ADD_INGREDIENT_MODAL,
+    DELETE_INGREDIENT_MODAL
+} from '../../services/actions/ingredients';
 
 import styles from './burger-ingredients.module.css';
 
 function Ingredients({ tabId, name, children }) {
-    
+
     return (
         <div className={styles.burgeringredients__ingredients}>
             <h3 className={`text text_type_main-medium`} id={tabId}>
@@ -24,7 +28,7 @@ function Ingredients({ tabId, name, children }) {
             </ul>
         </div>
     )
-}
+};
 
 Ingredients.propTypes = {
     children: PropTypes.oneOfType([
@@ -33,7 +37,7 @@ Ingredients.propTypes = {
     ]),
     tabId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-}
+};
 
 function BurgerIngredients() {
     const dispatch = useDispatch();
@@ -47,7 +51,7 @@ function BurgerIngredients() {
     const allIngredients = useSelector(state => state.ingredients.allIngredients);
 
     const getIngredient = (item) => {
-      
+
         return (
             <Ingredient
                 className={styles.burgeringredients__item}
@@ -72,22 +76,29 @@ function BurgerIngredients() {
         setCurrentTab(tab);
 
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' })
+            element.scrollIntoView({ behavior: 'smooth' });
         };
     };
 
     // Modal
 
     const [isOpenModal, setIsOpenModal] = useState(false);
-    const [modalData, setModalData] = useState();
 
     const handleOpenModal = (data) => {
         setIsOpenModal(true);
-        setModalData(data);
+     
+        dispatch({
+            type: ADD_INGREDIENT_MODAL,
+            ingredient: data
+        });
     };
 
     const handleCloseModal = () => {
         setIsOpenModal(false);
+
+        dispatch({
+            type: DELETE_INGREDIENT_MODAL,
+        });
     };
 
     if (!allIngredients.length) return null;
@@ -132,10 +143,10 @@ function BurgerIngredients() {
                 isOpen={isOpenModal}
                 onClose={handleCloseModal}
             >
-                <IngredientDetails ingredient={modalData} />
+                <IngredientDetails />
             </Modal>
         </div>
     );
-}
+};
 
 export default BurgerIngredients;
