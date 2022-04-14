@@ -20,7 +20,7 @@ function BurgerConstructor() {
 
     const { ingredients, bun } = useSelector(state => state.ingredients.selected);
 
-    const buns = useMemo(() => allIngredients.filter((item) => item.type === 'bun'), [allIngredients]);
+    const buns = useMemo(() => allIngredients.filter(item => item.type === 'bun'), [allIngredients]);
     const otherItems = useMemo(() => allIngredients.filter(item => item.type !== 'bun'), [allIngredients]);
 
     const addIngredient = (ingredientId) => {
@@ -75,7 +75,21 @@ function BurgerConstructor() {
 
     // Total price
 
-    const totalPrice = 0;
+    const getTotalPrice = useMemo(() => {
+        let totalPrice = 0;
+
+        if (ingredients.length > 0) ingredients
+            .map(item => totalPrice += allIngredients.find(product => item === product._id)
+            .price);
+
+        if (bun != null) {
+            totalPrice += 2 * allIngredients.find(product => product._id === bun).price;
+        }
+        
+        return totalPrice;
+    }, [ingredients, bun, allIngredients]);
+
+    console.log('getTotal :>> ', getTotalPrice);
 
     if (!allIngredients.length) return null;
 
@@ -125,7 +139,7 @@ function BurgerConstructor() {
 
             <div className={styles.burgerconstructor__cost}>
                 <p className={`text text_type_digits-medium mt-1 mr-5 mb-1 pr-5`}>
-                    <span>{totalPrice}</span>&nbsp;
+                    <span>{getTotalPrice}</span>&nbsp;
                     <CurrencyIcon type='primary' />
                 </p>
 
