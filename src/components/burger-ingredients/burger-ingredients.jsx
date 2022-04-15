@@ -55,7 +55,7 @@ function BurgerIngredients() {
         return (
             <Ingredient
                 className={styles.burgeringredients__item}
-                item={item}
+                product={item}
                 key={item._id}
                 onClick={() => { handleOpenModal(item) }}
             />
@@ -83,7 +83,6 @@ function BurgerIngredients() {
     const handleSrollWrapper = () => {
         const tabs = ['buns', 'sauces', 'mains'];
         const headTabs = tabs.map((id) => document.getElementById(id))
-        
         const scrollPosition = document.getElementById('scrollwrapper').scrollTop;
     
         headTabs.forEach((head, index) => {
@@ -94,7 +93,6 @@ function BurgerIngredients() {
             }
         })
     }
-
 
     // Modal (IngredientDetails)
 

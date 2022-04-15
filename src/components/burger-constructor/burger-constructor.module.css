@@ -15,6 +15,7 @@
 .burgerconstructor__bottom {
     display: flex;
     justify-content: flex-end;
+    min-height: 80px;
     padding: 0 16px;
 }
 
