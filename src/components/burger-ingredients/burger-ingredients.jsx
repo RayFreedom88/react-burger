@@ -68,9 +68,9 @@ function BurgerIngredients() {
 
     // Tabs
 
-    const [currentTab, setCurrentTab] = useState('булки');
+    const [currentTab, setCurrentTab] = useState('buns');
 
-    const tabClickHandler = (tab) => {
+    const handleClickTab = (tab) => {
         const element = document.getElementById(tab);
 
         setCurrentTab(tab);
@@ -80,13 +80,29 @@ function BurgerIngredients() {
         };
     };
 
+    const handleSrollWrapper = () => {
+        const tabs = ['buns', 'sauces', 'mains'];
+        const headTabs = tabs.map((id) => document.getElementById(id))
+        
+        const scrollPosition = document.getElementById('scrollwrapper').scrollTop;
+    
+        headTabs.forEach((head, index) => {
+            const headPosition = head.offsetTop;
+
+            if (headPosition <= scrollPosition + 340 && headPosition >= scrollPosition - 340) {
+                setCurrentTab(tabs[index]);
+            }
+        })
+    }
+
+
     // Modal (IngredientDetails)
 
     const [isOpenModal, setIsOpenModal] = useState(false);
 
     const handleOpenModal = (data) => {
         setIsOpenModal(true);
-     
+
         dispatch({
             type: ADD_INGREDIENT_MODAL,
             ingredient: data
@@ -109,20 +125,20 @@ function BurgerIngredients() {
             <p className={`text text_type_main-large mt-5 pt-5`}>Собери бургер</p>
 
             <div className={styles.burgeringredients__tabs}>
-                <Tab value='buns' active={currentTab === 'buns'} onClick={tabClickHandler}>
+                <Tab value='buns' active={currentTab === 'buns'} onClick={handleClickTab}>
                     Булки
                 </Tab>
 
-                <Tab value='sauces' active={currentTab === 'sauces'} onClick={tabClickHandler}>
+                <Tab value='sauces' active={currentTab === 'sauces'} onClick={handleClickTab}>
                     Соусы
                 </Tab>
 
-                <Tab value='mains' active={currentTab === 'mains'} onClick={tabClickHandler}>
+                <Tab value='mains' active={currentTab === 'mains'} onClick={handleClickTab}>
                     Начинки
                 </Tab>
             </div>
 
-            <div className={styles.burgeringredients__scrollwrapper}>
+            <div className={styles.burgeringredients__scrollwrapper} id='scrollwrapper' onScroll={handleSrollWrapper}>
                 <div className={styles.burgeringredients__wrap}>
                     <Ingredients tabId='buns' name='Булки'>
                         {buns.map(getIngredient)}
