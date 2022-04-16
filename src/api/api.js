@@ -10,7 +10,7 @@ const checkReponse = (res) => {
     }
     return Promise.reject(`Ошибка ${res.status}`);
 };
-  
+
 
 export const getData = async () => {
 
@@ -26,8 +26,8 @@ export const postOrder = async (ingredientsId) => {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
-            ingredients: ingredientsId 
+        body: JSON.stringify({
+            ingredients: ingredientsId
         })
     })
         .then(checkReponse);

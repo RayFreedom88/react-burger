@@ -36,7 +36,7 @@ export function getItems() {
                     });
                 }
             })
-            .catch(err =>  console.log(err));
+            .catch(err => console.log(err));
     }
 };
 
@@ -52,7 +52,7 @@ export function getOrder(ingredients) {
                 if (res && res.success) {
                     dispatch({
                         type: GET_ORDER_SUCCESS,
-                        order: { 
+                        order: {
                             name: res.name,
                             number: res.order.number
                         }
@@ -63,6 +63,6 @@ export function getOrder(ingredients) {
                     });
                 }
             })
-            .catch(err =>  console.log(err));
+            .catch(err => console.log(err));
     };
 };

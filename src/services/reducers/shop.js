@@ -14,7 +14,7 @@ import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
-} from '../actions/ingredients';
+} from '../actions/shop';
 
 const initialState = {
     allIngredients: [],
@@ -33,9 +33,9 @@ const initialState = {
     orderFailed: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const shopReducer = (state = initialState, action) => {
     switch (action.type) {
-        // Все ингредиенты (BurgerIngredients)
+        // BurgerIngredients
 
         case GET_INGREDIENTS_REQUEST: {
 
@@ -64,7 +64,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
         }
 
-        // выбранные ингредиенты (BurgerConstructor)
+        // BurgerConstructor
 
         case ADD_SELECTED_BUN: {
 
@@ -90,7 +90,7 @@ export const ingredientsReducer = (state = initialState, action) => {
 
         case DELETE_SELECTED_INGREDIENT: {
 
-            return { 
+            return {
                 ...state,
                 selected: {
                     ...state.selected,
@@ -99,7 +99,7 @@ export const ingredientsReducer = (state = initialState, action) => {
             }
         }
 
-        case UPDATE_SELECTED_LIST : {
+        case UPDATE_SELECTED_LIST: {
 
             return {
                 ...state,

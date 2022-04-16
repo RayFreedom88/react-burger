@@ -14,16 +14,16 @@ import {
     ADD_SELECTED_BUN,
     UPDATE_SELECTED_LIST,
     getOrder
-} from '../../services/actions/ingredients';
+} from '../../services/actions/shop';
 
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
     const dispatch = useDispatch();
 
-    const allIngredients = useSelector(state => state.ingredients.allIngredients);
+    const allIngredients = useSelector(state => state.shop.allIngredients);
 
-    const { ingredients, bun } = useSelector(state => state.ingredients.selected);
+    const { ingredients, bun } = useSelector(state => state.shop.selected);
 
     // dnd
 
@@ -38,7 +38,7 @@ function BurgerConstructor() {
         } else {
             dispatch({
                 type: ADD_SELECTED_INGREDIENT,
-                ingredient: {...item, uid: uuid()}
+                ingredient: { ...item, uid: uuid() }
             });
         }
     };
@@ -54,19 +54,19 @@ function BurgerConstructor() {
     const moveCard = useCallback((dragIndex, hoverIndex) => {
         const dragCard = ingredients[dragIndex];
         const newCards = [...ingredients]
-      
+
         newCards.splice(dragIndex, 1)
         newCards.splice(hoverIndex, 0, dragCard)
-    
+
         dispatch({
-          type: UPDATE_SELECTED_LIST,
-          ingredients: newCards,
+            type: UPDATE_SELECTED_LIST,
+            ingredients: newCards,
         })
-      }, [ingredients, dispatch]);
+    }, [ingredients, dispatch]);
 
     // Modal (OrderDetails)
 
-    const order = useSelector(state => state.ingredients.order);
+    const order = useSelector(state => state.shop.order);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const idIngredients = ingredients.map(product => product.id)
 
@@ -101,29 +101,35 @@ function BurgerConstructor() {
     if (!allIngredients.length) return null;
 
     return (
-        <div className={styles.burgerconstructor__column} ref={ dropTargerRef }>
+        <div className={styles.burgerconstructor__column} ref={dropTargerRef}>
             <h2 className={`visually-hidden`}>Лента заказов</h2>
             {(ingredients.length > 0) || bun
                 ?
                 <>
-                    <div className={ styles.burgerconstructor__top }>
+                    <div className={styles.burgerconstructor__top}>
                         {(bun != null) &&
-                            <ConstructorIngredient id={ bun } position={ 'top' } />
+                            <ConstructorIngredient id={bun} position={'top'} />
                         }
                     </div>
 
                     <div className={styles.burgerconstructor__scrollwrapper}>
                         <ul className={styles.burgerconstructor__list}>
-                            { (ingredients.length > 0) && 
-                                ingredients.map((product, index) => 
-                                    <ConstructorIngredient id={ product.id } uid={ product.uid }  key={ product.uid } index={ index } moveCard={ moveCard } />)
+                            {(ingredients.length > 0) &&
+                                ingredients.map((product, index) =>
+                                    <ConstructorIngredient
+                                        id={product.id}
+                                        uid={product.uid}
+                                        key={product.uid}
+                                        index={index}
+                                        moveCard={moveCard}
+                                    />)
                             }
                         </ul>
                     </div>
 
-                    <div className={ styles.burgerconstructor__bottom }>
+                    <div className={styles.burgerconstructor__bottom}>
                         {(bun != null) &&
-                            <ConstructorIngredient id={ bun } position={ 'bottom' } />
+                            <ConstructorIngredient id={bun} position={'bottom'} />
                         }
                     </div>
 

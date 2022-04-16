@@ -12,7 +12,7 @@ import {
     getItems,
     ADD_INGREDIENT_MODAL,
     DELETE_INGREDIENT_MODAL
-} from '../../services/actions/ingredients';
+} from '../../services/actions/shop';
 
 import styles from './burger-ingredients.module.css';
 
@@ -49,7 +49,7 @@ function BurgerIngredients() {
         [dispatch]
     );
 
-    const allIngredients = useSelector(state => state.ingredients.allIngredients);
+    const allIngredients = useSelector(state => state.shop.allIngredients);
 
     const getIngredient = (item) => {
 
@@ -85,7 +85,7 @@ function BurgerIngredients() {
         const tabs = ['buns', 'sauces', 'mains'];
         const headTabs = tabs.map((id) => document.getElementById(id))
         const scrollPosition = document.getElementById('scrollwrapper').scrollTop;
-    
+
         headTabs.forEach((head, index) => {
             const headPosition = head.offsetTop;
 

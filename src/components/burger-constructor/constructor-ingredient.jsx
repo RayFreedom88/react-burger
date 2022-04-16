@@ -5,14 +5,14 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_SELECTED_INGREDIENT } from '../../services/actions/ingredients';
+import { DELETE_SELECTED_INGREDIENT } from '../../services/actions/shop';
 
 import styles from './burger-constructor.module.css';
 
 function ConstructorIngredient({ id, uid, position, moveCard, index }) {
     const dispatch = useDispatch();
 
-    const allIngredients = useSelector(state => state.ingredients.allIngredients);
+    const allIngredients = useSelector(state => state.shop.allIngredients);
     const product = allIngredients.find(item => item._id === id);
 
     const ref = useRef(null);
@@ -26,21 +26,21 @@ function ConstructorIngredient({ id, uid, position, moveCard, index }) {
                 handlerId: monitor.getHandlerId()
             }
         },
-        
+
         hover(item, monitor) {
             if (!ref.current) {
 
                 return;
             }
-            
+
             const dragIndex = item.index;
             const hoverIndex = index;
-        
+
             if (dragIndex === hoverIndex) {
 
                 return;
             }
-           
+
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
@@ -50,17 +50,17 @@ function ConstructorIngredient({ id, uid, position, moveCard, index }) {
 
                 return;
             }
-        
+
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
 
                 return;
             }
-        
+
             moveCard(dragIndex, hoverIndex);
             item.index = hoverIndex;
         }
     })
-   
+
     const [{ isDragging }, drag] = useDrag({
         type: 'selected',
 
@@ -72,7 +72,7 @@ function ConstructorIngredient({ id, uid, position, moveCard, index }) {
     });
 
     const opacity = isDragging ? 0 : 1;
- 
+
     if (product.type !== 'bun') drag(drop(ref));
 
     const handleDeleteInredient = () => {
@@ -91,7 +91,7 @@ function ConstructorIngredient({ id, uid, position, moveCard, index }) {
             thumbnail={product.image}
         />
         :
-        <li className={styles.burgerconstructor__item} style={{ opacity }} ref={ ref } data-handler-id={ handlerId }>
+        <li className={styles.burgerconstructor__item} style={{ opacity }} ref={ref} data-handler-id={handlerId}>
             <DragIcon type='primary' />
 
             <ConstructorElement
@@ -107,7 +107,9 @@ function ConstructorIngredient({ id, uid, position, moveCard, index }) {
 ConstructorIngredient.propTypes = {
     id: PropTypes.string.isRequired,
     uid: PropTypes.string,
+    index: PropTypes.number,
     position: PropTypes.string,
+    moveCard: PropTypes.func
 };
 
 export default ConstructorIngredient;
