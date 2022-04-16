@@ -46,7 +46,7 @@ MicrolEmentsDetail.propTypes = {
 };
 
 function IngredientDetails() {
-    const ingredient = useSelector(state => state.ingredients.currentIngredient);
+    const ingredient = useSelector(state => state.shop.currentIngredient);
 
     return (
         <>
