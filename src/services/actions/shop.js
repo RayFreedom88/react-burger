@@ -63,6 +63,10 @@ export function getOrder(ingredients) {
                     });
                 }
             })
-            .catch(err => console.log(err));
+            .catch(() =>
+                dispatch({
+                    type: GET_ORDER_FAILED
+                })
+            );
     };
 };
