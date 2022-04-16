@@ -14,7 +14,7 @@ function Ingredient({ product, className, onClick }) {
 
     const [{ boxShadow }, dragRef] = useDrag({
         type: 'item',
-        item: {id: product._id},
+        item: { id: product._id },
 
         collect: monitor => ({
             boxShadow: monitor.isDragging() 

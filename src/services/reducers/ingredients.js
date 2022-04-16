@@ -5,6 +5,7 @@ import {
 
     ADD_SELECTED_INGREDIENT,
     ADD_SELECTED_BUN,
+    DELETE_SELECTED_INGREDIENT,
 
     ADD_INGREDIENT_MODAL,
     DELETE_INGREDIENT_MODAL,
@@ -20,8 +21,8 @@ const initialState = {
     ingredientsFailed: false,
 
     selected: {
-        ingredients: [],
         bun: null,
+        ingredients: [],
     },
 
     currentIngredient: {},
@@ -81,7 +82,18 @@ export const ingredientsReducer = (state = initialState, action) => {
                 ...state,
                 selected: {
                     ...state.selected,
-                    ingredients: [...state.selected.ingredients, action.id]
+                    ingredients: [...state.selected.ingredients, action.ingredient]
+                }
+            }
+        }
+
+        case DELETE_SELECTED_INGREDIENT: {
+
+            return { 
+                ...state,
+                selected: {
+                    ...state.selected,
+                    ingredients: state.selected.ingredients.filter(ingredient => ingredient.uid !== action.uid)
                 }
             }
         }

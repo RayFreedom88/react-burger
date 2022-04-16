@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 
+import { v1 as uuid } from 'uuid';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import ConstructorIngredient from './constructor-ingredient';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details';
@@ -25,6 +27,7 @@ function BurgerConstructor() {
     // dnd
 
     const moveItem = (item) => {
+        console.log('item :>> ', item);
         const type = allIngredients.find(product => product._id === item.id).type;
 
         if (type === 'bun') {
@@ -35,7 +38,7 @@ function BurgerConstructor() {
         } else {
             dispatch({
                 type: ADD_SELECTED_INGREDIENT,
-                id: item.id
+                ingredient: {...item, uid: uuid()}
             });
         }
     };
@@ -71,7 +74,7 @@ function BurgerConstructor() {
         let totalPrice = 0;
 
         if (ingredients.length > 0) ingredients
-            .map(item => totalPrice += allIngredients.find(product => product._id === item)
+            .map(item => totalPrice += allIngredients.find(product => product._id === item.id)
                 .price);
 
         if (bun != null) {
@@ -99,7 +102,7 @@ function BurgerConstructor() {
                         <ul className={styles.burgerconstructor__list}>
                             { (ingredients.length > 0) && 
                                 ingredients.map((product, index) => 
-                                    <ConstructorIngredient id={ product } key={ index } />)
+                                    <ConstructorIngredient id={ product.id } uid={ product.uid }  key={ product.uid } />)
                             }
                         </ul>
                     </div>
