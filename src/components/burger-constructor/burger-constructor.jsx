@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 
 import { v1 as uuid } from 'uuid';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     ADD_SELECTED_INGREDIENT,
     ADD_SELECTED_BUN,
+    UPDATE_SELECTED_LIST,
     getOrder
 } from '../../services/actions/ingredients';
 
@@ -27,7 +28,6 @@ function BurgerConstructor() {
     // dnd
 
     const moveItem = (item) => {
-        console.log('item :>> ', item);
         const type = allIngredients.find(product => product._id === item.id).type;
 
         if (type === 'bun') {
@@ -51,14 +51,28 @@ function BurgerConstructor() {
         },
     });
 
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        const dragCard = ingredients[dragIndex];
+        const newCards = [...ingredients]
+      
+        newCards.splice(dragIndex, 1)
+        newCards.splice(hoverIndex, 0, dragCard)
+    
+        dispatch({
+          type: UPDATE_SELECTED_LIST,
+          ingredients: newCards,
+        })
+      }, [ingredients, dispatch]);
+
     // Modal (OrderDetails)
 
     const order = useSelector(state => state.ingredients.order);
     const [isOpenModal, setIsOpenModal] = useState(false);
+    const idIngredients = ingredients.map(product => product.id)
 
     const handleOpenModal = () => {
         dispatch(
-            getOrder([...ingredients, bun, bun])
+            getOrder([...idIngredients, bun, bun])
         );
 
         setIsOpenModal(true);
@@ -102,7 +116,7 @@ function BurgerConstructor() {
                         <ul className={styles.burgerconstructor__list}>
                             { (ingredients.length > 0) && 
                                 ingredients.map((product, index) => 
-                                    <ConstructorIngredient id={ product.id } uid={ product.uid }  key={ product.uid } />)
+                                    <ConstructorIngredient id={ product.id } uid={ product.uid }  key={ product.uid } index={ index } moveCard={ moveCard } />)
                             }
                         </ul>
                     </div>
@@ -127,7 +141,7 @@ function BurgerConstructor() {
                 :
                 <>
                     <div className={'pt-30 pb-30'} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <p className={`text text_type_main-medium pb-10 pl-10 pr-10 pt-10`} style={{ textAlign: 'center' }}>
+                        <p className={`text text_type_main-medium pt-30 pb-30 pl-10 pr-10 mb-30`} style={{ textAlign: 'center' }}>
                             Перенесите в эту область ингредиенты для бургера
                         </p>
                     </div>

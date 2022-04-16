@@ -30,7 +30,7 @@ function Ingredient({ product, className, onClick }) {
             if (bun === product._id) count = 2;
         } else {
             ingredients.forEach(function (ingredient) {
-                if (ingredient === product._id) count = count + 1;
+                if (ingredient.id === product._id) count = count + 1;
             })
         }
         return count;
