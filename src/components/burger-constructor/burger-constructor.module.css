@@ -15,6 +15,7 @@
 .burgerconstructor__bottom {
     display: flex;
     justify-content: flex-end;
+    min-height: 80px;
     padding: 0 16px;
 }
 
@@ -49,6 +50,11 @@
 .burgerconstructor__item div {
     max-width: 536px;
     margin-left: auto;
+    min-height: 80px;
+}
+
+.burgerconstructor__item svg {
+    cursor: pointer;
 }
 
 .burgerconstructor__cost {

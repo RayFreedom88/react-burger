@@ -1,20 +1,23 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import Ingredient from './ingredient';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
-import { IngredientsContext } from '../../services/ingredients-context.jsx';
+
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    getItems,
+    ADD_INGREDIENT_MODAL,
+    DELETE_INGREDIENT_MODAL
+} from '../../services/actions/shop';
+
 import styles from './burger-ingredients.module.css';
 
-// временное решение для отображения счетчиков у ингридиентов
-const getRandom = function (min, max) {
-    const lower = Math.ceil(Math.min((min), (max)));
-    const upper = Math.floor(Math.max((min), (max)));
-    const result = Math.random() * (upper - lower + 1) + lower;
-    return Math.floor(result);
-};
 function Ingredients({ tabId, name, children }) {
+
     return (
         <div className={styles.burgeringredients__ingredients}>
             <h3 className={`text text_type_main-medium`} id={tabId}>
@@ -26,7 +29,7 @@ function Ingredients({ tabId, name, children }) {
             </ul>
         </div>
     )
-}
+};
 
 Ingredients.propTypes = {
     children: PropTypes.oneOfType([
@@ -35,50 +38,85 @@ Ingredients.propTypes = {
     ]),
     tabId: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-}
+};
 
 function BurgerIngredients() {
-    const { dataIngredients } = useContext(IngredientsContext);
-    const [currentTab, setCurrentTab] = useState('булки');
-    const [isOpenModal, setIsOpenModal] = useState(false);
-    const [modalData, setModalData] = useState();
+    const dispatch = useDispatch();
 
-    const tabClickHandler = (tab) => {
+    useEffect(() => {
+        dispatch(getItems());
+    },
+        [dispatch]
+    );
+
+    const allIngredients = useSelector(state => state.shop.allIngredients);
+
+    const getIngredient = (item) => {
+
+        return (
+            <Ingredient
+                className={styles.burgeringredients__item}
+                product={item}
+                key={item._id}
+                onClick={() => { handleOpenModal(item) }}
+            />
+        )
+    };
+
+    const buns = useMemo(() => allIngredients.filter((item) => item.type === 'bun'), [allIngredients]);
+    const sauces = useMemo(() => allIngredients.filter((item) => item.type === 'sauce'), [allIngredients]);
+    const mains = useMemo(() => allIngredients.filter((item) => item.type === 'main'), [allIngredients]);
+
+    // Tabs
+
+    const [currentTab, setCurrentTab] = useState('buns');
+
+    const handleClickTab = (tab) => {
         const element = document.getElementById(tab);
 
         setCurrentTab(tab);
 
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' })
+            element.scrollIntoView({ behavior: 'smooth' });
         };
     };
 
+    const handleSrollWrapper = () => {
+        const tabs = ['buns', 'sauces', 'mains'];
+        const headTabs = tabs.map((id) => document.getElementById(id))
+        const scrollPosition = document.getElementById('scrollwrapper').scrollTop;
+
+        headTabs.forEach((head, index) => {
+            const headPosition = head.offsetTop;
+
+            if (headPosition <= scrollPosition + 340 && headPosition >= scrollPosition - 340) {
+                setCurrentTab(tabs[index]);
+            }
+        })
+    }
+
+    // Modal (IngredientDetails)
+
+    const [isOpenModal, setIsOpenModal] = useState(false);
+
     const handleOpenModal = (data) => {
         setIsOpenModal(true);
-        setModalData(data);
+
+        dispatch({
+            type: ADD_INGREDIENT_MODAL,
+            ingredient: data
+        });
     };
 
     const handleCloseModal = () => {
         setIsOpenModal(false);
+
+        dispatch({
+            type: DELETE_INGREDIENT_MODAL,
+        });
     };
 
-    const getIngredient = (data) => {
-        return (
-            <Ingredient
-                className={styles.burgeringredients__item}
-                name={data.name}
-                image={data.image}
-                price={data.price}
-                key={data._id}
-                count={getRandom(0, 1)}
-                onClick={() => { handleOpenModal(data) }}
-            />
-        )
-    };
-
-    const buns = useMemo(() => dataIngredients.filter((item) => item.type === 'bun'), [dataIngredients]);
-    const sauces = useMemo(() => dataIngredients.filter((item) => item.type === 'sauce'), [dataIngredients]);
-    const mains = useMemo(() => dataIngredients.filter((item) => item.type === 'main'), [dataIngredients]);
+    if (!allIngredients.length) return null;
 
     return (
         <div className={styles.burgeringredients__column}>
@@ -86,20 +124,20 @@ function BurgerIngredients() {
             <p className={`text text_type_main-large mt-5 pt-5`}>Собери бургер</p>
 
             <div className={styles.burgeringredients__tabs}>
-                <Tab value='buns' active={currentTab === 'buns'} onClick={tabClickHandler}>
+                <Tab value='buns' active={currentTab === 'buns'} onClick={handleClickTab}>
                     Булки
                 </Tab>
 
-                <Tab value='sauces' active={currentTab === 'sauces'} onClick={tabClickHandler}>
+                <Tab value='sauces' active={currentTab === 'sauces'} onClick={handleClickTab}>
                     Соусы
                 </Tab>
 
-                <Tab value='mains' active={currentTab === 'mains'} onClick={tabClickHandler}>
+                <Tab value='mains' active={currentTab === 'mains'} onClick={handleClickTab}>
                     Начинки
                 </Tab>
             </div>
 
-            <div className={styles.burgeringredients__scrollwrapper}>
+            <div className={styles.burgeringredients__scrollwrapper} id='scrollwrapper' onScroll={handleSrollWrapper}>
                 <div className={styles.burgeringredients__wrap}>
                     <Ingredients tabId='buns' name='Булки'>
                         {buns.map(getIngredient)}
@@ -120,10 +158,10 @@ function BurgerIngredients() {
                 isOpen={isOpenModal}
                 onClose={handleCloseModal}
             >
-                <IngredientDetails ingredient={modalData} />
+                <IngredientDetails />
             </Modal>
         </div>
     );
-}
+};
 
 export default BurgerIngredients;
