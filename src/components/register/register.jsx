@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import styles from './register.module.css';
 
 export default function Register() {
-    const [form, setValue] = useState({ name: '', email: '', password: '' });
+    const [formValue, setFormValue] = useState({ name: '', email: '', password: '' });
 
     const handleChange = e => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+        setFormValue({ ...formValue, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = (e) => {
@@ -54,7 +54,7 @@ export default function Register() {
                         type={'text'}
                         name={'name'}
                         placeholder={'Имя'}
-                        value={form.name}
+                        value={formValue.name}
                         onChange={handleChange}
                     />
                 </div>
@@ -64,7 +64,7 @@ export default function Register() {
                         type={'email'}
                         name={'email'}
                         placeholder={'E-mail'}
-                        value={form.email}
+                        value={formValue.email}
                         errorText={'Ой, произошла ошибка!'} 
                         error={isError}
                         ref={inputRef}
@@ -77,7 +77,7 @@ export default function Register() {
                 <div className='mt-6'>
                     <PasswordInput
                         name={'password'}
-                        value={form.password}
+                        value={formValue.password}
                         onChange={handleChange}
                     />
                 </div>
@@ -87,7 +87,7 @@ export default function Register() {
                 </div>
             </form>
 
-            <p className={`text text_type_main-small text_color_inactive mt-4`}>
+            <p className={`text text_type_main-small text_color_inactive mt-20`}>
                 Уже зарегистрированы? <Link to='/login' className={styles.register__link}>Войти</Link>
             </p>
         </div>

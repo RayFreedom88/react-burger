@@ -1,21 +1,38 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { forgotPassword } from '../../services/actions/auth';
 
 import styles from './forgot-password.module.css';
 
 export default function ForgotPassword() {
-    const [form, setValue] = useState({ email: '' });
+    const dispatch = useDispatch();
+
+    const [formValue, setFormValue] = useState({ email: '' });
 
     const handleChange = e => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+        setFormValue({ ...formValue, [e.target.name]: e.target.value });
+    };
+
+    const history = useHistory();
+    console.log('history :>> ', history);
+
+    const redirect = () => {
+        history.push('/reset-password')
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // здесь будет (диспатч) обновление стейта 
-    }
+        if (formValue.email === '') {
+            return
+        } else {
+            dispatch(forgotPassword(formValue.email));
+            redirect();
+        };
+    };
 
     // Валидация    
 
@@ -53,7 +70,7 @@ export default function ForgotPassword() {
                         type={'email'}
                         name={'email'}
                         placeholder={'Укажите e-mail'}
-                        value={form.email}
+                        value={formValue.email}
                         errorText={'Ой, произошла ошибка!'}
                         error={isError}
                         ref={inputRef}
@@ -68,7 +85,7 @@ export default function ForgotPassword() {
                 </div>
             </form>
 
-            <p className={`text text_type_main-small text_color_inactive mt-4`}>
+            <p className={`text text_type_main-small text_color_inactive mt-20`}>
                 Вспомнили пароль? <Link to='/login' className={styles.forgot__link}>Войти</Link>
             </p>
         </div>

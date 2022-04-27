@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import App from './components/app/app';
 
-import { rootReducer } from './services/reducers/index.js';
+import { rootReducer } from './services/reducers/index';
 
 import reportWebVitals from './reportWebVitals';
 import './index.css';

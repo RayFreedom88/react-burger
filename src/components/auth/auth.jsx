@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import styles from './auth.module.css';
 
 export default function Auth() {
-    const [form, setValue] = useState({ email: '', password: '' });
+    const [formValue, setFormValue] = useState({ email: '', password: '' });
 
     const handleChange = e => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+        setFormValue({ ...formValue, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = (e) => {
@@ -53,7 +53,7 @@ export default function Auth() {
                         type={'email'}
                         name={'email'}
                         placeholder={'E-mail'}
-                        value={form.email}
+                        value={formValue.email}
                         errorText={'Ой, произошла ошибка!'} 
                         error={isError}
                         ref={inputRef}
@@ -66,7 +66,7 @@ export default function Auth() {
                 <div className={`mt-6`}>
                     <PasswordInput
                         name={'password'}
-                        value={form.password}
+                        value={formValue.password}
                         onChange={handleChange}
                     />
                 </div>
