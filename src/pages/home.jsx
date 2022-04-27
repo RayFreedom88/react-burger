@@ -1,13 +1,17 @@
-import React from "react";
-
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 
-import styles from './home.module.css';
-
+const styleHome = {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: 40,
+    margin: '0 auto',
+    height: 912,
+    width: 1280
+};
 
 export function HomePage() {
 
@@ -18,7 +22,7 @@ export function HomePage() {
                     Главная страница сайта Stellar Burgers
                 </h1>
 
-                <section className={styles.home__section}>
+                <section style={styleHome}>
                     <BurgerIngredients />
                     <BurgerConstructor/>
                 </section>
