@@ -1,7 +1,8 @@
 .appheader {
-    width: 100%;
-    max-width: 1920px;
     margin: 0 auto;
+    min-width: 1280px;
+    max-width: 100%;
+    background: #1C1C21;
     text-align: center;
 }
 
@@ -16,16 +17,16 @@
 
 .appheader__logo {
     position: absolute;
-    left: 0;
-    right: 0;
+    left: calc(50% - 145px);
+    width: 290px;
     height: 50px;
-    pointer-events: none;
 }
 
 .appheader__nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 56px;
     width: 100%;
 }
 
@@ -38,6 +39,20 @@
 .appheader__link {
     display: flex;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 16px 20px;
+    color: #8585ad;
     cursor: pointer;
+}
+
+.appheader__link svg {
+    fill: #8585ad;
+}
+
+.appheader__link_active {
+    color: white
+}
+
+.appheader__link_active svg {
+    fill: white;
+
 }

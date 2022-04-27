@@ -1,0 +1,14 @@
+.auth__conteiner {
+	display:flex;
+	flex-direction:column;
+	align-items: center;
+	width:480px;
+	margin:0 auto;
+	padding-top: 180px;
+	text-align:center;
+}
+
+.auth__link {
+	color:#4C4CFF;
+	text-decoration:none;
+}

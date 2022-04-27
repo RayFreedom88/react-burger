@@ -1,11 +1,10 @@
+
 import React from 'react';
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage,  NotFound404 } from '../../pages';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 import styles from './app.module.css';
 
@@ -13,20 +12,33 @@ function App() {
 
     return (
         <div className={`app`}>
-            <AppHeader />
+            <Router>
+                <AppHeader />
 
-            <DndProvider backend={HTML5Backend}>
                 <main className={styles.app__main}>
-                    <h1 className={`visually-hidden`}>
-                        Главная страница сайта Stellar Burgers
-                    </h1>
+                    <Switch>
+                        <Route path='/' exact={true}>
+                            <HomePage />
+                        </Route>
 
-                    <section className={styles.app__section}>
-                        <BurgerIngredients />
-                        <BurgerConstructor />
-                    </section>
+                        <Route path='/login' exact={true}>
+                            <LoginPage />
+                        </Route>
+
+                        <Route path='/register' exact={true}>
+                            <RegisterPage />
+                        </Route>
+
+                        <Route path='/forgot-password' exact={true}>
+                            <ForgotPasswordPage />
+                        </Route>
+
+                        <Route>
+                            <NotFound404 />
+                        </Route>
+                    </Switch>
                 </main>
-            </DndProvider>
+            </Router>
         </div>
     );
 }
