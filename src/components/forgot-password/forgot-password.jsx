@@ -18,14 +18,15 @@ export default function ForgotPassword() {
     };
 
     const history = useHistory();
-    console.log('history :>> ', history);
 
+    // временное решение
     const redirect = () => {
         history.push('/reset-password')
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         if (formValue.email === '') {
             return
         } else {
