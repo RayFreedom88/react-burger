@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, NotFound404 } from '../../pages';
+import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../../pages';
 import AppHeader from '../app-header/app-header';
 
 import styles from './app.module.css';
@@ -35,6 +35,10 @@ function App() {
 
                         <Route path='/reset-password' exact={true}>
                             <ResetPasswordPage />
+                        </Route>
+
+                        <Route path='/profile' exact={true}>
+                            <ProfilePage />
                         </Route>
 
                         <Route>

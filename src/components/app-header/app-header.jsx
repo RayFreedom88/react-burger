@@ -14,7 +14,7 @@ function NavItem({ icon, linkTo, exact, children }) {
                 to={linkTo} 
                 className={styles.appheader__link} 
                 activeClassName={styles.appheader__link_active} 
-                exact={exact}
+                exact
             >
                 {icon}
                 <p className='text text_type_main-default ml-2'>
@@ -27,7 +27,6 @@ function NavItem({ icon, linkTo, exact, children }) {
 
 NavItem.propTypes = {
     linkTo: PropTypes.string.isRequired,
-    exact: PropTypes.bool.isRequired,
     children: PropTypes.string.isRequired
 }
 
@@ -41,17 +40,17 @@ function AppHeader() {
 
                 <nav className={styles.appheader__nav}>
                     <ul className={styles.appheader__list}>
-                        <NavItem icon={<BurgerIcon />} linkTo={'/'} exact={true}>
+                        <NavItem icon={<BurgerIcon />} linkTo={'/'}>
                             Конструктор
                         </NavItem>
 
-                        <NavItem icon={<ListIcon />} linkTo={'/feed'} exact={true}>
+                        <NavItem icon={<ListIcon />} linkTo={'/feed'}>
                             Лента заказов
                         </NavItem>
                     </ul>
 
                     <ul className={styles.appheader__list}>
-                        <NavItem icon={<ProfileIcon />} linkTo={'/login'} exact={true}>
+                        <NavItem icon={<ProfileIcon />} linkTo={'/profile'}>
                             Личный кабинет
                         </NavItem>
                     </ul>

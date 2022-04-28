@@ -10,7 +10,9 @@ import {
 
 const initialState = {
     user: {
+        name: '',
         email: '',
+        password: ''
     },
 
     forgotPasswordRequest: false,
