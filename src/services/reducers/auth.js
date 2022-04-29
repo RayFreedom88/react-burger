@@ -1,4 +1,8 @@
 import {
+    REGISTER_REQUEST,
+    REGISTER_SUCCESS,
+    REGISTER_FAILED,
+
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAILED,
@@ -14,6 +18,10 @@ const initialState = {
         email: '',
         password: ''
     },
+    loggedIn: false,
+
+    registerRequest: false,
+    registerFailed: false,
 
     forgotPasswordRequest: false,
     forgotPasswordFailed: false,
@@ -24,6 +32,29 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
+        case REGISTER_REQUEST: {
+            return {
+                ...state,
+                registerRequest: true,
+                registerFailed: false,
+            };
+        }
+
+        case REGISTER_SUCCESS: {
+            return {
+                ...state,
+                user: action.user,
+                loggedIn: true,
+                registerRequest: false,
+            };
+        }
+        case REGISTER_FAILED: {
+            return {
+                ...state,
+                registerRequest: false,
+                registerFailed: true
+            };
+        }
         case FORGOT_PASSWORD_REQUEST: {
 
             return {
@@ -52,7 +83,7 @@ export const authReducer = (state = initialState, action) => {
 
         case RESET_PASSWORD_REQUEST: {
 
-            return { 
+            return {
                 ...state,
                 resetPasswordRequest: true,
             };
@@ -60,7 +91,7 @@ export const authReducer = (state = initialState, action) => {
 
         case RESET_PASSWORD_SUCCESS: {
 
-            return { 
+            return {
                 ...state,
                 resetPasswordRequest: false,
                 resetPasswordFailed: false,
@@ -69,7 +100,7 @@ export const authReducer = (state = initialState, action) => {
 
         case RESET_PASSWORD_FAILED: {
 
-            return { 
+            return {
                 ...state,
                 resetPasswordRequest: false,
                 resetPasswordFailed: true,

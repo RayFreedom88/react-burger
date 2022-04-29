@@ -84,7 +84,6 @@ export default function Profile() {
         } else {
             console.log('Сохранить')
         };
-        
     };
 
     const redirect = () => {

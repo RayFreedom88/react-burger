@@ -1,6 +1,7 @@
 const Endpoint = {
     INGREDIENTS: 'ingredients',
     ORDERS: 'orders',
+    REGISTER: 'auth/register',
     FORGOT_PASSWORD: 'password-reset',
     RESET_PASSWORD: 'password-reset/reset'
 };
@@ -35,6 +36,22 @@ export const postOrder = async (ingredientsId) => {
         .then(checkReponse);
 };
 
+export const postRegisterRequest = async (email, password, name) => {
+    return await fetch(`${URL_API}/${Endpoint.REGISTER}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email,
+            password,
+            name
+        }),
+    })
+        .then(checkReponse);
+};
+
 export const postForgotPasswordRequest = async (email) => {
 
     return await fetch(`${URL_API}/${Endpoint.FORGOT_PASSWORD}`, {
@@ -60,3 +77,4 @@ export const postResetPasswordRequest = async (password, token) => {
     })
         .then(checkReponse);
 };
+

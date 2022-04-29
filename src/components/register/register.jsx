@@ -1,12 +1,24 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
+import { useDispatch, useSelector } from "react-redux";
+import { register } from '../../services/actions/auth';
 
 import styles from './register.module.css';
 
 export default function Register() {
-    const [formValue, setFormValue] = useState({ name: '', email: '', password: '' });
+    const dispatch = useDispatch();
+    const { loggedIn } = useSelector((store) => store.auth);
+    console.log('loggedIn :>> ', loggedIn);
+
+    const [formValue, setFormValue] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+
 
     const handleChange = e => {
         setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -14,13 +26,25 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // здесь будет (диспатч) обновление стейта 
+        if (formValue.name === '') return setIsNameError(true);;
+
+        if (!validateEmail(formValue.email)) return setIsMailError(true);
+
+        if (formValue.password.length <= 5) {
+            return alert('Некорректный пароль')
+        } 
+        dispatch(register(formValue.email, formValue.password, formValue.name));
     };
 
-    // Валидация  
+    // Валидация
 
     const inputRef = useRef(null);
-    const [isError, setIsError] = useState(false);
+    const [isNameError, setIsNameError] = useState(false);
+    const [isMailError, setIsMailError] = useState(false);
+
+    const handleNameFocus = () => {
+        setIsNameError(false);
+    };
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,20 +52,24 @@ export default function Register() {
     };
 
     const validateField = (value) => {
-        setIsError(!validateEmail(value));
+        setIsMailError(!validateEmail(value));
     };
 
-    const handleFocus = () => {
-        setIsError(false);
+    const handleMailFocus = () => {
+        setIsMailError(false);
     };
 
     const handleBlur = (e) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
-            setIsError(false);
+            setIsMailError(false);
         };
     };
+
+    if (loggedIn) {
+        return <Redirect to={'/'} />;
+    }
 
     return (
         <div className={styles.register__conteiner}>
@@ -55,6 +83,9 @@ export default function Register() {
                         name={'name'}
                         placeholder={'Имя'}
                         value={formValue.name}
+                        errorText={'Ой, произошла ошибка!'} 
+                        error={isNameError}
+                        onFocus={handleNameFocus}
                         onChange={handleChange}
                     />
                 </div>
@@ -66,10 +97,10 @@ export default function Register() {
                         placeholder={'E-mail'}
                         value={formValue.email}
                         errorText={'Ой, произошла ошибка!'} 
-                        error={isError}
+                        error={isMailError}
                         ref={inputRef}
                         onBlur={handleBlur}
-                        onFocus={handleFocus}
+                        onFocus={handleMailFocus}
                         onChange={handleChange}
                     />
                 </div>
