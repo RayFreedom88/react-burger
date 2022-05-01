@@ -1,6 +1,8 @@
 // получение Cookie
 export function getCookie(name) {
+    
     const matches = document.cookie.match(
+        // eslint-disable-next-line no-useless-escape
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
 

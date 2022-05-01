@@ -1,26 +1,47 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
+import { useDispatch, useSelector } from "react-redux";
+import { logIn } from '../../services/actions/auth';
 
 import styles from './auth.module.css';
 
 export default function Auth() {
-    const [formValue, setFormValue] = useState({ email: '', password: '' });
+    const dispatch = useDispatch();
+    const { loggedIn } = useSelector((store) => store.auth);
 
-    const handleChange = e => {
-        setFormValue({ ...formValue, [e.target.name]: e.target.value });
+    const [formValue, setFormValue] = useState({
+        email: '',
+        password: ''
+    });
+    console.log(formValue)
+
+    const handleChange = (e) => {
+        setFormValue({
+            ...formValue,
+            [e.target.name]: e.target.value
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // здесь будет (диспатч) обновление стейта 
+
+
+        if (!validateEmail(formValue.email)) return setIsMailError(true);
+
+        if (formValue.password.length <= 5) {
+            return alert('Некорректный пароль')
+        }
+
+        dispatch(logIn(formValue.email, formValue.password));
     }
 
     // Валидация    
 
     const inputRef = useRef(null);
-    const [isError, setIsError] = useState(false);
+    const [isMailError, setIsMailError] = useState(false);
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -28,20 +49,22 @@ export default function Auth() {
     };
 
     const validateField = (value) => {
-        setIsError(!validateEmail(value));
+        setIsMailError(!validateEmail(value));
     };
 
-    const handleFocus = () => {
-        setIsError(false);
+    const handleMailFocus = () => {
+        setIsMailError(false);
     };
 
-    const handleBlur = (e) => {
+    const handleMailBlur = (e) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
-            setIsError(false);
+            setIsMailError(false);
         };
     };
+
+    if (localStorage.refreshToken && loggedIn) return <Redirect to={'/'} />;
 
     return (
         <div className={styles.auth__conteiner}>
@@ -54,11 +77,11 @@ export default function Auth() {
                         name={'email'}
                         placeholder={'E-mail'}
                         value={formValue.email}
-                        errorText={'Ой, произошла ошибка!'} 
-                        error={isError}
+                        errorText={'Ой, произошла ошибка!'}
+                        error={isMailError}
                         ref={inputRef}
-                        onBlur={handleBlur}
-                        onFocus={handleFocus}
+                        onBlur={handleMailBlur}
+                        onFocus={handleMailFocus}
                         onChange={handleChange}
                     />
                 </div>

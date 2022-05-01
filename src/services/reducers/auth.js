@@ -1,4 +1,12 @@
 import {
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILED,
+
+    LOGOUT_REQUEST,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAILED,
+
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILED,
@@ -18,7 +26,14 @@ const initialState = {
         email: '',
         password: ''
     },
+
     loggedIn: false,
+
+    loginRequest: false,
+    loginFailed: false,
+
+    logoutRequest: false,
+    logoutFailed: false,
 
     registerRequest: false,
     registerFailed: false,
@@ -32,6 +47,61 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
+        case LOGIN_REQUEST: {
+
+            return {
+                ...state,
+                loginRequest: true,
+                loginFailed: false
+            };
+        }
+
+        case LOGIN_SUCCESS: {
+
+            return {
+                ...state,
+                user: action.user,
+                loggedIn: true,
+                loginRequest: false
+            };
+        }
+
+        case LOGIN_FAILED: {
+
+            return {
+                ...state,
+                loginRequest: false,
+                loginFailed: true
+            };
+        }
+
+        case LOGOUT_REQUEST: {
+
+            return {
+                ...state,
+                logoutRequest: true,
+                logoutFailed: false
+            };
+        }
+
+        case LOGOUT_SUCCESS: {
+
+            return {
+                ...state,
+                user: initialState.user,
+                loggedIn: false
+            };
+        }
+
+        case LOGOUT_FAILED: {
+
+            return {
+                ...state,
+                logoutRequest: false,
+                logoutFailed: true
+            };
+        }
+
         case REGISTER_REQUEST: {
             return {
                 ...state,
@@ -48,6 +118,7 @@ export const authReducer = (state = initialState, action) => {
                 registerRequest: false,
             };
         }
+
         case REGISTER_FAILED: {
             return {
                 ...state,
@@ -55,6 +126,7 @@ export const authReducer = (state = initialState, action) => {
                 registerFailed: true
             };
         }
+
         case FORGOT_PASSWORD_REQUEST: {
 
             return {

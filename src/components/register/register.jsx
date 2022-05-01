@@ -11,7 +11,6 @@ import styles from './register.module.css';
 export default function Register() {
     const dispatch = useDispatch();
     const { loggedIn } = useSelector((store) => store.auth);
-    console.log('loggedIn :>> ', loggedIn);
 
     const [formValue, setFormValue] = useState({
         name: '',
@@ -67,9 +66,7 @@ export default function Register() {
         };
     };
 
-    if (loggedIn) {
-        return <Redirect to={'/'} />;
-    }
+    if (localStorage.refreshToken && loggedIn) return <Redirect to={'/'} />;
 
     return (
         <div className={styles.register__conteiner}>

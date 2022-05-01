@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory, NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
 
@@ -12,9 +13,9 @@ function NavBarItem({ linkTo, onClick, children }) {
 
     return (
         <li>
-            <NavLink 
-                to={linkTo} 
-                className={styles.profile__link} 
+            <NavLink
+                to={linkTo}
+                className={styles.profile__link}
                 activeClassName={styles.profile__link_active}
                 onClick={onClick}
                 exact
@@ -34,14 +35,14 @@ NavBarItem.propTypes = {
 }
 
 export default function Profile() {
-    const history = useHistory();
     const inputRef = useRef(null);
-    
+
+    const dispatch = useDispatch();
     const { name, email } = useSelector(
         state => state.auth.user
     );
 
-    const [formValue, setFormValue] = useState({ 
+    const [formValue, setFormValue] = useState({
         name: name,
         email: email,
         password: ''
@@ -49,17 +50,17 @@ export default function Profile() {
 
     useEffect(
         () => {
-            setFormValue({ 
+            setFormValue({
                 name: name,
                 email: email,
-                password: '' 
+                password: ''
             });
         },
         [name, email]
     );
 
     const handleChange = (e) => {
-        setFormValue({ 
+        setFormValue({
             ...formValue,
             [e.target.name]: e.target.value
         });
@@ -86,19 +87,17 @@ export default function Profile() {
         };
     };
 
-    const redirect = () => {
-        history.push('/login')
-      };
-
     const handleLogout = e => {
         e.preventDefault();
         console.log('выход');
-        redirect();
+        dispatch(logOut())
     };
 
     const handleIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
     };
+
+    if (!localStorage.refreshToken) return (<Redirect to='/login' />);
 
     return (
         <>
@@ -121,7 +120,7 @@ export default function Profile() {
                             Выход
                         </NavBarItem>
                     </ul>
-                    
+
                     <p className={`${styles.profile__text} text text_type_main-small text_color_inactive mt-20`}>
                         В этом разделе вы можете изменить свои персональные данные
                     </p>
@@ -130,8 +129,8 @@ export default function Profile() {
                 <div className={styles.profile__wrap}>
                     <form onSubmit={handleSubmit} >
                         <div className='mt-0'>
-                            <Input 
-                                type={'text'} 
+                            <Input
+                                type={'text'}
                                 placeholder={'Имя'}
                                 name='name'
                                 value={formValue.name}
@@ -143,10 +142,10 @@ export default function Profile() {
                         </div>
 
                         <div className="mt-6">
-                            <EmailInput 
-                                name='email' 
+                            <EmailInput
+                                name='email'
                                 value={formValue.email}
-                                onChange={handleChange} 
+                                onChange={handleChange}
                             />
                         </div>
 

@@ -1,13 +1,15 @@
 const Endpoint = {
     INGREDIENTS: 'ingredients',
     ORDERS: 'orders',
+    LOGIN: 'auth/login',
+    LOGOUT: 'auth/logout',
     REGISTER: 'auth/register',
     FORGOT_PASSWORD: 'password-reset',
     RESET_PASSWORD: 'password-reset/reset'
 };
 const URL_API = 'https://norma.nomoreparties.space/api';
 
-const checkReponse = (res) => {
+const checkResponse = (res) => {
     if (res.ok) {
         return res.json();
     }
@@ -18,7 +20,7 @@ const checkReponse = (res) => {
 export const getData = async () => {
 
     return await fetch(`${URL_API}/${Endpoint.INGREDIENTS}`)
-        .then(checkReponse);
+        .then(checkResponse);
 };
 
 export const postOrder = async (ingredientsId) => {
@@ -33,7 +35,32 @@ export const postOrder = async (ingredientsId) => {
             ingredients: ingredientsId
         })
     })
-        .then(checkReponse);
+        .then(checkResponse);
+};
+
+export const postLoginRequest = async (email, password) => {
+    return await fetch(`${URL_API}/${Endpoint.LOGIN}`, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    })
+        .then(checkResponse);
+}
+
+export const postLogoutRequest = async () => {
+    return await fetch(`${URL_API}/${Endpoint.LOGOUT}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            token: localStorage.getItem("refreshToken")
+        }),
+    })
+        .then(checkResponse);
 };
 
 export const postRegisterRequest = async (email, password, name) => {
@@ -43,13 +70,9 @@ export const postRegisterRequest = async (email, password, name) => {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            email,
-            password,
-            name
-        }),
+        body: JSON.stringify({ email, password, name }),
     })
-        .then(checkReponse);
+        .then(checkResponse);
 };
 
 export const postForgotPasswordRequest = async (email) => {
@@ -62,7 +85,7 @@ export const postForgotPasswordRequest = async (email) => {
         },
         body: JSON.stringify({ email })
     })
-        .then(checkReponse);
+        .then(checkResponse);
 };
 
 export const postResetPasswordRequest = async (password, token) => {
@@ -75,6 +98,6 @@ export const postResetPasswordRequest = async (password, token) => {
         },
         body: JSON.stringify({ password, token })
     })
-        .then(checkReponse);
+        .then(checkResponse);
 };
 

@@ -5,10 +5,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../../pages';
 import AppHeader from '../app-header/app-header';
+import { useSelector } from "react-redux";
 
 import styles from './app.module.css';
 
 function App() {
+    console.log('store :>> ', useSelector((store) => store.auth));
 
     return (
         <div className={`app`}>
