@@ -1,6 +1,7 @@
 import {
     postLoginRequest,
     postLogoutRequest,
+    postUpdateTokenRequest,
     postRegisterRequest,
     postForgotPasswordRequest,
     postResetPasswordRequest
@@ -14,6 +15,10 @@ export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILED = 'LOGOUT_FAILED';
+
+export const UPDATE_TOKEN_REQUEST = 'TOKEN_REQUEST';
+export const UPDATE_TOKEN_SUCCESS = 'TOKEN_SUCCESS';
+export const UPDATE_TOKEN_FAILED = 'TOKEN_FAILED';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -38,6 +43,7 @@ export function logIn(email, password) {
             .then((res) => {
                 const accessToken = res.accessToken.split('Bearer ')[1];
                 const refreshToken = res.refreshToken;
+                console.log(accessToken)
 
                 setCookie('token', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
@@ -72,7 +78,7 @@ export function logOut() {
                 if (res.success) {
                     localStorage.removeItem('refreshToken');
                     deleteCookie('token');
-                    
+
                     dispatch({
                         type: LOGOUT_SUCCESS
                     });
@@ -85,6 +91,36 @@ export function logOut() {
             });
     }
 }
+
+export const updateToken = () => {
+    return function (dispatch) {
+        dispatch({ type: UPDATE_TOKEN_REQUEST });
+
+        postUpdateTokenRequest()
+            .then((res) => {
+                const accessToken = res.accessToken.split('Bearer ')[1];
+                const refreshToken = res.refreshToken;
+
+                setCookie('token', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+
+                if (res && res.success) {
+                    dispatch({
+                        type: UPDATE_TOKEN_SUCCESS
+                    });
+                } else {
+                    dispatch({
+                        type: UPDATE_TOKEN_FAILED
+                    });
+                }
+            })
+            .catch(() => {
+                dispatch({
+                    type: UPDATE_TOKEN_FAILED
+                })
+            });
+    };
+};
 
 export function register(email, password, name) {
 

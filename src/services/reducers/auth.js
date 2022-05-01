@@ -7,6 +7,10 @@ import {
     LOGOUT_SUCCESS,
     LOGOUT_FAILED,
 
+    UPDATE_TOKEN_REQUEST,
+    UPDATE_TOKEN_SUCCESS,
+    UPDATE_TOKEN_FAILED,
+
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILED,
@@ -34,6 +38,9 @@ const initialState = {
 
     logoutRequest: false,
     logoutFailed: false,
+
+    updateTokenRequest: false,
+    updateTokenFailed: false,
 
     registerRequest: false,
     registerFailed: false,
@@ -99,6 +106,31 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 logoutRequest: false,
                 logoutFailed: true
+            };
+        }
+
+        case UPDATE_TOKEN_REQUEST: {
+
+            return { 
+                ...state,
+                updateTokenRequest: true,
+                updateTokenFailed: false
+            };
+        }
+        case UPDATE_TOKEN_SUCCESS: {
+
+            return {
+                ...state,
+                loggedIn: true,
+                updateTokenRequest: false
+            };
+        }
+        case UPDATE_TOKEN_FAILED: {
+
+            return {
+                ...state,
+                updateTokenFailed: true,
+                updateTokenRequest: false
             };
         }
 

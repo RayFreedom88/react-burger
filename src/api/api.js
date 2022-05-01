@@ -3,6 +3,7 @@ const Endpoint = {
     ORDERS: 'orders',
     LOGIN: 'auth/login',
     LOGOUT: 'auth/logout',
+    UPDATE_TOKEN: 'auth/token',
     REGISTER: 'auth/register',
     FORGOT_PASSWORD: 'password-reset',
     RESET_PASSWORD: 'password-reset/reset'
@@ -61,6 +62,20 @@ export const postLogoutRequest = async () => {
         }),
     })
         .then(checkResponse);
+};
+
+export const postUpdateTokenRequest = async () => {
+    return await fetch(`${URL_API}/${Endpoint.UPDATE_TOKEN}`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            token: localStorage.refreshToken
+        })
+    })
+        .then(checkResponse)
 };
 
 export const postRegisterRequest = async (email, password, name) => {
