@@ -2,6 +2,8 @@ import {
     postLoginRequest,
     postLogoutRequest,
     postUpdateTokenRequest,
+    getUserRequest,
+    patchUpdateUser,
     postRegisterRequest,
     postForgotPasswordRequest,
     postResetPasswordRequest
@@ -19,6 +21,14 @@ export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 export const UPDATE_TOKEN_REQUEST = 'TOKEN_REQUEST';
 export const UPDATE_TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const UPDATE_TOKEN_FAILED = 'TOKEN_FAILED';
+
+export const GET_USER_REQUEST = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED = 'GET_USER_FAILED';
+
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -43,7 +53,6 @@ export function logIn(email, password) {
             .then((res) => {
                 const accessToken = res.accessToken.split('Bearer ')[1];
                 const refreshToken = res.refreshToken;
-                console.log(accessToken)
 
                 setCookie('token', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
@@ -121,6 +130,62 @@ export const updateToken = () => {
             });
     };
 };
+
+export function getUser() {
+    return function (dispatch) {
+        dispatch({
+            type: GET_USER_REQUEST
+        });
+
+        getUserRequest()
+            .then((res) => {
+                if (res.success) {
+                    dispatch({
+                        type: GET_USER_SUCCESS,
+                        user: res.user
+                    });
+                }
+            })
+            .catch((err) => {
+                if ((err.message === 'jwt expired') || (err.message === 'Token is invalid')) {
+                    dispatch(updateToken());
+                    dispatch(getUser());
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
+                }
+            });
+    }
+}
+
+export function updateUser(email, name) {
+    return function (dispatch) {
+        dispatch({
+            type: UPDATE_USER_REQUEST
+        });
+
+        patchUpdateUser(email, name)
+            .then((res) => {
+                if (res.success) {
+                    dispatch({
+                        type: UPDATE_USER_SUCCESS,
+                        user: res.user
+                    });
+                }
+            })
+            .catch((err) => {
+                if ((err.message === 'jwt expired') || (err.message === 'Token is invalid')) {
+                    dispatch(updateToken());
+                    dispatch(updateUser(email, name));
+                } else {
+                    dispatch({
+                        type: UPDATE_USER_FAILED
+                    })
+                }
+            });
+    }
+}
 
 export function register(email, password, name) {
 

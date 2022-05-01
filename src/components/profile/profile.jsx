@@ -5,7 +5,7 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 import { NavLink, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../../services/actions/auth';
+import { logOut, updateUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
 
@@ -79,22 +79,29 @@ export default function Profile() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if ((formValue.name === '') || formValue.email === '') {
+        if ((formValue.name === '') || !validateEmail(formValue.email)) {
 
             return
         } else {
-            console.log('Сохранить')
+            dispatch(updateUser(formValue.email, formValue.name));
         };
     };
 
     const handleLogout = e => {
         e.preventDefault();
-        console.log('выход');
+    
         dispatch(logOut())
     };
 
     const handleIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
+    };
+
+    // Валидация 
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
     };
 
     if (!localStorage.refreshToken) return (<Redirect to='/login' />);

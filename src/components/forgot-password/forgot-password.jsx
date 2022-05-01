@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, Redirect } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { forgotPassword } from '../../services/actions/auth';
@@ -60,6 +60,8 @@ export default function ForgotPassword() {
             setIsError(false);
         };
     };
+
+    if (localStorage.refreshToken) return <Redirect to={'/'} />;
 
     return (
         <div className={styles.forgot__conteiner}>

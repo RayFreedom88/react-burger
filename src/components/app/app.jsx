@@ -1,15 +1,23 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../../pages';
 import AppHeader from '../app-header/app-header';
-import { useSelector } from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from '../../services/actions/auth';
 
 import styles from './app.module.css';
 
 function App() {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUser());
+      }, [dispatch]);
+      
     console.log('store :>> ', useSelector((store) => store.auth));
 
     return (

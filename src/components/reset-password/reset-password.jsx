@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory, Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../services/actions/auth';
@@ -17,21 +17,16 @@ export default function ResetPassword() {
         setValue({ ...formValue, [e.target.name]: e.target.value });
     };
 
-    const history = useHistory();
-    // временное решение
-    const redirect = () => {
-        history.push('/')
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if ((formValue.password === '') || formValue.token === '') {
             return
         } else {
             dispatch(resetPassword(formValue.password, formValue.token));
-            redirect();
         };
     }
+
+    if (localStorage.refreshToken) return <Redirect to={'/'} />;
 
     return (
         <div className={styles.reset__conteiner}>

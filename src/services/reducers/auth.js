@@ -11,6 +11,14 @@ import {
     UPDATE_TOKEN_SUCCESS,
     UPDATE_TOKEN_FAILED,
 
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_FAILED,
+
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAILED,
+
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILED,
@@ -28,7 +36,6 @@ const initialState = {
     user: {
         name: '',
         email: '',
-        password: ''
     },
 
     loggedIn: false,
@@ -41,6 +48,12 @@ const initialState = {
 
     updateTokenRequest: false,
     updateTokenFailed: false,
+
+    getUserRequest: false,
+    getUserFailed: false,
+
+    updateUserRequest: false,
+    updateUserFailed: false,
 
     registerRequest: false,
     registerFailed: false,
@@ -111,12 +124,13 @@ export const authReducer = (state = initialState, action) => {
 
         case UPDATE_TOKEN_REQUEST: {
 
-            return { 
+            return {
                 ...state,
                 updateTokenRequest: true,
                 updateTokenFailed: false
             };
         }
+
         case UPDATE_TOKEN_SUCCESS: {
 
             return {
@@ -125,6 +139,7 @@ export const authReducer = (state = initialState, action) => {
                 updateTokenRequest: false
             };
         }
+
         case UPDATE_TOKEN_FAILED: {
 
             return {
@@ -134,7 +149,63 @@ export const authReducer = (state = initialState, action) => {
             };
         }
 
+        case GET_USER_REQUEST: {
+
+            return {
+                ...state,
+                getUserRequest: true,
+                getUserFailed: false
+            };
+        }
+
+        case GET_USER_SUCCESS: {
+
+            return {
+                ...state,
+                user: action.user,
+                loggedIn: true,
+                getUserRequest: false
+            };
+        }
+
+        case GET_USER_FAILED: {
+
+            return {
+                ...state,
+                getUserRequest: false,
+                getUserFailed: true
+            };
+        }
+
+        case UPDATE_USER_REQUEST: {
+
+            return {
+                ...state,
+                updateUserRequest: true,
+                updateUserFailed: false
+            };
+        }
+
+        case UPDATE_USER_SUCCESS: {
+
+            return {
+                ...state,
+                user: action.user,
+                updateUserRequest: false
+            };
+        }
+
+        case UPDATE_USER_FAILED: {
+
+            return {
+                ...state,
+                updateUserRequest: false,
+                updateUserFailed: true
+            };
+        }
+
         case REGISTER_REQUEST: {
+
             return {
                 ...state,
                 registerRequest: true,
@@ -143,6 +214,7 @@ export const authReducer = (state = initialState, action) => {
         }
 
         case REGISTER_SUCCESS: {
+
             return {
                 ...state,
                 user: action.user,
@@ -152,6 +224,7 @@ export const authReducer = (state = initialState, action) => {
         }
 
         case REGISTER_FAILED: {
+
             return {
                 ...state,
                 registerRequest: false,
