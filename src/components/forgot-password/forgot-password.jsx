@@ -1,14 +1,16 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useHistory, Link, Redirect } from 'react-router-dom';
+import { useLocation, useHistory, Link, Redirect } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/auth';
 
 import styles from './forgot-password.module.css';
 
 export default function ForgotPassword() {
+    const { state } = useLocation();
+    console.log('useSelector :>> ', useSelector((store) => store.auth));
     const dispatch = useDispatch();
 
     const [formValue, setFormValue] = useState({ email: '' });
@@ -21,7 +23,7 @@ export default function ForgotPassword() {
 
     // временное решение
     const redirect = () => {
-        history.push('/reset-password')
+        history.push('/reset-password', { prevPathname: history.location.pathname })
     };
 
     const handleSubmit = (e) => {
@@ -61,7 +63,7 @@ export default function ForgotPassword() {
         };
     };
 
-    if (localStorage.refreshToken) return <Redirect to={'/'} />;
+    if (localStorage.refreshToken) return <Redirect to={state?.from || '/'} />;
 
     return (
         <div className={styles.forgot__conteiner}>

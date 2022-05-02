@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { useHistory ,Link, Redirect } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { resetPassword } from '../../services/actions/auth';
@@ -9,6 +9,9 @@ import { resetPassword } from '../../services/actions/auth';
 import styles from './reset-password.module.css';
 
 export default function ResetPassword() {
+    const history = useHistory();
+    const prevPathname = history.location.state;
+
     const dispatch = useDispatch();
 
     const [formValue, setValue] = useState({ password: '', token: '' });
@@ -27,6 +30,8 @@ export default function ResetPassword() {
     }
 
     if (localStorage.refreshToken) return <Redirect to={'/'} />;
+
+    if (!prevPathname) history.push('/forgot-password');
 
     return (
         <div className={styles.reset__conteiner}>

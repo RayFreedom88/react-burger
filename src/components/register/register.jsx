@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { useLocation, Link, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from "react-redux";
 import { register } from '../../services/actions/auth';
@@ -9,6 +9,8 @@ import { register } from '../../services/actions/auth';
 import styles from './register.module.css';
 
 export default function Register() {
+    const { state } = useLocation();
+
     const dispatch = useDispatch();
     const { loggedIn } = useSelector((store) => store.auth);
 
@@ -66,7 +68,7 @@ export default function Register() {
         };
     };
 
-    if (localStorage.refreshToken && loggedIn) return <Redirect to={'/'} />;
+    if (localStorage.refreshToken && loggedIn) return <Redirect to={state?.from || '/'} />;
 
     return (
         <div className={styles.register__conteiner}>

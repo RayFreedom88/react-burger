@@ -1,24 +1,15 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import { ProtectedRoute } from '../protected-route';
 import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../../pages';
 import AppHeader from '../app-header/app-header';
-
-import { useSelector, useDispatch } from "react-redux";
-import { getUser } from '../../services/actions/auth';
 
 import styles from './app.module.css';
 
 function App() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getUser());
-      }, [dispatch]);
-      
-    console.log('store :>> ', useSelector((store) => store.auth));
 
     return (
         <div className={`app`}>
@@ -47,9 +38,9 @@ function App() {
                             <ResetPasswordPage />
                         </Route>
 
-                        <Route path='/profile' exact={true}>
+                        <ProtectedRoute path="/profile" exact={true}>
                             <ProfilePage />
-                        </Route>
+                        </ProtectedRoute>
 
                         <Route>
                             <NotFound404 />

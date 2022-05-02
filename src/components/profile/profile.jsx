@@ -5,7 +5,7 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 import { NavLink, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { logOut, updateUser } from '../../services/actions/auth';
+import { logOut, updateUser, getUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
 
@@ -41,12 +41,20 @@ export default function Profile() {
     const { name, email } = useSelector(
         state => state.auth.user
     );
+    const { loggedIn } = useSelector((store) => store.auth);
 
     const [formValue, setFormValue] = useState({
         name: name,
         email: email,
         password: ''
     });
+
+    useEffect(
+        () => {
+            dispatch(getUser())
+        },
+        [dispatch]
+    );
 
     useEffect(
         () => {
@@ -104,7 +112,7 @@ export default function Profile() {
         return re.test(email);
     };
 
-    if (!localStorage.refreshToken) return (<Redirect to='/login' />);
+    if (!loggedIn) return (<Redirect to='/login' />);
 
     return (
         <>

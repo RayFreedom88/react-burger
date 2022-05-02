@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { useLocation, Link, Redirect } from 'react-router-dom';
 
 import { useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
@@ -9,13 +9,14 @@ import { logIn } from '../../services/actions/auth';
 import styles from './auth.module.css';
 
 export default function Auth() {
+    const { state } = useLocation();
+
     const dispatch = useDispatch();
 
     const [formValue, setFormValue] = useState({
         email: '',
         password: ''
     });
-    console.log(formValue)
 
     const handleChange = (e) => {
         setFormValue({
@@ -63,7 +64,7 @@ export default function Auth() {
         };
     };
 
-    if (localStorage.refreshToken) return <Redirect to={'/'} />;
+    if (localStorage.refreshToken) return <Redirect to={state?.from || '/'} />;
 
     return (
         <div className={styles.auth__conteiner}>
