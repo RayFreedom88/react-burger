@@ -1,18 +1,11 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import Ingredient from './ingredient';
-import Modal from '../modal/modal';
-import IngredientDetails from './ingredient-details/ingredient-details';
 
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    getItems,
-    ADD_INGREDIENT_MODAL,
-    DELETE_INGREDIENT_MODAL
-} from '../../services/actions/shop';
+import { useSelector } from 'react-redux';
 
 import styles from './burger-ingredients.module.css';
 
@@ -41,14 +34,6 @@ Ingredients.propTypes = {
 };
 
 function BurgerIngredients() {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getItems());
-    },
-        [dispatch]
-    );
-
     const allIngredients = useSelector(state => state.shop.allIngredients);
 
     const getIngredient = (item) => {
@@ -58,7 +43,6 @@ function BurgerIngredients() {
                 className={styles.burgeringredients__item}
                 product={item}
                 key={item._id}
-                onClick={() => { handleOpenModal(item) }}
             />
         )
     };
@@ -94,27 +78,6 @@ function BurgerIngredients() {
             }
         })
     }
-
-    // Modal (IngredientDetails)
-
-    const [isOpenModal, setIsOpenModal] = useState(false);
-
-    const handleOpenModal = (data) => {
-        setIsOpenModal(true);
-
-        dispatch({
-            type: ADD_INGREDIENT_MODAL,
-            ingredient: data
-        });
-    };
-
-    const handleCloseModal = () => {
-        setIsOpenModal(false);
-
-        dispatch({
-            type: DELETE_INGREDIENT_MODAL,
-        });
-    };
 
     if (!allIngredients.length) return null;
 
@@ -152,14 +115,6 @@ function BurgerIngredients() {
                     </Ingredients>
                 </div>
             </div>
-
-            <Modal
-                header={'Детали ингредиента'}
-                isOpen={isOpenModal}
-                onClose={handleCloseModal}
-            >
-                <IngredientDetails />
-            </Modal>
         </div>
     );
 };

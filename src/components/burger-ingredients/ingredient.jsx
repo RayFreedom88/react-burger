@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { itemPropTypes } from '../../utils/types';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
-function Ingredient({ product, className, onClick }) {
-    const { name, image, price } = product;
+function Ingredient({ product, className}) {
+    const location = useLocation();
 
+    const { name, image, price } = product;
     const { bun, ingredients } = useSelector(state => state.shop.selected);
 
     const [{ boxShadow }, dragRef] = useDrag({
@@ -39,19 +41,27 @@ function Ingredient({ product, className, onClick }) {
     );
 
     return (
-        <li className={className} onClick={onClick} style={{ boxShadow }} ref={dragRef}>
-            {count >= 1 ? <Counter count={count} size='default' /> : null}
+        <li style={{ boxShadow }} ref={dragRef}>
+            <Link 
+                className={className}
+                to={{
+                    pathname: `/ingredients/${product._id}`,
+                    state: { background: location }
+                }}
+            >
+                {count >= 1 ? <Counter count={count} size='default' /> : null}
 
-            <img src={image} alt={name} />
+                <img src={image} alt={name} />
 
-            <p className={`text text_type_digits-default mt-1 mb-1`}>
-                <span>{price}</span>&nbsp;
-                <CurrencyIcon type='primary' />
-            </p>
+                <p className={`text text_type_digits-default mt-1 mb-1`}>
+                    <span>{price}</span>&nbsp;
+                    <CurrencyIcon type='primary' />
+                </p>
 
-            <p className={`text text_type_main-small mb-5`}>
-                {name}
-            </p>
+                <p className={`text text_type_main-default mb-5`}>
+                    {name}
+                </p>
+            </Link>
         </li>
     );
 }
@@ -59,7 +69,6 @@ function Ingredient({ product, className, onClick }) {
 Ingredient.propTypes = {
     product: itemPropTypes.isRequired,
     className: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired
 };
 
 export default Ingredient;

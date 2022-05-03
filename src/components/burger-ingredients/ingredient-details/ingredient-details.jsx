@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { itemPropTypes } from "../../../utils/types";
 import IngredientImage from './ingredient-image';
 
+import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import styles from '../burger-ingredients.module.css'
@@ -46,7 +47,12 @@ MicrolEmentsDetail.propTypes = {
 };
 
 function IngredientDetails() {
-    const ingredient = useSelector(state => state.shop.currentIngredient);
+    const { id } = useParams();
+    const { allIngredients } = useSelector(state => state.shop);
+    
+    const ingredient = (allIngredients.length > 0) 
+        ? allIngredients.find(product => product._id === id) 
+        : {image_large:'',name:'',calories:'',proteins:'',fat:'',carbohydrates:''};
 
     return (
         <>

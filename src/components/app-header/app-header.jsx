@@ -1,40 +1,58 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, NavLink } from 'react-router-dom';
+
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './app-header.module.css';
 
+function NavItem({ icon, linkTo, exact, children }) {
+
+    return (
+        <li>
+            <NavLink 
+                to={linkTo} 
+                className={styles.appheader__link} 
+                activeClassName={styles.appheader__link_active} 
+                exact
+            >
+                {icon}
+                <p className='text text_type_main-default ml-2'>
+                    {children}
+                </p>
+            </NavLink>
+        </li>
+    )
+}
+
+NavItem.propTypes = {
+    linkTo: PropTypes.string.isRequired,
+    children: PropTypes.string.isRequired
+}
 
 function AppHeader() {
     return (
         <header className={styles.appheader}>
             <div className={styles.appheader__content}>
-                <div className={styles.appheader__logo}>
+                <Link to={'/'} className={styles.appheader__logo}>
                     <Logo />
-                </div>
+                </Link>
 
                 <nav className={styles.appheader__nav}>
                     <ul className={styles.appheader__list}>
-                        <li>
-                            <span className={styles.appheader__link}>
-                                <BurgerIcon type='primary' />
-                                <p className='text text_type_main-default ml-2'>Конструктор</p>
-                            </span>
-                        </li>
+                        <NavItem icon={<BurgerIcon />} linkTo={'/'}>
+                            Конструктор
+                        </NavItem>
 
-                        <li>
-                            <span className={styles.appheader__link}>
-                                <ListIcon type='secondary' />
-                                <p className='text text_type_main-default text_color_inactive ml-2'>Лента заказов</p>
-                            </span>
-                        </li>
+                        <NavItem icon={<ListIcon />} linkTo={'/feed'}>
+                            Лента заказов
+                        </NavItem>
                     </ul>
 
                     <ul className={styles.appheader__list}>
-                        <li>
-                            <span className={styles.appheader__link}>
-                                <ProfileIcon type='secondary' />
-                                <p className='text text_type_main-default text_color_inactive ml-2'>Личный кабинет</p>
-                            </span>
-                        </li>
+                        <NavItem icon={<ProfileIcon />} linkTo={'/profile'}>
+                            Личный кабинет
+                        </NavItem>
                     </ul>
                 </nav>
             </div>

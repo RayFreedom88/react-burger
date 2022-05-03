@@ -1,33 +1,98 @@
-import React from 'react';
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import React, { useEffect } from 'react';
 
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
+
+import { ProtectedRoute } from '../protected-route';
+import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import Modal from '../modal/modal';
+import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details';
+
+import { useDispatch } from 'react-redux';
+import { getItems } from '../../services/actions/shop';
+import { getUser } from '../../services/actions/auth';
 
 import styles from './app.module.css';
 
 function App() {
+    const ModalSwitch = () => {
+        const dispatch = useDispatch();
+
+        const history = useHistory();
+        const location = useLocation();
+        const background = location.state && location.state.background;
+
+        useEffect(() => {
+            dispatch(getItems());
+            
+            if (localStorage.refreshToken) {
+                dispatch(getUser());
+            };
+        }, [dispatch]);
+
+        const handleCloseModal = () => {
+            history.goBack();
+        };
+
+        return (
+            <div className={`app`}>
+                <AppHeader />
+
+                <main className={styles.app__main}>
+                    <Switch location={background || location}>
+                        <Route path='/' exact={true}>
+                            <HomePage />
+                        </Route>
+
+                        <Route path='/login'>
+                            <LoginPage />
+                        </Route>
+
+                        <Route path='/register'>
+                            <RegisterPage />
+                        </Route>
+
+                        <Route path='/forgot-password'>
+                            <ForgotPasswordPage />
+                        </Route>
+
+                        <Route path='/reset-password'>
+                            <ResetPasswordPage />
+                        </Route>
+
+                        <ProtectedRoute path='/profile'>
+                            <ProfilePage />
+                        </ProtectedRoute>
+
+                        <Route path='/ingredients/:id'>
+                            <IngredientPage />
+                        </Route>
+
+                        <Route>
+                            <NotFound404 />
+                        </Route>
+                    </Switch>
+
+                    {background && (
+                        <Route path='/ingredients/:id'>
+                            <Modal
+                                header='Детали ингредиента'
+                                onClose={handleCloseModal}
+                            >
+                                <IngredientDetails />
+                            </Modal>
+                        </Route>
+                    )}
+                </main>
+            </div>
+        );
+    };
 
     return (
-        <div className={`app`}>
-            <AppHeader />
-
-            <DndProvider backend={HTML5Backend}>
-                <main className={styles.app__main}>
-                    <h1 className={`visually-hidden`}>
-                        Главная страница сайта Stellar Burgers
-                    </h1>
-
-                    <section className={styles.app__section}>
-                        <BurgerIngredients />
-                        <BurgerConstructor />
-                    </section>
-                </main>
-            </DndProvider>
-        </div>
+        <Router>
+            <ModalSwitch />
+        </Router>
     );
 }
 
