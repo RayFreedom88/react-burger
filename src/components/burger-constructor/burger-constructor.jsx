@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 
 import { v1 as uuid } from 'uuid';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,17 +8,20 @@ import Modal from '../modal/modal';
 import OrderDetails from './order-details';
 
 import { useDrop } from "react-dnd";
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     ADD_SELECTED_INGREDIENT,
     ADD_SELECTED_BUN,
     UPDATE_SELECTED_LIST,
-    getOrder
+    getOrder,
+    CLOSE_ORDER
 } from '../../services/actions/shop';
 
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const allIngredients = useSelector(state => state.shop.allIngredients);
@@ -67,19 +70,22 @@ function BurgerConstructor() {
     // Modal (OrderDetails)
 
     const order = useSelector(state => state.shop.order);
-    const [isOpenModal, setIsOpenModal] = useState(false);
     const idIngredients = ingredients.map(product => product.id)
 
     const handleOpenModal = () => {
-        dispatch(
-            getOrder([...idIngredients, bun, bun])
-        );
-
-        setIsOpenModal(true);
+        if (localStorage.refreshToken) {
+            dispatch(
+                getOrder([...idIngredients, bun, bun])
+            );
+        } else {
+            history.push('/login');
+        }
     };
 
     const handleCloseModal = () => {
-        setIsOpenModal(false);
+        dispatch({
+            type: CLOSE_ORDER
+        });
     };
 
     // Total price
@@ -156,8 +162,7 @@ function BurgerConstructor() {
 
             {order &&
                 <Modal
-                    header={``}
-                    isOpen={isOpenModal}
+                    header={''}
                     onClose={handleCloseModal}
                 >
                     <OrderDetails />

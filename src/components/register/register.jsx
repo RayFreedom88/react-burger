@@ -68,7 +68,7 @@ export default function Register() {
         };
     };
 
-    if (localStorage.refreshToken && loggedIn) return <Redirect to={state?.from || '/'} />;
+    if (loggedIn) return <Redirect to={state?.from || '/'} />;
 
     return (
         <div className={styles.register__conteiner}>

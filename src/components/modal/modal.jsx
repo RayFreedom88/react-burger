@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,11 +6,13 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
 function ModalHeader({ children, onClick }) {
+
     return (
         <div className={styles.modal__header}>
             <p className={'text text_type_main-large'}>
                 {children}
             </p>
+
             <CloseIcon onClick={onClick} />
         </div>
     )
@@ -26,6 +28,7 @@ ModalHeader.propTypes = {
 }
 
 function ModalBody({ children }) {
+
     return (
         <div className={styles.modal__body}>
             {children}
@@ -40,50 +43,41 @@ ModalBody.propTypes = {
     ]).isRequired
 }
 
-function Modal({ isOpen, header, children, onClose }) {
+function Modal({ header, children, onClose }) {
+    const modalRoot = document.getElementById('modal-root');
 
-    const handleEscKeyDown = (e) => {
-        e.preventDefault()
-
+    const handleEscKeyDown = useCallback((e) => {
         if (e.key === 'Escape') {
             onClose();
-        }
-    }
+        };
+    }, [onClose]);
+
 
     useEffect(() => {
-        if (isOpen) window.addEventListener('keydown', handleEscKeyDown);
+        window.addEventListener('keydown', handleEscKeyDown);
 
         return () => {
             window.removeEventListener('keydown', handleEscKeyDown);
         };
-        // eslint-disable-next-line
-    }, [isOpen])
 
-    useEffect(() => {
-        if (isOpen) document.getElementById('modal').focus();
-    }, [isOpen])
+    }, [handleEscKeyDown])
 
     return createPortal(
-        (
-            <>
-                {isOpen &&
-                    <div id='modal'>
-                        <ModalOverlay onClick={onClose} />
+        <div id='modal'>
+            <ModalOverlay onClick={onClose} />
 
-                        <div className={styles.modal}>
-                            <ModalHeader onClick={onClose}>
-                                {header}
-                            </ModalHeader>
+            <div className={styles.modal}>
+                <ModalHeader onClick={onClose}>
+                    {header}
+                </ModalHeader>
 
-                            <ModalBody>
-                                {children}
-                            </ModalBody>
-                        </div>
-                    </div>
-                }
-            </>
-        ),
-        document.getElementById('modal-root')
+                <ModalBody>
+                    {children}
+                </ModalBody>
+            </div>
+        </div>,
+
+        modalRoot
     );
 }
 

@@ -14,6 +14,7 @@ import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
+    CLOSE_ORDER,
 } from '../actions/shop';
 
 const initialState = {
@@ -28,7 +29,7 @@ const initialState = {
 
     currentIngredient: {},
 
-    orders: null,
+    order: null,
     orderRequest: false,
     orderFailed: false,
 };
@@ -159,6 +160,14 @@ export const shopReducer = (state = initialState, action) => {
                 ...state,
                 orderRequest: false,
                 orderFailed: true
+            };
+        }
+
+        case CLOSE_ORDER: {
+
+            return {
+                ...state,
+                order: null
             };
         }
 

@@ -3,15 +3,15 @@ import React, { useState, useRef } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
 
 import styles from './auth.module.css';
 
 export default function Auth() {
-    const { state } = useLocation();
-
     const dispatch = useDispatch();
+    const { loggedIn } = useSelector(state => state.auth);
+    const { state } = useLocation();
 
     const [formValue, setFormValue] = useState({
         email: '',
@@ -27,7 +27,6 @@ export default function Auth() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
 
         if (!validateEmail(formValue.email)) return setIsMailError(true);
 
@@ -64,7 +63,7 @@ export default function Auth() {
         };
     };
 
-    if (localStorage.refreshToken) return <Redirect to={state?.from || '/'} />;
+    if (loggedIn) return <Redirect to={state?.from || '/'} />;
 
     return (
         <div className={styles.auth__conteiner}>

@@ -9,7 +9,7 @@ const styleHome = {
     justifyContent: 'center',
     gap: 40,
     margin: '0 auto',
-    height: 912,
+    height: 'calc(100vh - 120px)',
     width: 1280
 };
 

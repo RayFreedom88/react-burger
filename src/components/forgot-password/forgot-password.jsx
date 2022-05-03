@@ -10,8 +10,9 @@ import styles from './forgot-password.module.css';
 
 export default function ForgotPassword() {
     const { state } = useLocation();
-    console.log('useSelector :>> ', useSelector((store) => store.auth));
+    
     const dispatch = useDispatch();
+    const { loggedIn } = useSelector(state => state.auth);
 
     const [formValue, setFormValue] = useState({ email: '' });
 
@@ -63,7 +64,7 @@ export default function ForgotPassword() {
         };
     };
 
-    if (localStorage.refreshToken) return <Redirect to={state?.from || '/'} />;
+    if (loggedIn) return <Redirect to={state?.from || '/'} />;
 
     return (
         <div className={styles.forgot__conteiner}>
