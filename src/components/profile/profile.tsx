@@ -9,12 +9,12 @@ import { logOut, updateUser, getUser } from '../../services/actions/auth';
 import styles from './profile.module.css';
 import { TState } from '../../utils/types';
 
-interface IProps {
+interface IPropsNavBar {
     linkTo: string;
     onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
-const NavBarItem: FC<IProps> = ({ linkTo, onClick, children }) => {
+const NavBarItem: FC<IPropsNavBar> = ({ linkTo, onClick, children }) => {
 
     return (
         <li>

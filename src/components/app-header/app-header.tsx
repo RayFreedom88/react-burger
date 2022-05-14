@@ -1,12 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC, ReactNode } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './app-header.module.css';
 
-function NavItem({ icon, linkTo, exact, children }) {
+interface IPropsNavItem {
+    linkTo: string;
+    icon: ReactNode;
+}
+
+const NavItem: FC<IPropsNavItem> = ({ icon, linkTo, children }) => {
 
     return (
         <li>
@@ -23,14 +26,10 @@ function NavItem({ icon, linkTo, exact, children }) {
             </NavLink>
         </li>
     )
-}
+};
 
-NavItem.propTypes = {
-    linkTo: PropTypes.string.isRequired,
-    children: PropTypes.string.isRequired
-}
+const AppHeader: FC = () => {
 
-function AppHeader() {
     return (
         <header className={styles.appheader}>
             <div className={styles.appheader__content}>
@@ -40,17 +39,17 @@ function AppHeader() {
 
                 <nav className={styles.appheader__nav}>
                     <ul className={styles.appheader__list}>
-                        <NavItem icon={<BurgerIcon />} linkTo={'/'}>
+                        <NavItem icon={<BurgerIcon type="primary"/>} linkTo={'/'}>
                             Конструктор
                         </NavItem>
 
-                        <NavItem icon={<ListIcon />} linkTo={'/feed'}>
+                        <NavItem icon={<ListIcon type="primary"/>} linkTo={'/feed'}>
                             Лента заказов
                         </NavItem>
                     </ul>
 
                     <ul className={styles.appheader__list}>
-                        <NavItem icon={<ProfileIcon />} linkTo={'/profile'}>
+                        <NavItem icon={<ProfileIcon type="primary"/>} linkTo={'/profile'}>
                             Личный кабинет
                         </NavItem>
                     </ul>
@@ -58,6 +57,6 @@ function AppHeader() {
             </div>
         </header>
     );
-}
+};
 
 export default AppHeader;
