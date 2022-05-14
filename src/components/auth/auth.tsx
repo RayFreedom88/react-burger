@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, FC, SyntheticEvent, FocusEvent } from 'react';
 
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link, Redirect } from 'react-router-dom';
@@ -7,25 +7,61 @@ import { useSelector, useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
 
 import styles from './auth.module.css';
+import { TLocation } from '../../utils/types';
 
-export default function Auth() {
+interface IState {
+    auth: {
+        user: {
+            name: string,
+            email: string,
+        },
+    
+        loggedIn: boolean,
+    
+        loginRequest: boolean,
+        loginFailed: boolean,
+    
+        logoutRequest: boolean,
+        logoutFailed: boolean,
+    
+        updateTokenRequest: boolean,
+        updateTokenFailed: boolean,
+    
+        getUserRequest: boolean,
+        getUserFailed: boolean,
+    
+        updateUserRequest: boolean,
+        updateUserFailed: boolean,
+    
+        registerRequest: boolean,
+        registerFailed: boolean,
+    
+        forgotPasswordRequest: boolean,
+        forgotPasswordFailed: boolean,
+    
+        resetPasswordRequest: boolean,
+        resetPasswordFailed: boolean,
+    }
+};
+
+const Auth: FC = () => {
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector(state => state.auth);
-    const { state } = useLocation();
+    const { loggedIn } = useSelector<IState, { loggedIn: boolean }>(state => state.auth);
+    const { state } = useLocation<TLocation>();
 
     const [formValue, setFormValue] = useState({
         email: '',
         password: ''
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: { target: HTMLInputElement}) => {
         setFormValue({
             ...formValue,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
         if (!validateEmail(formValue.email)) return setIsMailError(true);
@@ -42,12 +78,12 @@ export default function Auth() {
     const inputRef = useRef(null);
     const [isMailError, setIsMailError] = useState(false);
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     };
 
-    const validateField = (value) => {
+    const validateField = (value: string) => {
         setIsMailError(!validateEmail(value));
     };
 
@@ -55,7 +91,7 @@ export default function Auth() {
         setIsMailError(false);
     };
 
-    const handleMailBlur = (e) => {
+    const handleMailBlur = (e: FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
@@ -107,4 +143,6 @@ export default function Auth() {
             </p>
         </div>
     )
-}
+};
+
+export default Auth;

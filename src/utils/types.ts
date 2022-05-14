@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Location } from "history";
 
 export const itemPropTypes = PropTypes.shape({
     calories: PropTypes.number.isRequired,
@@ -14,3 +15,8 @@ export const itemPropTypes = PropTypes.shape({
     __v: PropTypes.number,
     _id: PropTypes.string.isRequired
 });
+
+export type TLocation = {
+    from: Location;
+    background?: Location;
+};

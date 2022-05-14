@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
 
@@ -14,13 +14,14 @@ import { getItems } from '../../services/actions/shop';
 import { getUser } from '../../services/actions/auth';
 
 import styles from './app.module.css';
+import { TLocation } from '../../utils/types';
 
-function App() {
+const App: FC = () => {
     const ModalSwitch = () => {
         const dispatch = useDispatch();
 
         const history = useHistory();
-        const location = useLocation();
+        const location = useLocation<TLocation>();
         const background = location.state && location.state.background;
 
         useEffect(() => {
