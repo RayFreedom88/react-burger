@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useRef, useEffect, FC, SyntheticEvent, MouseEventHandler } from 'react';
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Redirect } from 'react-router-dom';
@@ -8,8 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut, updateUser, getUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
+import { TState } from '../../utils/types';
 
-function NavBarItem({ linkTo, onClick, children }) {
+interface IProps {
+    linkTo: string;
+    onClick?: MouseEventHandler<HTMLAnchorElement>
+}
+
+const NavBarItem: FC<IProps> = ({ linkTo, onClick, children }) => {
 
     return (
         <li>
@@ -26,22 +31,16 @@ function NavBarItem({ linkTo, onClick, children }) {
             </NavLink>
         </li>
     )
-}
+};
 
-NavBarItem.propTypes = {
-    linkTo: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    children: PropTypes.string.isRequired
-}
-
-export default function Profile() {
-    const inputRef = useRef(null);
+const Profile: FC = () => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();
-    const { name, email } = useSelector(
+    const { name, email } = useSelector<TState, { name: string, email: string }>(
         state => state.auth.user
     );
-    const { loggedIn } = useSelector((store) => store.auth);
+    const { loggedIn } = useSelector<TState, { loggedIn: boolean }>((store) => store.auth);
 
     const [formValue, setFormValue] = useState({
         name: name,
@@ -67,14 +66,14 @@ export default function Profile() {
         [name, email]
     );
 
-    const handleChange = (e) => {
+    const handleChange = (e: { target: HTMLInputElement}) => {
         setFormValue({
             ...formValue,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleCancel = (e) => {
+    const handleCancel = (e: SyntheticEvent) => {
         e.preventDefault();
 
         setFormValue({
@@ -84,7 +83,7 @@ export default function Profile() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
         if ((formValue.name === '') || !validateEmail(formValue.email)) {
@@ -95,19 +94,21 @@ export default function Profile() {
         };
     };
 
-    const handleLogout = e => {
+    const handleLogout = (e: SyntheticEvent) => {
         e.preventDefault();
     
         dispatch(logOut())
     };
 
     const handleIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0)
+        if(inputRef && inputRef.current) {
+            inputRef.current.focus()
+        }
     };
 
     // Валидация 
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     };
@@ -186,4 +187,6 @@ export default function Profile() {
             </section>
         </>
     );
-}
+};
+
+export default Profile;
