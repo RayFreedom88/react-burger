@@ -5,9 +5,9 @@ import { useLocation, Link, Redirect } from 'react-router-dom';
 
 import { useSelector, useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
+import { TState, TLocation } from '../../utils/types';
 
 import styles from './auth.module.css';
-import { TState, TLocation } from '../../utils/types';
 
 const Auth: FC = () => {
     const dispatch = useDispatch();

@@ -12,9 +12,9 @@ import IngredientDetails from '../burger-ingredients/ingredient-details/ingredie
 import { useDispatch } from 'react-redux';
 import { getItems } from '../../services/actions/shop';
 import { getUser } from '../../services/actions/auth';
+import { TLocation } from '../../utils/types';
 
 import styles from './app.module.css';
-import { TLocation } from '../../utils/types';
 
 const App: FC = () => {
     const ModalSwitch = () => {
