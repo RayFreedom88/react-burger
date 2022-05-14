@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-import { Redirect, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import { TState } from '../utils/types';
 
-export function ProtectedRoute({ children, ...rest }) {
-    const {loggedIn} = useSelector(state => state.auth)
+export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
+    const {loggedIn} = useSelector<TState,{ loggedIn: boolean }>(state => state.auth);
 
     return (
         <Route
@@ -20,8 +20,6 @@ export function ProtectedRoute({ children, ...rest }) {
             )}
         />
     );
-}
-
-ProtectedRoute.propTypes = {
-    children: PropTypes.element.isRequired,
 };
+
+export default ProtectedRoute;
