@@ -7,46 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
 
 import styles from './auth.module.css';
-import { TLocation } from '../../utils/types';
-
-interface IState {
-    auth: {
-        user: {
-            name: string,
-            email: string,
-        },
-    
-        loggedIn: boolean,
-    
-        loginRequest: boolean,
-        loginFailed: boolean,
-    
-        logoutRequest: boolean,
-        logoutFailed: boolean,
-    
-        updateTokenRequest: boolean,
-        updateTokenFailed: boolean,
-    
-        getUserRequest: boolean,
-        getUserFailed: boolean,
-    
-        updateUserRequest: boolean,
-        updateUserFailed: boolean,
-    
-        registerRequest: boolean,
-        registerFailed: boolean,
-    
-        forgotPasswordRequest: boolean,
-        forgotPasswordFailed: boolean,
-    
-        resetPasswordRequest: boolean,
-        resetPasswordFailed: boolean,
-    }
-};
+import { TState, TLocation } from '../../utils/types';
 
 const Auth: FC = () => {
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector<IState, { loggedIn: boolean }>(state => state.auth);
+    const { loggedIn } = useSelector<TState, { loggedIn: boolean }>(state => state.auth);
     const { state } = useLocation<TLocation>();
 
     const [formValue, setFormValue] = useState({

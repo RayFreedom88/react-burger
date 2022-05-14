@@ -1,18 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, FC, SyntheticEvent, FocusEvent } from 'react';
 
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from "react-redux";
 import { register } from '../../services/actions/auth';
+import { TState, TLocation } from '../../utils/types';
 
 import styles from './register.module.css';
 
-export default function Register() {
-    const { state } = useLocation();
+const Register: FC = () => {
+    const { state } = useLocation<TLocation>();
 
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector((store) => store.auth);
+    const { loggedIn } = useSelector<TState, { loggedIn: boolean }>((store) => store.auth);
 
     const [formValue, setFormValue] = useState({
         name: '',
@@ -21,11 +22,14 @@ export default function Register() {
     });
 
 
-    const handleChange = e => {
-        setFormValue({ ...formValue, [e.target.name]: e.target.value });
+    const handleChange = (e: { target: HTMLInputElement}) => {
+        setFormValue({ 
+            ...formValue,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
         if (formValue.name === '') return setIsNameError(true);;
 
@@ -47,12 +51,12 @@ export default function Register() {
         setIsNameError(false);
     };
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     };
 
-    const validateField = (value) => {
+    const validateField = (value: string) => {
         setIsMailError(!validateEmail(value));
     };
 
@@ -60,7 +64,7 @@ export default function Register() {
         setIsMailError(false);
     };
 
-    const handleBlur = (e) => {
+    const handleMailBlur = (e: FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
@@ -98,7 +102,7 @@ export default function Register() {
                         errorText={'Ой, произошла ошибка!'} 
                         error={isMailError}
                         ref={inputRef}
-                        onBlur={handleBlur}
+                        onBlur={handleMailBlur}
                         onFocus={handleMailFocus}
                         onChange={handleChange}
                     />
@@ -123,3 +127,5 @@ export default function Register() {
         </div>
     );
 };
+
+export default Register;

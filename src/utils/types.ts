@@ -16,6 +16,41 @@ export const itemPropTypes = PropTypes.shape({
     _id: PropTypes.string.isRequired
 });
 
+export type TState = {
+    auth: {
+        user: {
+            name: string,
+            email: string,
+        },
+    
+        loggedIn: boolean,
+    
+        loginRequest: boolean,
+        loginFailed: boolean,
+    
+        logoutRequest: boolean,
+        logoutFailed: boolean,
+    
+        updateTokenRequest: boolean,
+        updateTokenFailed: boolean,
+    
+        getUserRequest: boolean,
+        getUserFailed: boolean,
+    
+        updateUserRequest: boolean,
+        updateUserFailed: boolean,
+    
+        registerRequest: boolean,
+        registerFailed: boolean,
+    
+        forgotPasswordRequest: boolean,
+        forgotPasswordFailed: boolean,
+    
+        resetPasswordRequest: boolean,
+        resetPasswordFailed: boolean,
+    }
+};
+
 export type TLocation = {
     from: Location;
     background?: Location;
