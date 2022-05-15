@@ -1,5 +1,5 @@
 // получение Cookie
-export function getCookie(name) {
+export function getCookie(name: string) {
     
     const matches = document.cookie.match(
         // eslint-disable-next-line no-useless-escape
@@ -10,7 +10,7 @@ export function getCookie(name) {
 }
 
 // изменение Cookie
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string | number | null | boolean, props?: any) {
     props = props || {};
     let exp = props.expires;
 
@@ -24,7 +24,7 @@ export function setCookie(name, value, props) {
         props.expires = exp.toUTCString();
     }
 
-    value = encodeURIComponent(value);
+    value = (value != null) ? encodeURIComponent(value) : null;
     let updatedCookie = name + '=' + value;
 
     for (const propName in props) {
@@ -39,6 +39,6 @@ export function setCookie(name, value, props) {
 }
 
 // удаление Cookie 
-export function deleteCookie(name) {
+export function deleteCookie(name: string) {
     setCookie(name, null, { expires: -1 });
 }
