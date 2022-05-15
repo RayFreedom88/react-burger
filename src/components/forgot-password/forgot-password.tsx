@@ -5,7 +5,7 @@ import { useLocation, useHistory, Link, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/auth';
-import { TLocation, TState } from '../../utils/types';
+import { TLocation, TStateAuth } from '../../utils/types';
 
 import styles from './forgot-password.module.css';
 
@@ -13,7 +13,7 @@ const ForgotPassword: FC = () => {
     const { state } = useLocation<TLocation>();
     
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector<TState, { loggedIn: boolean }>(state => state.auth);
+    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>(state => state.auth);
 
     const [formValue, setFormValue] = useState({ email: '' });
 

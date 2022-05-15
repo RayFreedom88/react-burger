@@ -2,13 +2,10 @@ import React, { useEffect, useCallback, FC } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { IModalHeader } from '../../utils/interfaces';
 import styles from './modal.module.css';
 
-interface IPropsModalHeader {
-    onClick: () => void;
-};
-
-const ModalHeader: FC<IPropsModalHeader> = ({ children, onClick }) => {
+const ModalHeader: FC<IModalHeader> = ({ children, onClick }) => {
 
     return (
         <div className={styles.modal__header}>

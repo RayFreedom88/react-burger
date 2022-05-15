@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, FC, SyntheticEvent, MouseEventHandler } from 'react';
+import React, { useState, useRef, useEffect, FC, SyntheticEvent } from 'react';
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Redirect } from 'react-router-dom';
@@ -7,14 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut, updateUser, getUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
-import { TState } from '../../utils/types';
+import { TStateAuth } from '../../utils/types';
+import { INavBar } from '../../utils/interfaces';
 
-interface IPropsNavBar {
-    linkTo: string;
-    onClick?: MouseEventHandler<HTMLAnchorElement>
-}
-
-const NavBarItem: FC<IPropsNavBar> = ({ linkTo, onClick, children }) => {
+const NavBarItem: FC<INavBar> = ({ linkTo, onClick, children }) => {
 
     return (
         <li>
@@ -37,10 +33,10 @@ const Profile: FC = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();
-    const { name, email } = useSelector<TState, { name: string, email: string }>(
+    const { name, email } = useSelector<TStateAuth, { name: string, email: string }>(
         state => state.auth.user
     );
-    const { loggedIn } = useSelector<TState, { loggedIn: boolean }>((store) => store.auth);
+    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>((store) => store.auth);
 
     const [formValue, setFormValue] = useState({
         name: name,

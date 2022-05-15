@@ -1,15 +1,13 @@
-import React, { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-
+import React, { useState, useMemo, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import Ingredient from './ingredient';
-
 import { useSelector } from 'react-redux';
 
 import styles from './burger-ingredients.module.css';
+import { TIngredient, TStateShop } from '../../utils/types';
+import { IIngredients } from '../../utils/interfaces';
 
-function Ingredients({ tabId, name, children }) {
+const Ingredients: FC<IIngredients> = ({ tabId, name, children }) => {
 
     return (
         <div className={styles.burgeringredients__ingredients}>
@@ -24,19 +22,10 @@ function Ingredients({ tabId, name, children }) {
     )
 };
 
-Ingredients.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.element,
-        PropTypes.node,
-    ]),
-    tabId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired
-};
+const BurgerIngredients: FC = () => {
+    const allIngredients = useSelector<TStateShop, Array<TIngredient>>(state => state.shop.allIngredients);
 
-function BurgerIngredients() {
-    const allIngredients = useSelector(state => state.shop.allIngredients);
-
-    const getIngredient = (item) => {
+    const getIngredient = (item: TIngredient) => {
 
         return (
             <Ingredient
@@ -55,7 +44,7 @@ function BurgerIngredients() {
 
     const [currentTab, setCurrentTab] = useState('buns');
 
-    const handleClickTab = (tab) => {
+    const handleClickTab = (tab: string) => {
         const element = document.getElementById(tab);
 
         setCurrentTab(tab);
@@ -68,10 +57,10 @@ function BurgerIngredients() {
     const handleSrollWrapper = () => {
         const tabs = ['buns', 'sauces', 'mains'];
         const headTabs = tabs.map((id) => document.getElementById(id))
-        const scrollPosition = document.getElementById('scrollwrapper').scrollTop;
+        const scrollPosition = document.getElementById('scrollwrapper')!.scrollTop;
 
         headTabs.forEach((head, index) => {
-            const headPosition = head.offsetTop;
+            const headPosition = head!.offsetTop;
 
             if (headPosition <= scrollPosition + 340 && headPosition >= scrollPosition - 340) {
                 setCurrentTab(tabs[index]);

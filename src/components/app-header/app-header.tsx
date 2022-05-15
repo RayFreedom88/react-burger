@@ -1,15 +1,11 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { INavItem } from '../../utils/interfaces';
 
 import styles from './app-header.module.css';
 
-interface IPropsNavItem {
-    linkTo: string;
-    icon: ReactNode;
-}
-
-const NavItem: FC<IPropsNavItem> = ({ icon, linkTo, children }) => {
+const NavItem: FC<INavItem> = ({ icon, linkTo, children }) => {
 
     return (
         <li>

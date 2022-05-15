@@ -1,18 +1,18 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { itemPropTypes } from '../../utils/types';
+import React, { FC, useMemo } from 'react';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
+import { TSelectedIngredients, TStateShop } from '../../utils/types';
+import { IIngredient } from '../../utils/interfaces';
 
-function Ingredient({ product, className}) {
+const Ingredient: FC<IIngredient> = ({ product, className}) => {
     const location = useLocation();
 
     const { name, image, price } = product;
-    const { bun, ingredients } = useSelector(state => state.shop.selected);
+    const { bun, ingredients } = useSelector<TStateShop, { bun: string | null, ingredients: Array<TSelectedIngredients> }>(state => state.shop.selected);
 
     const [{ boxShadow }, dragRef] = useDrag({
         type: 'item',
@@ -64,11 +64,6 @@ function Ingredient({ product, className}) {
             </Link>
         </li>
     );
-}
-
-Ingredient.propTypes = {
-    product: itemPropTypes.isRequired,
-    className: PropTypes.string.isRequired,
 };
 
 export default Ingredient;

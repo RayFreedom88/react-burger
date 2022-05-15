@@ -1,15 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types'
+import React, { FC } from 'react';
 
-import { itemPropTypes } from "../../../utils/types";
 import IngredientImage from './ingredient-image';
 
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import styles from '../burger-ingredients.module.css'
+import { IMicrolEmentsDetail } from '../../../utils/interfaces';
+import { TIngredient, TStateShop } from '../../../utils/types';
 
-function MicrolEmentsDetail({ caseType, microElementValue }) {
+const MicrolEmentsDetail: FC<IMicrolEmentsDetail> = ({ caseType, microElementValue }) => {
     let name = '';
 
     switch (caseType) {
@@ -38,50 +38,38 @@ function MicrolEmentsDetail({ caseType, microElementValue }) {
     )
 };
 
-MicrolEmentsDetail.propTypes = {
-    caseType: PropTypes.string.isRequired,
-    microElementValue: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number
-    ]).isRequired
-};
-
-function IngredientDetails() {
-    const { id } = useParams();
-    const { allIngredients } = useSelector(state => state.shop);
+const IngredientDetails: FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const { allIngredients } = useSelector<TStateShop, { allIngredients: Array<TIngredient> }>(state => state.shop);
     
     const ingredient = (allIngredients.length > 0) 
         ? allIngredients.find(product => product._id === id) 
-        : {image_large:'',name:'',calories:'',proteins:'',fat:'',carbohydrates:''};
+        : {image_large: '',name: '',calories: '',proteins: '',fat: '',carbohydrates: ''};
 
     return (
         <>
-            <IngredientImage img={ingredient.image_large} alt={ingredient.name} />
+            <IngredientImage img={ingredient!.image_large} alt={ingredient!.name} />
 
             <div className={`pb-8 pt-4`}>
-                <p className={`text text_type_main-medium`}>{ingredient.name}</p>
+                <p className={`text text_type_main-medium`}>{ingredient!.name}</p>
             </div>
 
             <div className={`${styles.burgeringredients__details} pb-15`}>
                 <MicrolEmentsDetail
                     caseType={'calories'}
-                    microElementValue={ingredient.calories} />
+                    microElementValue={ingredient!.calories} />
                 <MicrolEmentsDetail
                     caseType={'proteins'}
-                    microElementValue={ingredient.proteins} />
+                    microElementValue={ingredient!.proteins} />
                 <MicrolEmentsDetail
                     caseType={'fat'}
-                    microElementValue={ingredient.fat} />
+                    microElementValue={ingredient!.fat} />
                 <MicrolEmentsDetail
                     caseType={'carbohydrates'}
-                    microElementValue={ingredient.carbohydrates} />
+                    microElementValue={ingredient!.carbohydrates} />
             </div>
         </>
     )
-};
-
-IngredientDetails.propTypes = {
-    ingredient: itemPropTypes,
 };
 
 export default IngredientDetails;

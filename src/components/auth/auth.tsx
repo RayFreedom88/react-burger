@@ -5,13 +5,13 @@ import { useLocation, Link, Redirect } from 'react-router-dom';
 
 import { useSelector, useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
-import { TState, TLocation } from '../../utils/types';
+import { TStateAuth, TLocation } from '../../utils/types';
 
 import styles from './auth.module.css';
 
 const Auth: FC = () => {
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector<TState, { loggedIn: boolean }>(state => state.auth);
+    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>(state => state.auth);
     const { state } = useLocation<TLocation>();
 
     const [formValue, setFormValue] = useState({
