@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { useSelector } from 'react-redux';
+import { TStateShop } from '../../utils/types';
 
 import done from '../../images/done.png'
 import styles from './burger-constructor.module.css';
 
-export default function OrderDetails() {
-    const orderNumber = useSelector(state => state.shop.order.number);
-
+const OrderDetails: FC = () => {
+    const orderNumber = useSelector<TStateShop, number>(state => state.shop.order!.number);
+    
     return (
         <>
             <p className={`${styles.burgerconstructor__id} text text_type_digits-large mt-4 mb-8`}>
@@ -24,3 +25,5 @@ export default function OrderDetails() {
         </>
     )
 };
+
+export default OrderDetails;

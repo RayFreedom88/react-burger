@@ -20,6 +20,11 @@ export type TSelectedIngredients = {
     uid: string;
 };
 
+export type TOrder = {
+    name: string;
+    number: number;
+};
+
 export type TStateShop = {
     shop: {
         allIngredients: Array<TIngredient>;
@@ -33,7 +38,7 @@ export type TStateShop = {
 
         currentIngredient: {};
 
-        order: null;
+        order: TOrder | null;
         orderRequest: boolean;
         orderFailed: boolean;
     }

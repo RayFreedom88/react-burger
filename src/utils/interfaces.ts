@@ -29,6 +29,15 @@ export interface IIngredientImage {
     alt?: string;
 }
 
+// burger-constructor
+export interface IConstructorIngredient {
+    id: string;
+    uid?: string;
+    position?: 'top' | 'bottom';
+    moveCard?: (dragIndex: number, hoverIndex: number) => void;
+    index?: number;
+}
+
 // modal
 export interface IModalHeader {
     onClick: () => void;

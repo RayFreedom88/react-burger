@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, FC } from 'react';
 
 import { v1 as uuid } from 'uuid';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -17,21 +17,23 @@ import {
     getOrder,
     CLOSE_ORDER
 } from '../../services/actions/shop';
+import { TIngredient, TOrder, TSelectedIngredients, TStateShop } from '../../utils/types';
 
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor() {
+const BurgerConstructor: FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const allIngredients = useSelector(state => state.shop.allIngredients);
+    const allIngredients = useSelector<TStateShop, Array<TIngredient>>(state => state.shop.allIngredients);
 
-    const { ingredients, bun } = useSelector(state => state.shop.selected);
+    const { bun, ingredients } = useSelector<TStateShop, { bun: string | null, ingredients: Array<TSelectedIngredients> }>(state => state.shop.selected);
 
     // dnd
 
-    const moveItem = (item) => {
-        const type = allIngredients.find(product => product._id === item.id).type;
+    const moveItem = (item: TSelectedIngredients ) => {
+        if (allIngredients && allIngredients.length > 0) {
+            const type = allIngredients.find(product => product._id === item.id)!.type;
 
         if (type === 'bun') {
             dispatch({
@@ -44,17 +46,18 @@ function BurgerConstructor() {
                 ingredient: { ...item, uid: uuid() }
             });
         }
+        }
     };
 
     const [, dropTargerRef] = useDrop({
         accept: 'item',
 
-        drop(item) {
+        drop(item: TSelectedIngredients) {
             moveItem(item)
         },
     });
 
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
         const dragCard = ingredients[dragIndex];
         const newCards = [...ingredients]
 
@@ -69,7 +72,7 @@ function BurgerConstructor() {
 
     // Modal (OrderDetails)
 
-    const order = useSelector(state => state.shop.order);
+    const order = useSelector<TStateShop, TOrder | null >(state => state.shop.order);
     const idIngredients = ingredients.map(product => product.id)
 
     const handleOpenModal = () => {
@@ -94,11 +97,11 @@ function BurgerConstructor() {
         let totalPrice = 0;
 
         if (ingredients.length > 0) ingredients
-            .map(item => totalPrice += allIngredients.find(product => product._id === item.id)
+            .map(item => totalPrice += allIngredients.find(product => product._id === item.id)!
                 .price);
 
         if (bun != null) {
-            totalPrice += 2 * allIngredients.find(product => product._id === bun).price;
+            totalPrice += 2 * allIngredients.find(product => product._id === bun)!.price;
         }
 
         return totalPrice;
