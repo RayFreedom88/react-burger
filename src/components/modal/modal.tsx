@@ -1,11 +1,14 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, FC } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import styles from './modal.module.css';
 
-function ModalHeader({ children, onClick }) {
+interface IPropsModalHeader {
+    onClick: () => void;
+};
+
+const ModalHeader: FC<IPropsModalHeader> = ({ children, onClick }) => {
 
     return (
         <div className={styles.modal__header}>
@@ -13,38 +16,27 @@ function ModalHeader({ children, onClick }) {
                 {children}
             </p>
 
-            <CloseIcon onClick={onClick} />
+            <CloseIcon onClick={onClick} type='primary' />
         </div>
     )
-}
+};
 
-ModalHeader.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.element,
-        PropTypes.node,
-        PropTypes.string
-    ]).isRequired
-}
-
-function ModalBody({ children }) {
+const ModalBody: FC = ({ children }) => {
 
     return (
         <div className={styles.modal__body}>
             {children}
         </div>
     )
-}
+};
 
-ModalBody.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.element,
-        PropTypes.node,
-    ]).isRequired
-}
+interface IPropsModal {
+    header: string;
+    onClose: () => void;
+};
 
-function Modal({ header, children, onClose }) {
-    const modalRoot = document.getElementById('modal-root');
+const Modal: FC<IPropsModal> = ({ header, children, onClose }) => {
+    const modalRoot = document.getElementById('modal-root') as HTMLElement;
 
     const handleEscKeyDown = useCallback((e) => {
         if (e.key === 'Escape') {
@@ -79,19 +71,6 @@ function Modal({ header, children, onClose }) {
 
         modalRoot
     );
-}
-
-Modal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    header: PropTypes.oneOfType([
-        PropTypes.element,
-        PropTypes.node,
-        PropTypes.string
-    ]).isRequired,
-    children: PropTypes.oneOfType([
-        PropTypes.element,
-        PropTypes.node,
-    ]).isRequired
-}
+};
 
 export default Modal;
