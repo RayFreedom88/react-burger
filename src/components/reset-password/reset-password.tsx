@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, SyntheticEvent, useState } from 'react';
 
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useHistory ,Link, Redirect } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { resetPassword } from '../../services/actions/auth';
 
 import styles from './reset-password.module.css';
 
-export default function ResetPassword() {
+const ResetPassword: FC = () => {
     const history = useHistory();
     const prevPathname = history.location.state;
 
@@ -16,12 +16,16 @@ export default function ResetPassword() {
 
     const [formValue, setValue] = useState({ password: '', token: '' });
 
-    const handleChange = e => {
-        setValue({ ...formValue, [e.target.name]: e.target.value });
+    const handleChange = (e: { target: HTMLInputElement }) => {
+        setValue({
+            ...formValue,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
+
         if ((formValue.password === '') || formValue.token === '') {
             return
         } else {
@@ -62,4 +66,6 @@ export default function ResetPassword() {
             </p>
         </div>
     );
-}
+};
+
+export default ResetPassword;

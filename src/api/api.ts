@@ -13,7 +13,7 @@ const Endpoint = {
 };
 const URL_API = 'https://norma.nomoreparties.space/api';
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
     if (res.ok) {
         return res.json();
     }
@@ -27,7 +27,7 @@ export const getData = async () => {
         .then(checkResponse);
 };
 
-export const postOrder = async (ingredientsId) => {
+export const postOrder = async (ingredientsId: Array<string>) => {
 
     return await fetch(`${URL_API}/${Endpoint.ORDERS}`, {
         method: "POST",
@@ -42,7 +42,7 @@ export const postOrder = async (ingredientsId) => {
         .then(checkResponse);
 };
 
-export const postLoginRequest = async (email, password) => {
+export const postLoginRequest = async (email: string, password: string) => {
     return await fetch(`${URL_API}/${Endpoint.LOGIN}`, {
         method: "POST",
         headers: {
@@ -96,7 +96,7 @@ export const getUserRequest = () => {
 
 };
 
-export async function patchUpdateUser(email, name) {
+export async function patchUpdateUser(email: string, name: string) {
 
     return fetch(`${URL_API}/${Endpoint.USER}`, {
         method: "PATCH",
@@ -110,7 +110,7 @@ export async function patchUpdateUser(email, name) {
         .then(checkResponse)
 }
 
-export const postRegisterRequest = async (email, password, name) => {
+export const postRegisterRequest = async (email: string, password: string, name: string) => {
     return await fetch(`${URL_API}/${Endpoint.REGISTER}`, {
         method: "POST",
         headers: {
@@ -122,7 +122,7 @@ export const postRegisterRequest = async (email, password, name) => {
         .then(checkResponse);
 };
 
-export const postForgotPasswordRequest = async (email) => {
+export const postForgotPasswordRequest = async (email: string) => {
 
     return await fetch(`${URL_API}/${Endpoint.FORGOT_PASSWORD}`, {
         method: "POST",
@@ -135,7 +135,7 @@ export const postForgotPasswordRequest = async (email) => {
         .then(checkResponse);
 };
 
-export const postResetPasswordRequest = async (password, token) => {
+export const postResetPasswordRequest = async (password: string, token: string) => {
 
     return await fetch(`${URL_API}/${Endpoint.RESET_PASSWORD}`, {
         method: "POST",

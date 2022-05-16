@@ -1,23 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, SyntheticEvent, FocusEvent, FC } from 'react';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useHistory, Link, Redirect } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { forgotPassword } from '../../services/actions/auth';
+import { TLocation, TStateAuth } from '../../utils/types';
 
 import styles from './forgot-password.module.css';
 
-export default function ForgotPassword() {
-    const { state } = useLocation();
+const ForgotPassword: FC = () => {
+    const { state } = useLocation<TLocation>();
     
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector(state => state.auth);
+    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>(state => state.auth);
 
     const [formValue, setFormValue] = useState({ email: '' });
 
-    const handleChange = e => {
-        setFormValue({ ...formValue, [e.target.name]: e.target.value });
+    const handleChange = (e: {target: HTMLInputElement}) => {
+        setFormValue({
+            ...formValue,
+            [e.target.name]: e.target.value});
     };
 
     const history = useHistory();
@@ -27,7 +30,7 @@ export default function ForgotPassword() {
         history.push('/reset-password', { prevPathname: history.location.pathname })
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
         if (formValue.email === '') {
@@ -41,26 +44,26 @@ export default function ForgotPassword() {
     // Валидация    
 
     const inputRef = useRef(null);
-    const [isError, setIsError] = useState(false);
+    const [isMailError, setIsMailError] = useState(false);
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     };
 
-    const validateField = (value) => {
-        setIsError(!validateEmail(value));
+    const validateField = (value: string) => {
+        setIsMailError(!validateEmail(value));
     };
 
-    const handleFocus = () => {
-        setIsError(false);
+    const handleMailFocus = () => {
+        setIsMailError(false);
     };
 
-    const handleBlur = (e) => {
+    const handleMailBlur = (e: FocusEvent<HTMLInputElement>) => {
         if (e.target.value) {
             validateField(e.target.value);
         } else {
-            setIsError(false);
+            setIsMailError(false);
         };
     };
 
@@ -78,10 +81,10 @@ export default function ForgotPassword() {
                         placeholder={'Укажите e-mail'}
                         value={formValue.email}
                         errorText={'Ой, произошла ошибка!'}
-                        error={isError}
+                        error={isMailError}
                         ref={inputRef}
-                        onBlur={handleBlur}
-                        onFocus={handleFocus}
+                        onBlur={handleMailBlur}
+                        onFocus={handleMailFocus}
                         onChange={handleChange}
                     />
                 </div>
@@ -96,4 +99,6 @@ export default function ForgotPassword() {
             </p>
         </div>
     );
-}
+};
+
+export default ForgotPassword;

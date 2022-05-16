@@ -1,6 +1,6 @@
 import Register from '../components/register/register';
 
-export function RegisterPage() {
+export const RegisterPage = () => {
 
     return <Register />;
-}
+};

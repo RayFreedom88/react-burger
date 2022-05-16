@@ -1,6 +1,6 @@
 import Auth from '../components/auth/auth';
 
-export function LoginPage() {
+export const LoginPage = () => {
 
     return <Auth />
-}
+};
