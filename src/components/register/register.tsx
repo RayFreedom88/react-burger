@@ -3,9 +3,9 @@ import React, { useState, useRef, FC, SyntheticEvent, FocusEvent } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from '../../services/hooks';
 import { register } from '../../services/actions/auth';
-import { TStateAuth, TLocation } from '../../utils/types';
+import { TLocation } from '../../services/types/types';
 
 import styles from './register.module.css';
 
@@ -13,7 +13,7 @@ const Register: FC = () => {
     const { state } = useLocation<TLocation>();
 
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>((store) => store.auth);
+    const { loggedIn } = useSelector(store => store.auth);
 
     const [formValue, setFormValue] = useState({
         name: '',

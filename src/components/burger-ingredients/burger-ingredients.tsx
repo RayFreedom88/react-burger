@@ -1,11 +1,12 @@
 import React, { useState, useMemo, FC } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from './ingredient';
-import { useSelector } from 'react-redux';
+
+import { useSelector } from '../../services/hooks';
+import { TIngredient } from '../../services/types/types';
+import { IIngredients } from '../../services/types/components';
 
 import styles from './burger-ingredients.module.css';
-import { TIngredient, TStateShop } from '../../utils/types';
-import { IIngredients } from '../../utils/interfaces';
 
 const Ingredients: FC<IIngredients> = ({ tabId, name, children }) => {
 
@@ -23,7 +24,7 @@ const Ingredients: FC<IIngredients> = ({ tabId, name, children }) => {
 };
 
 const BurgerIngredients: FC = () => {
-    const allIngredients = useSelector<TStateShop, Array<TIngredient>>(state => state.shop.allIngredients);
+    const allIngredients = useSelector(state => state.shop.allIngredients);
 
     const getIngredient = (item: TIngredient) => {
 

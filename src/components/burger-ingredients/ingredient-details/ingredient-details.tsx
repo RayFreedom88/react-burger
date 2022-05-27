@@ -1,13 +1,11 @@
 import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
 
 import IngredientImage from './ingredient-image';
-
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { IMicrolEmentsDetail } from '../../../services/types/components';
+import { useSelector } from '../../../services/hooks';
 
 import styles from '../burger-ingredients.module.css'
-import { IMicrolEmentsDetail } from '../../../utils/interfaces';
-import { TIngredient, TStateShop } from '../../../utils/types';
 
 const MicrolEmentsDetail: FC<IMicrolEmentsDetail> = ({ caseType, microElementValue }) => {
     let name = '';
@@ -40,7 +38,7 @@ const MicrolEmentsDetail: FC<IMicrolEmentsDetail> = ({ caseType, microElementVal
 
 const IngredientDetails: FC = () => {
     const { id } = useParams<{ id: string }>();
-    const { allIngredients } = useSelector<TStateShop, { allIngredients: Array<TIngredient> }>(state => state.shop);
+    const { allIngredients } = useSelector(state => state.shop);
     
     const ingredient = (allIngredients.length > 0) 
         ? allIngredients.find(product => product._id === id) 

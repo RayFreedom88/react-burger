@@ -1,4 +1,4 @@
-import { getCookie } from "../utils/cookie";
+import { getCookie } from "./cookie";
 
 const Endpoint = {
     INGREDIENTS: 'ingredients',

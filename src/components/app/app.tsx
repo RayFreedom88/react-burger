@@ -9,10 +9,10 @@ import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details';
 
-import { useDispatch } from 'react-redux';
 import { getItems } from '../../services/actions/shop';
 import { getUser } from '../../services/actions/auth';
-import { TLocation } from '../../utils/types';
+import { TLocation } from '../../services/types/types';
+import { useDispatch } from '../../services/hooks';
 
 import styles from './app.module.css';
 

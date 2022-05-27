@@ -8,16 +8,15 @@ import {
     DELETE_SELECTED_INGREDIENT,
     UPDATE_SELECTED_LIST,
 
-    ADD_INGREDIENT_MODAL,
-    DELETE_INGREDIENT_MODAL,
-
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
     CLOSE_ORDER,
+    TShopsActions,
 } from '../actions/shop';
+import { TShopState } from '../types/types';
 
-const initialState = {
+const initialState: TShopState = {
     allIngredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
@@ -27,17 +26,15 @@ const initialState = {
         ingredients: [],
     },
 
-    currentIngredient: {},
-
     order: null,
     orderRequest: false,
     orderFailed: false,
 };
 
-export const shopReducer = (state = initialState, action) => {
+export const shopReducer = (state = initialState, action: TShopsActions): TShopState => {
     switch (action.type) {
-        // BurgerIngredients
 
+        // BurgerIngredients
         case GET_INGREDIENTS_REQUEST: {
 
             return {
@@ -66,7 +63,6 @@ export const shopReducer = (state = initialState, action) => {
         }
 
         // BurgerConstructor
-
         case ADD_SELECTED_BUN: {
 
             return {
@@ -111,31 +107,12 @@ export const shopReducer = (state = initialState, action) => {
             }
         }
 
-        // Modal
-
-        case ADD_INGREDIENT_MODAL: {
-
-            return {
-                ...state,
-                currentIngredient: action.ingredient
-            }
-        }
-
-        case DELETE_INGREDIENT_MODAL: {
-
-            return {
-                ...state,
-                currentIngredient: {}
-            }
-        }
-
         // Order
-
         case GET_ORDER_REQUEST: {
 
             return {
                 ...state,
-                ordersRequest: true
+                orderRequest: true
             };
         }
 

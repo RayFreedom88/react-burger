@@ -3,17 +3,16 @@ import React, { FC, useRef } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { DELETE_SELECTED_INGREDIENT } from '../../services/actions/shop';
-import { IConstructorIngredient } from '../../utils/interfaces';
-import { TIngredient, TStateShop } from '../../utils/types';
+import { IConstructorIngredient } from '../../services/types/components';
 
 import styles from './burger-constructor.module.css';
 
 const ConstructorIngredient: FC<IConstructorIngredient> = ({ id, uid, position, moveCard, index }) => {
     const dispatch = useDispatch();
 
-    const allIngredients = useSelector<TStateShop, Array<TIngredient>>(state => state.shop.allIngredients);
+    const allIngredients = useSelector(state => state.shop.allIngredients);
     const product = allIngredients.find(item => item._id === id);
 
     const ref = useRef<HTMLLIElement>(null);

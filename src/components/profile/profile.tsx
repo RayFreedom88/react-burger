@@ -3,12 +3,11 @@ import React, { useState, useRef, useEffect, FC, SyntheticEvent } from 'react';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Redirect } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { INavBar } from '../../services/types/components';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { logOut, updateUser, getUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
-import { TStateAuth } from '../../utils/types';
-import { INavBar } from '../../utils/interfaces';
 
 const NavBarItem: FC<INavBar> = ({ linkTo, onClick, children }) => {
 
@@ -33,10 +32,10 @@ const Profile: FC = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();
-    const { name, email } = useSelector<TStateAuth, { name: string, email: string }>(
+    const { name, email } = useSelector(
         state => state.auth.user
     );
-    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>((store) => store.auth);
+    const { loggedIn } = useSelector(state => state.auth);
 
     const [formValue, setFormValue] = useState({
         name: name,
