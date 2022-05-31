@@ -1,10 +1,12 @@
-const styleNotFound = {
+import { CSSProperties, FC } from "react";
+
+const styleNotFound: CSSProperties = {
     width: '100%',
     margin: '100px auto 40px',
     textAlign: 'center'
 };
 
-export function NotFound404() {
+export const NotFound404: FC = () => {
 
     return (
         <>

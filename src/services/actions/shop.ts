@@ -1,6 +1,6 @@
 import { getData, postOrder } from '../../utils/api';
 import { AppDispatch, AppThunk } from '../types';
-import { TIngredient, TOrder, TSelectedIngredients } from '../types/types';
+import { TIngredient, TOrderNumber, TSelectedIngredients } from '../types/types';
 
 // INGREDIENTS
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
@@ -61,7 +61,7 @@ export interface IGetOrderRequestAction {
 
 export interface IGetOrderSuccessAction {
     readonly type: typeof GET_ORDER_SUCCESS;
-    readonly order: TOrder;
+    readonly order: TOrderNumber;
 }
 
 export interface IGetOrderFailedAction {

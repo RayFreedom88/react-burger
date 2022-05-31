@@ -75,8 +75,10 @@ const BurgerConstructor: FC = () => {
     const order = useSelector(state => state.shop.order);
     const idIngredients = ingredients.map(product => product.id)
 
+    const { loggedIn } = useSelector(state => state.auth);
+
     const handleOpenModal = () => {
-        if (localStorage.refreshToken) {
+        if (loggedIn) {
             dispatch(
                 getOrder([...idIngredients, bun, bun])
             );
