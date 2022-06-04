@@ -20,7 +20,7 @@ export type TSelectedIngredients = {
     uid: string;
 };
 
-export type TOrder = {
+export type TOrderNumber = {
     name: string;
     number: number;
 };
@@ -35,7 +35,7 @@ export type TShopState = {
         ingredients: Array<TSelectedIngredients>;
     };
 
-    order: TOrder | null;
+    order: TOrderNumber | null;
     orderRequest: boolean;
     orderFailed: boolean;
 }
@@ -78,4 +78,34 @@ export type TAuthState = {
 export type TLocation = {
     from: Location;
     background?: Location;
+    number?: number | string;
+    orders?: Array<TOrder>
+};
+
+export type TOrder = {
+    ingredients: Array<string>;
+    _id: string;
+    name: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type TOrders = {
+    orders: Array<TOrder>;
+    total: number;
+    totalToday: number;
+}
+
+export type TOrderStatus = {
+    name: string;
+    color: string;
+};
+
+export type TFeedState = {
+    wsConnected: boolean;
+    orders: Array<TOrder>;
+    total: number;
+    totalToday: number;
 };

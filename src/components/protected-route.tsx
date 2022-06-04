@@ -1,11 +1,18 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { updateToken } from '../services/actions/auth';
 
-import { useSelector } from '../services/hooks';
-
+import { useDispatch, useSelector } from '../services/hooks';
 
 export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
     const {loggedIn} = useSelector(state => state.auth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (localStorage.refreshToken) {
+            dispatch(updateToken());
+        };
+    }, [dispatch]);
 
     return (
         <Route

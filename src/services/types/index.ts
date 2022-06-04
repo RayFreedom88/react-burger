@@ -3,8 +3,9 @@ import { Action, ActionCreator, Dispatch } from 'redux';
 import { store } from '../store';
 import { TShopsActions } from '../actions/shop';
 import { TAuthActions } from '../actions/auth';
+import { TFeedActions } from '../actions/feed';
 
-type TApplicationActions = TShopsActions | TAuthActions;
+type TApplicationActions = TShopsActions | TAuthActions | TFeedActions;
 
 export type RootState = ReturnType<typeof store.getState>;
 

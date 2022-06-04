@@ -45,7 +45,7 @@ const IngredientDetails: FC = () => {
         : {image_large: '',name: '',calories: '',proteins: '',fat: '',carbohydrates: ''};
 
     return (
-        <>
+        <div className={styles.container}>
             <IngredientImage img={ingredient!.image_large} alt={ingredient!.name} />
 
             <div className={`pb-8 pt-4`}>
@@ -66,7 +66,7 @@ const IngredientDetails: FC = () => {
                     caseType={'carbohydrates'}
                     microElementValue={ingredient!.carbohydrates} />
             </div>
-        </>
+        </div>
     )
 };
 

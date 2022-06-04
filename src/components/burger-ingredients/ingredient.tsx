@@ -34,6 +34,7 @@ const Ingredient: FC<IIngredient> = ({ product, className}) => {
                 if (ingredient.id === product._id) count = count + 1;
             })
         }
+        
         return count;
     },
         [bun, ingredients, product]

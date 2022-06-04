@@ -1,5 +1,6 @@
 import { MouseEventHandler, ReactNode } from "react";
-import { TIngredient } from "./types";
+import { match } from "react-router-dom";
+import { TIngredient, TOrder } from "./types";
 
 // app-header
 export interface INavItem {
@@ -40,7 +41,14 @@ export interface IConstructorIngredient {
 
 // modal
 export interface IModalHeader {
+    headerClass?: string;
     onClick: () => void;
+};
+
+export interface IModal {
+    header: string;
+    headerClass?: string;
+    onClose: () => void;
 };
 
 // modal-overlay
@@ -52,4 +60,23 @@ export interface IModalOverlay {
 export interface INavBar {
     linkTo: string;
     onClick?: MouseEventHandler<HTMLAnchorElement>
+}
+
+// order-card
+export interface IOrderCardIngredients {
+    idIngredients: Array<string>;
+}
+export interface IOrderCard  {
+    orders: Array<TOrder>;
+    orderID: string;
+    number: number;
+    time: string;
+    name: string;
+    status: string;
+    ingredients: Array<string>;
+    isUserOrder: match<{}> | null;
+}
+
+export interface IFeedDetails {
+    orders: Array<TOrder> | undefined;
 }

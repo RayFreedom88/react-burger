@@ -305,7 +305,6 @@ export const updateUser: AppThunk = (email: string, name: string) => (dispatch) 
         .catch((err) => {
             if (err.message === 'Token is invalid') {
                 dispatch(updateToken());
-                // dispatch(updateUser(email, name));
             } else {
                 dispatch({
                     type: UPDATE_USER_FAILED

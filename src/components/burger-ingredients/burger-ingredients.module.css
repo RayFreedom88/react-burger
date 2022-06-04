@@ -71,6 +71,13 @@
     max-height: 100%;
 }
 
+.container {
+    width: 720px;
+    padding: 0 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .burgeringredients__details {
     display: flex;
     flex-direction: row;

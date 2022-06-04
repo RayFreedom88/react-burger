@@ -1,13 +1,14 @@
 
 import React, { FC, useEffect } from 'react';
 
-import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { ProtectedRoute } from '../protected-route';
-import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
+import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404, FeedPage, OrderPage } from '../../pages';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import IngredientDetails from '../burger-ingredients/ingredient-details/ingredient-details';
+import FeedDetails from '../feed-details/feed-details';
 
 import { getItems } from '../../services/actions/shop';
 import { getUser } from '../../services/actions/auth';
@@ -24,9 +25,13 @@ const App: FC = () => {
         const location = useLocation<TLocation>();
         const background = location.state && location.state.background;
 
+        const number = location.state && location.state.number;
+        const orders = location.state && location.state.orders;
+
+
         useEffect(() => {
             dispatch(getItems());
-            
+
             if (localStorage.refreshToken) {
                 dispatch(getUser());
             };
@@ -70,6 +75,14 @@ const App: FC = () => {
                             <IngredientPage />
                         </Route>
 
+                        <Route path='/feed' exact={true}>
+                            <FeedPage />
+                        </Route>
+
+                        <Route path='/feed/:id' exact={true}>
+                            <OrderPage />
+                        </Route>
+
                         <Route>
                             <NotFound404 />
                         </Route>
@@ -82,6 +95,30 @@ const App: FC = () => {
                                 onClose={handleCloseModal}
                             >
                                 <IngredientDetails />
+                            </Modal>
+                        </Route>
+                    )}
+
+                    {background && (
+                        <Route path='/feed/:id'>
+                            <Modal
+                                header={`#${number}`}
+                                headerClass={'text text_type_digits-default'}
+                                onClose={handleCloseModal}
+                            >
+                                <FeedDetails orders={orders} />
+                            </Modal>
+                        </Route>
+                    )}
+
+                    {background && (
+                        <Route path='/profile/orders/:id'>
+                            <Modal
+                                header={`#${number}`}
+                                headerClass={'text text_type_digits-default'}
+                                onClose={handleCloseModal}
+                            >
+                                <FeedDetails orders={orders} />
                             </Modal>
                         </Route>
                     )}
