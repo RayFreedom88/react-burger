@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import { updateToken } from '../services/actions/auth';
+import { getUser, updateToken } from '../services/actions/auth';
 
 import { useDispatch, useSelector } from '../services/hooks';
 
@@ -11,6 +11,7 @@ export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
     useEffect(() => {
         if (localStorage.refreshToken) {
             dispatch(updateToken());
+            dispatch(getUser());
         };
     }, [dispatch]);
 

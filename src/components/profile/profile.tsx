@@ -46,13 +46,6 @@ const Profile: FC = () => {
 
     useEffect(
         () => {
-            dispatch(getUser())
-        },
-        [dispatch]
-    );
-
-    useEffect(
-        () => {
             setFormValue({
                 name: name,
                 email: email,
@@ -195,7 +188,7 @@ const Profile: FC = () => {
                             </form>
                         </div>
                     </Route>
-
+                    
                     <Route path={`${path}/orders`} exact={true}>
                         <OrderList />
                     </Route>

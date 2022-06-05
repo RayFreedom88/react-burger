@@ -63,10 +63,9 @@ export const postUpdateTokenRequest = async () => {
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${getCookie('token')}`,
         },
         body: JSON.stringify({
-            token: localStorage.getItem('refreshToken')
+            token: localStorage.refreshToken
         })
     })
         .then(checkResponse)

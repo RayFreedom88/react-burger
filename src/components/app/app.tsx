@@ -1,7 +1,7 @@
 
 import React, { FC, useEffect } from 'react';
 
-import { BrowserRouter as Router, Switch, Route, useHistory, useLocation, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from 'react-router-dom';
 
 import { ProtectedRoute } from '../protected-route';
 import { HomePage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404, FeedPage, OrderPage } from '../../pages';
@@ -112,7 +112,7 @@ const App: FC = () => {
                     )}
 
                     {background && (
-                        <Route path='/profile/orders/:id'>
+                        <ProtectedRoute path='/profile/orders/:id'>
                             <Modal
                                 header={`#${number}`}
                                 headerClass={'text text_type_digits-default'}
@@ -120,7 +120,7 @@ const App: FC = () => {
                             >
                                 <FeedDetails orders={orders} />
                             </Modal>
-                        </Route>
+                        </ProtectedRoute>
                     )}
                 </main>
             </div>
