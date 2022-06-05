@@ -1,0 +1,26 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    width: 608px;
+}
+
+.column_profile {
+    display: flex;
+    flex-direction: column;
+    width: 860px;
+    margin-left: auto;
+}
+
+.list {
+    height: 75vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.item {
+    width: 584px;
+}
+
+.item_profile {
+    width: 844px;
+}

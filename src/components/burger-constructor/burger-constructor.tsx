@@ -9,7 +9,7 @@ import OrderDetails from './order-details';
 
 import { useDrop } from "react-dnd";
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import {
     ADD_SELECTED_INGREDIENT,
     ADD_SELECTED_BUN,
@@ -17,7 +17,7 @@ import {
     getOrder,
     CLOSE_ORDER
 } from '../../services/actions/shop';
-import { TIngredient, TOrder, TSelectedIngredients, TStateShop } from '../../utils/types';
+import { TSelectedIngredients } from '../../services/types/types';
 
 import styles from './burger-constructor.module.css';
 
@@ -25,27 +25,27 @@ const BurgerConstructor: FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const allIngredients = useSelector<TStateShop, Array<TIngredient>>(state => state.shop.allIngredients);
+    const allIngredients = useSelector(state => state.shop.allIngredients);
 
-    const { bun, ingredients } = useSelector<TStateShop, { bun: string | null, ingredients: Array<TSelectedIngredients> }>(state => state.shop.selected);
+    const { bun, ingredients } = useSelector(state => state.shop.selected);
 
     // dnd
 
-    const moveItem = (item: TSelectedIngredients ) => {
+    const moveItem = (item: TSelectedIngredients) => {
         if (allIngredients && allIngredients.length > 0) {
             const type = allIngredients.find(product => product._id === item.id)!.type;
 
-        if (type === 'bun') {
-            dispatch({
-                type: ADD_SELECTED_BUN,
-                id: item.id
-            });
-        } else {
-            dispatch({
-                type: ADD_SELECTED_INGREDIENT,
-                ingredient: { ...item, uid: uuid() }
-            });
-        }
+            if (type === 'bun') {
+                dispatch({
+                    type: ADD_SELECTED_BUN,
+                    id: item.id
+                });
+            } else {
+                dispatch({
+                    type: ADD_SELECTED_INGREDIENT,
+                    ingredient: { ...item, uid: uuid() }
+                });
+            }
         }
     };
 
@@ -72,11 +72,13 @@ const BurgerConstructor: FC = () => {
 
     // Modal (OrderDetails)
 
-    const order = useSelector<TStateShop, TOrder | null >(state => state.shop.order);
+    const order = useSelector(state => state.shop.order);
     const idIngredients = ingredients.map(product => product.id)
 
+    const { loggedIn } = useSelector(state => state.auth);
+
     const handleOpenModal = () => {
-        if (localStorage.refreshToken) {
+        if (loggedIn) {
             dispatch(
                 getOrder([...idIngredients, bun, bun])
             );

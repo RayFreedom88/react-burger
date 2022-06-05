@@ -30,9 +30,11 @@ import {
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED,
+    TAuthActions,
 } from '../actions/auth';
+import { TAuthState } from '../types/types';
 
-const initialState = {
+const initialState: TAuthState = {
     user: {
         name: '',
         email: '',
@@ -65,7 +67,7 @@ const initialState = {
     resetPasswordFailed: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case LOGIN_REQUEST: {
 

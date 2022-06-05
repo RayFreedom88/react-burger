@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, FC, SyntheticEvent } from 'react';
 
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink, Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { INavBar } from '../../services/types/components';
+import OrderList from '../order-list/order-list';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { logOut, updateUser, getUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
-import { TStateAuth } from '../../utils/types';
-import { INavBar } from '../../utils/interfaces';
 
 const NavBarItem: FC<INavBar> = ({ linkTo, onClick, children }) => {
 
@@ -33,23 +33,16 @@ const Profile: FC = () => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const dispatch = useDispatch();
-    const { name, email } = useSelector<TStateAuth, { name: string, email: string }>(
+    const { name, email } = useSelector(
         state => state.auth.user
     );
-    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>((store) => store.auth);
+    const { loggedIn } = useSelector(state => state.auth);
 
     const [formValue, setFormValue] = useState({
         name: name,
         email: email,
         password: ''
     });
-
-    useEffect(
-        () => {
-            dispatch(getUser())
-        },
-        [dispatch]
-    );
 
     useEffect(
         () => {
@@ -62,7 +55,7 @@ const Profile: FC = () => {
         [name, email]
     );
 
-    const handleChange = (e: { target: HTMLInputElement}) => {
+    const handleChange = (e: { target: HTMLInputElement }) => {
         setFormValue({
             ...formValue,
             [e.target.name]: e.target.value
@@ -92,22 +85,26 @@ const Profile: FC = () => {
 
     const handleLogout = (e: SyntheticEvent) => {
         e.preventDefault();
-    
+
         dispatch(logOut())
     };
 
     const handleIconClick = () => {
-        if(inputRef && inputRef.current) {
+        if (inputRef && inputRef.current) {
             inputRef.current.focus()
         }
     };
 
     // Валидация 
-
     const validateEmail = (email: string) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     };
+
+    // Определение роута
+    const { path } = useRouteMatch();
+    const profileMatch = useRouteMatch("/profile");
+    const profileOrdersMatch = useRouteMatch("/profile/orders");
 
     if (!loggedIn) return (<Redirect to='/login' />);
 
@@ -133,53 +130,69 @@ const Profile: FC = () => {
                         </NavBarItem>
                     </ul>
 
-                    <p className={`${styles.profile__text} text text_type_main-small text_color_inactive mt-20`}>
-                        В этом разделе вы можете изменить свои персональные данные
-                    </p>
+                    {profileMatch?.isExact &&
+                        <p className={`${styles.profile__text} text text_type_main-small text_color_inactive mt-20`}>
+                            В этом разделе вы можете изменить свои персональные данные
+                        </p>
+                    }
+
+                    {profileOrdersMatch?.isExact &&
+                        <p className={`${styles.profile__text} text text_type_main-small text_color_inactive mt-20`}>
+                            В этом разделе вы можете посмотреть свои заказы
+                        </p>
+                    }
                 </div>
 
-                <div className={styles.profile__wrap}>
-                    <form onSubmit={handleSubmit} >
-                        <div className='mt-0'>
-                            <Input
-                                type={'text'}
-                                placeholder={'Имя'}
-                                name='name'
-                                value={formValue.name}
-                                icon={'EditIcon'}
-                                ref={inputRef}
-                                onIconClick={handleIconClick}
-                                onChange={handleChange}
-                            />
-                        </div>
+                <Switch>
+                    <Route path={`${path}`} exact={true}>
+                        <div className={styles.profile__wrap}>
+                            <form onSubmit={handleSubmit} >
+                                <div className='mt-0'>
+                                    <Input
+                                        type={'text'}
+                                        placeholder={'Имя'}
+                                        name='name'
+                                        value={formValue.name}
+                                        icon={'EditIcon'}
+                                        ref={inputRef}
+                                        onIconClick={handleIconClick}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                        <div className="mt-6">
-                            <EmailInput
-                                name='email'
-                                value={formValue.email}
-                                onChange={handleChange}
-                            />
-                        </div>
+                                <div className="mt-6">
+                                    <EmailInput
+                                        name='email'
+                                        value={formValue.email}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                        <div className='mt-6'>
-                            <PasswordInput
-                                name={'password'}
-                                value={formValue.password}
-                                onChange={handleChange}
-                            />
-                        </div>
+                                <div className='mt-6'>
+                                    <PasswordInput
+                                        name={'password'}
+                                        value={formValue.password}
+                                        onChange={handleChange}
+                                    />
+                                </div>
 
-                        <div className={`${styles.profile__buttons} mt-6`}>
-                            <Button type='secondary' size='medium' onClick={handleCancel}>
-                                Отмена
-                            </Button>
+                                <div className={`${styles.profile__buttons} mt-6`}>
+                                    <Button type='secondary' size='medium' onClick={handleCancel}>
+                                        Отмена
+                                    </Button>
 
-                            <Button type='primary' size='medium'>
-                                Сохранить
-                            </Button>
+                                    <Button type='primary' size='medium'>
+                                        Сохранить
+                                    </Button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
+                    </Route>
+                    
+                    <Route path={`${path}/orders`} exact={true}>
+                        <OrderList />
+                    </Route>
+                </Switch>
             </section>
         </>
     );

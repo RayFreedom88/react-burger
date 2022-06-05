@@ -1,11 +1,11 @@
 import React, { useState, useRef, SyntheticEvent, FocusEvent, FC } from 'react';
-
-import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, useHistory, Link, Redirect } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { useDispatch, useSelector } from '../../services/hooks';
 import { forgotPassword } from '../../services/actions/auth';
-import { TLocation, TStateAuth } from '../../utils/types';
+import { TLocation } from '../../services/types/types';
 
 import styles from './forgot-password.module.css';
 
@@ -13,7 +13,7 @@ const ForgotPassword: FC = () => {
     const { state } = useLocation<TLocation>();
     
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>(state => state.auth);
+    const { loggedIn } = useSelector(state => state.auth);
 
     const [formValue, setFormValue] = useState({ email: '' });
 

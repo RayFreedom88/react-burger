@@ -1,13 +1,12 @@
 import React, { FC } from 'react';
 
-import { useSelector } from 'react-redux';
-import { TStateShop } from '../../utils/types';
+import { useSelector } from '../../services/hooks';
 
 import done from '../../images/done.png'
 import styles from './burger-constructor.module.css';
 
 const OrderDetails: FC = () => {
-    const orderNumber = useSelector<TStateShop, number>(state => state.shop.order!.number);
+    const orderNumber = useSelector(state => state.shop.order!.number);
     
     return (
         <>

@@ -2,14 +2,14 @@ import React, { useEffect, useCallback, FC } from 'react';
 import { createPortal } from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { IModalHeader } from '../../utils/interfaces';
+import { IModal, IModalHeader } from '../../services/types/components';
 import styles from './modal.module.css';
 
-const ModalHeader: FC<IModalHeader> = ({ children, onClick }) => {
+const ModalHeader: FC<IModalHeader> = ({ children, headerClass, onClick }) => {
 
     return (
         <div className={styles.modal__header}>
-            <p className={'text text_type_main-large'}>
+            <p className={headerClass ? headerClass : 'text text_type_main-large'}>
                 {children}
             </p>
 
@@ -27,12 +27,7 @@ const ModalBody: FC = ({ children }) => {
     )
 };
 
-interface IPropsModal {
-    header: string;
-    onClose: () => void;
-};
-
-const Modal: FC<IPropsModal> = ({ header, children, onClose }) => {
+const Modal: FC<IModal> = ({ header, headerClass, children, onClose }) => {
     const modalRoot = document.getElementById('modal-root') as HTMLElement;
 
     const handleEscKeyDown = useCallback((e) => {
@@ -40,7 +35,6 @@ const Modal: FC<IPropsModal> = ({ header, children, onClose }) => {
             onClose();
         };
     }, [onClose]);
-
 
     useEffect(() => {
         window.addEventListener('keydown', handleEscKeyDown);
@@ -56,7 +50,7 @@ const Modal: FC<IPropsModal> = ({ header, children, onClose }) => {
             <ModalOverlay onClick={onClose} />
 
             <div className={styles.modal}>
-                <ModalHeader onClick={onClose}>
+                <ModalHeader headerClass={headerClass} onClick={onClose}>
                     {header}
                 </ModalHeader>
 

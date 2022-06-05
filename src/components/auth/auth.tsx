@@ -3,15 +3,15 @@ import React, { useState, useRef, FC, SyntheticEvent, FocusEvent } from 'react';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link, Redirect } from 'react-router-dom';
 
-import { useSelector, useDispatch } from "react-redux";
 import { logIn } from '../../services/actions/auth';
-import { TStateAuth, TLocation } from '../../utils/types';
+import { TLocation } from '../../services/types/types';
 
 import styles from './auth.module.css';
+import { useDispatch, useSelector } from '../../services/hooks';
 
 const Auth: FC = () => {
     const dispatch = useDispatch();
-    const { loggedIn } = useSelector<TStateAuth, { loggedIn: boolean }>(state => state.auth);
+    const { loggedIn } = useSelector(state => state.auth);
     const { state } = useLocation<TLocation>();
 
     const [formValue, setFormValue] = useState({

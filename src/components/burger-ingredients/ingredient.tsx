@@ -1,18 +1,17 @@
 import React, { FC, useMemo } from 'react';
-
-import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-import { useDrag } from 'react-dnd';
-import { TSelectedIngredients, TStateShop } from '../../utils/types';
-import { IIngredient } from '../../utils/interfaces';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { useSelector } from '../../services/hooks';
+import { IIngredient } from '../../services/types/components';
 
 const Ingredient: FC<IIngredient> = ({ product, className}) => {
     const location = useLocation();
 
     const { name, image, price } = product;
-    const { bun, ingredients } = useSelector<TStateShop, { bun: string | null, ingredients: Array<TSelectedIngredients> }>(state => state.shop.selected);
+    const { bun, ingredients } = useSelector(state => state.shop.selected);
 
     const [{ boxShadow }, dragRef] = useDrag({
         type: 'item',
@@ -35,6 +34,7 @@ const Ingredient: FC<IIngredient> = ({ product, className}) => {
                 if (ingredient.id === product._id) count = count + 1;
             })
         }
+        
         return count;
     },
         [bun, ingredients, product]

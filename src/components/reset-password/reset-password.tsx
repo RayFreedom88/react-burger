@@ -3,7 +3,7 @@ import React, { FC, SyntheticEvent, useState } from 'react';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useHistory ,Link, Redirect } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { resetPassword } from '../../services/actions/auth';
 
 import styles from './reset-password.module.css';
