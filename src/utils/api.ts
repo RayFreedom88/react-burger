@@ -61,11 +61,10 @@ export const postUpdateTokenRequest = async () => {
     return await fetch(`${URL_API}/${Endpoint.UPDATE_TOKEN}`, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            token: localStorage.refreshToken
+            token: localStorage.getItem('refreshToken')
         })
     })
         .then(checkResponse)

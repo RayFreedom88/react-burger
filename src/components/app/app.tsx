@@ -11,7 +11,7 @@ import IngredientDetails from '../burger-ingredients/ingredient-details/ingredie
 import FeedDetails from '../feed-details/feed-details';
 
 import { getItems } from '../../services/actions/shop';
-import { getUser } from '../../services/actions/auth';
+import { getUser, updateToken } from '../../services/actions/auth';
 import { TLocation } from '../../services/types/types';
 import { useDispatch } from '../../services/hooks';
 
@@ -33,6 +33,7 @@ const App: FC = () => {
             dispatch(getItems());
 
             if (localStorage.refreshToken) {
+                dispatch(updateToken());
                 dispatch(getUser());
             };
         }, [dispatch]);
