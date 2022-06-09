@@ -6,7 +6,7 @@ import { NavLink, Redirect, Switch, Route, useRouteMatch } from 'react-router-do
 import { INavBar } from '../../services/types/components';
 import OrderList from '../order-list/order-list';
 import { useDispatch, useSelector } from '../../services/hooks';
-import { logOut, updateUser, getUser } from '../../services/actions/auth';
+import { logOut, updateUser } from '../../services/actions/auth';
 
 import styles from './profile.module.css';
 
