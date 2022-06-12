@@ -32,7 +32,8 @@
     "eject": "react-scripts eject",
     "cypress:open": "./node_modules/.bin/cypress open",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deploy-script": "npm run build && scp -r ./build/* rayfreedom13@178.154.194.12:/home/rayfreedom13/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [
