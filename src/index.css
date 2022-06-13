@@ -61,3 +61,11 @@ a {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+.input__container {
+  width: 480px;
+}
+
+.input {
+  width: 100%;
+}
