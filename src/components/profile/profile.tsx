@@ -39,10 +39,12 @@ const Profile: FC = () => {
     const { loggedIn } = useSelector(state => state.auth);
 
     const [formValue, setFormValue] = useState({
-        name: name,
-        email: email,
+        name: '',
+        email: '',
         password: ''
     });
+
+    const [isChanged, setIsChanged] = useState<boolean>(false);
 
     useEffect(
         () => {
@@ -54,6 +56,14 @@ const Profile: FC = () => {
         },
         [name, email]
     );
+
+    useEffect(() => {
+        setIsChanged(
+            formValue.name !== name ||
+            formValue.email !== email ||
+            formValue.password !== ''
+        );
+    }, [name, email, formValue]);
 
     const handleChange = (e: { target: HTMLInputElement }) => {
         setFormValue({
@@ -176,19 +186,21 @@ const Profile: FC = () => {
                                     />
                                 </div>
 
-                                <div className={`${styles.profile__buttons} mt-6`}>
-                                    <Button type='secondary' size='medium' onClick={handleCancel}>
-                                        Отмена
-                                    </Button>
+                                {isChanged && (
+                                    <div className={`${styles.profile__buttons} mt-6`}>
+                                        <Button type='secondary' size='medium' onClick={handleCancel}>
+                                            Отмена
+                                        </Button>
 
-                                    <Button type='primary' size='medium'>
-                                        Сохранить
-                                    </Button>
-                                </div>
+                                        <Button type='primary' size='medium'>
+                                            Сохранить
+                                        </Button>
+                                    </div>
+                                )}
                             </form>
                         </div>
                     </Route>
-                    
+
                     <Route path={`${path}/orders`} exact={true}>
                         <OrderList />
                     </Route>
