@@ -25,9 +25,6 @@
 ### Запуск приложения на localhost:3000
     $ npm start
 
-### Сборка приложения
-    $ npm run build
-
 ### Тестирование приложения с помощью Cypress
     $ npm run cypress
 
