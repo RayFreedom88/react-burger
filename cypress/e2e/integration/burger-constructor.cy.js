@@ -20,12 +20,25 @@ describe('Проверка оформления заказа Stellar burgers', (
         cy.get('[data-test="selected"]').trigger('drop');
     });
 
+    it('Открытие модального окна с описанием ингредиента', () => {
+        cy.get('[data-test="60d3b41abdacab0026a733c6"]').click();
+        cy.location('pathname').should('eq', '/react-burger/ingredients/60d3b41abdacab0026a733c6');
+        cy.get('#modal').as('modal').should('exist');
+        cy.get('@modal').contains('Детали ингредиента');
+        cy.get('@modal').contains('Краторная булка N-200i');
+    });
+
+    it('Закрытие модального окна с описанием ингредиента', function () {
+        cy.get('#modal').find('svg').click();
+        cy.get('#modal').should('not.exist');
+    });
+
     it('Оформление заказа без авторизации', function () {
         cy.get('button').contains('Оформить заказ').click();
         cy.location('pathname').should('eq', '/react-burger/login');
     });
 
-    it('Оформление заказа с авторизацией', function () {
+    it('Оформление заказа с авторизацией и с открытием модального окна с номером заказа', function () {
         cy.location('pathname').should('eq', '/react-burger/login');
         cy.get('input[name="email"]').type('nightmare-on@elm.street');
         cy.get('input[name="password"]').type('12FreddysComingForYou');
@@ -38,7 +51,7 @@ describe('Проверка оформления заказа Stellar burgers', (
         cy.contains('Дождитесь готовности на орбитальной станции');
     });
 
-    it('Закрытие модального окна', function () {
+    it('Закрытие модального окна с номером заказа', function () {
         cy.get('#modal').find('svg').click();
         cy.get('#modal').should('not.exist');
     });
