@@ -111,7 +111,7 @@ const BurgerConstructor: FC = () => {
     }, [ingredients, bun, allIngredients]);
 
     return (
-        <div className={styles.burgerconstructor__column} ref={dropTargerRef}>
+        <div className={styles.burgerconstructor__column} ref={dropTargerRef} data-test={'selected'}>
             <h2 className={`visually-hidden`}>Лента заказов</h2>
             {(ingredients.length > 0) || bun
                 ?
