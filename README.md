@@ -3,30 +3,33 @@
 Этот проект был создан во время обучения в [Yandex.Practicum](https://practicum.yandex.ru) на курсе "React-разработик".
 Проект сделан с помощью [Create React App](https://github.com/facebook/create-react-app).
 
+
 ## Приложение можно протестировать по следющим ссылкам:
 
-### [Github Pages](https://rayfreedom88.github.io/react-burger/)
-### [free.stellar-burgers.nomoredomains.xyz](https://free.stellar-burgers.nomoredomains.xyz/)
+### на [Github Pages](https://rayfreedom88.github.io/react-burger/)
+### сайт [free.stellar-burgers.nomoredomains.xyz](https://free.stellar-burgers.nomoredomains.xyz/)
 
-## Данные для авторизации
-### Email:
+
+## Данные для авторизации:
+### E-mail:
     nightmare-on@elm.street
 
 ### Password:
     12FreddysComingForYou
 
-## установка зависимостей
+
+## Основные команды для запуска приложения:
+### Установка зависимостей
     $ npm i
 
-## запуск приложения на localhost:3000
+### Запуск приложения на localhost:3000
     $ npm start
 
-## сборка приложения
+### Сборка приложения
     $ npm run build
 
-## тестирование приложения с помощью Cypress
+### Тестирование приложения с помощью Cypress
     $ npm run cypress
 
-## тестирование с помощью Unit-тестов
+### Тестирование с помощью Unit-тестов
     $ npm run test
-
