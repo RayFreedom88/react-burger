@@ -16,7 +16,7 @@ import {
 } from '../actions/shop';
 import { TShopState } from '../types/types';
 
-const initialState: TShopState = {
+export const initialState: TShopState = {
     allIngredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
@@ -49,7 +49,7 @@ export const shopReducer = (state = initialState, action: TShopsActions): TShopS
                 ...state,
                 ingredientsRequest: false,
                 ingredientsFailed: false,
-                allIngredients: action.allIngredients
+                allIngredients: action.dataIngredients
             }
         }
 
@@ -58,7 +58,7 @@ export const shopReducer = (state = initialState, action: TShopsActions): TShopS
             return {
                 ...state,
                 ingredientsRequest: false,
-                ingredientsFailed: true,
+                ingredientsFailed: true
             }
         }
 
@@ -125,8 +125,8 @@ export const shopReducer = (state = initialState, action: TShopsActions): TShopS
                 orderFailed: false,
 
                 selected: {
-                    ingredients: [],
-                    bun: null
+                    bun: null,
+                    ingredients: []
                 }
             };
         }

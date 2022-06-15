@@ -7,14 +7,14 @@ import {
 } from '../actions/feed';
 import { TFeedState } from '../types/types';
 
-const feedInitialState: TFeedState = {
+export const initialState: TFeedState = {
     wsConnected: false,
     orders: [],
     total: 0,
     totalToday: 0
 };
 
-export const feedReducer = (state = feedInitialState, action: TFeedActions): TFeedState => {
+export const feedReducer = (state = initialState, action: TFeedActions): TFeedState => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS: {
 
