@@ -20,12 +20,13 @@ import {
 import { TSelectedIngredients } from '../../services/types/types';
 
 import styles from './burger-constructor.module.css';
+import Preloader from '../preloader/preloader';
 
 const BurgerConstructor: FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const allIngredients = useSelector(state => state.shop.allIngredients);
+    const { allIngredients, orderRequest } = useSelector(state => state.shop);
 
     const { bun, ingredients } = useSelector(state => state.shop.selected);
 
@@ -109,10 +110,8 @@ const BurgerConstructor: FC = () => {
         return totalPrice;
     }, [ingredients, bun, allIngredients]);
 
-    if (!allIngredients.length) return null;
-
     return (
-        <div className={styles.burgerconstructor__column} ref={dropTargerRef}>
+        <div className={styles.burgerconstructor__column} ref={dropTargerRef} data-test={'selected'}>
             <h2 className={`visually-hidden`}>Лента заказов</h2>
             {(ingredients.length > 0) || bun
                 ?
@@ -165,7 +164,19 @@ const BurgerConstructor: FC = () => {
                 </>
             }
 
-            {order &&
+            {!order && orderRequest &&
+                <Modal
+                    header={''}
+                    onClose={handleCloseModal}
+                >
+                    <div style={{width: 720, height: 577}}>
+                        <p className={`text text_type_main-large mt-10`}>Заказ обрабатывается</p>
+                        <Preloader width={720} height={500}/>
+                    </div>
+                </Modal>
+            }
+
+            {!!order &&
                 <Modal
                     header={''}
                     onClose={handleCloseModal}

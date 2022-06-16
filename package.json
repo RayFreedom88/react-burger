@@ -2,10 +2,10 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://rayfreedom88.github.io/react-burger",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^16.11.26",
@@ -29,7 +29,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "./node_modules/.bin/cypress open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "deploy-script": "npm run build && scp -r ./build/* rayfreedom13@178.154.194.12:/home/rayfreedom13/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [
@@ -50,7 +54,17 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^13.3.0",
+    "@types/enzyme": "^3.10.12",
     "@types/react-router-dom": "^5.3.3",
-    "@types/uuid": "^8.3.4"
+    "@types/uuid": "^8.3.4",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+    "cypress": "^10.0.3",
+    "enzyme": "^3.11.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "fetch-mock": "^9.11.0",
+    "gh-pages": "^4.0.0",
+    "react-test-renderer": "^18.1.0",
+    "redux-mock-store": "^1.5.4"
   }
 }

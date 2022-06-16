@@ -34,10 +34,10 @@ import {
 } from '../actions/auth';
 import { TAuthState } from '../types/types';
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
     user: {
         name: '',
-        email: '',
+        email: ''
     },
 
     loggedIn: false,
@@ -221,7 +221,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
                 ...state,
                 user: action.user,
                 loggedIn: true,
-                registerRequest: false,
+                registerRequest: false
             };
         }
 
@@ -238,7 +238,8 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
 
             return {
                 ...state,
-                forgotPasswordRequest: true
+                forgotPasswordRequest: true,
+                forgotPasswordFailed: false
             };
         }
 
@@ -265,6 +266,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
             return {
                 ...state,
                 resetPasswordRequest: true,
+                resetPasswordFailed: false
             };
         }
 
@@ -273,7 +275,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
             return {
                 ...state,
                 resetPasswordRequest: false,
-                resetPasswordFailed: false,
+                resetPasswordFailed: false
             }
         }
 
@@ -282,7 +284,7 @@ export const authReducer = (state = initialState, action: TAuthActions): TAuthSt
             return {
                 ...state,
                 resetPasswordRequest: false,
-                resetPasswordFailed: true,
+                resetPasswordFailed: true
             }
         }
 

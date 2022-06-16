@@ -26,7 +26,7 @@ export interface IGetIngredientRequestAction {
 
 export interface IGetIngredientSuccessAction {
     readonly type: typeof GET_INGREDIENTS_SUCCESS;
-    readonly allIngredients: Array<TIngredient>
+    readonly dataIngredients: Array<TIngredient>
 }
 
 export interface IGetIngredientFailedAction {
@@ -96,7 +96,7 @@ export const getItems: AppThunk = () => (dispatch: AppDispatch) => {
             if (res && res.success) {
                 dispatch({
                     type: GET_INGREDIENTS_SUCCESS,
-                    allIngredients: res.data
+                    dataIngredients: res.data
                 });
             } else {
                 dispatch({

@@ -11,7 +11,11 @@ export function getCookie(name: string) {
 
 // изменение Cookie
 export function setCookie(name: string, value: string | number | null | boolean, props?: any) {
-    props = props || {};
+    props = {
+        path: '/',
+        ...props
+    };
+
     let exp = props.expires;
 
     if (typeof exp == 'number' && exp) {

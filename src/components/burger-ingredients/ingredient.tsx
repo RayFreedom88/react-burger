@@ -41,7 +41,7 @@ const Ingredient: FC<IIngredient> = ({ product, className}) => {
     );
 
     return (
-        <li style={{ boxShadow }} ref={dragRef}>
+        <li style={{ boxShadow }} ref={dragRef} data-test={product._id}>
             <Link 
                 className={className}
                 to={{

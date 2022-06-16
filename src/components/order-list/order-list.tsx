@@ -6,6 +6,7 @@ import { TOrder } from '../../services/types/types';
 import { WS_URL, WS_URL_ALL } from '../../utils/const';
 import { getCookie } from '../../utils/cookie';
 import OrderCard from '../order-card/order-card';
+import Preloader from '../preloader/preloader';
 
 import styles from './order-list.module.css'
 
@@ -51,7 +52,7 @@ const OrderList: FC = () => {
     return (
         <div className={isUserOrder?.isExact ? styles.column_profile : styles.column}>
             <ul className={styles.list}>
-                {(orders.length > 0) ? orders.map(dataToOrder) : null}
+                {(orders.length > 0) ? orders.map(dataToOrder) : <Preloader width={608} height={'75vh'} />}
             </ul>
         </div>
     );

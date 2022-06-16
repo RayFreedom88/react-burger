@@ -20,7 +20,7 @@
     flex-direction: column;
     align-content: flex-start;
     flex-wrap: wrap;
-    gap: 2px;
+    row-gap: 2px;
     column-gap: 20px;
     height: 152px;
     overflow: hidden;
