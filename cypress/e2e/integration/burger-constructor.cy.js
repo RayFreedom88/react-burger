@@ -45,9 +45,9 @@ describe('Проверка оформления заказа Stellar burgers', (
         cy.get('button').contains('Войти').click();
         cy.location('pathname').should('eq', '/react-burger/');
         cy.get('button').contains('Оформить заказ').click(); 
-        cy.get('#modal').should('exist');
         cy.intercept('POST','https://norma.nomoreparties.space/api/orders').as('getOrder');
         cy.wait('@getOrder').its('response.statusCode').should('eq', 200);
+        cy.get('#modal').should('exist');
         cy.contains('Дождитесь готовности на орбитальной станции');
     });
 
