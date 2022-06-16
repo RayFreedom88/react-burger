@@ -43,7 +43,7 @@
     $ npm start
 
 ### Тестирование приложения с помощью Cypress
-    $ npm run cypress
+    $ npm run cypress:open
 
 ### Тестирование с помощью Unit-тестов
     $ npm run test
