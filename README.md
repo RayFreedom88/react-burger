@@ -8,7 +8,6 @@
 ## Приложение можно протестировать по следющим ссылкам:
 
 ### на [Github Pages](https://rayfreedom88.github.io/react-burger/)
-### на ВМ [Яндекс.Облако](https://free.stellar-burgers.nomoredomains.xyz/)
 
 
 ## Данные для авторизации:
